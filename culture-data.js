@@ -27,6 +27,17 @@ function enrich(result,html,reading,clean){
  if(/^Event(?:\s*[–—-]|$)/i.test(r.title)){const performer=head.find(t=>t.length>10&&t===t.toUpperCase()&&/ORCHESTRA|ORQUESTRA|ORQUESTA|QUARTET|ENSEMBLE/.test(t));if(performer){r.title=r.workTitle=performer;r.activityType='Concierto';r.venue=head.find(t=>/^SALA\b/.test(t))||r.venue;const program=head.filter(t=>/\bop\.|sinfon[ií]a|concierto.*menor/i.test(t)).slice(0,2);r.summary='Concierto de '+performer+(program.length?'. Programa: '+program.join('; '):'.');}}
  // Prefer a plot paragraph to a director's reflection about rehearsals or verse.
  const narrative=reading.paragraphs.find(t=>t.length>100&&t.length<1800&&/\b(?:enamora|enamorad|acuden a casa|su nuevo comienzo|se ve interrumpido|la obra habla|la historia sigue|drama musical|mito del)\b/i.test(t));if(narrative&&(!r.summary||/verso exige|resulta soberbio|Comprar entradas/i.test(r.summary))){const sentences=narrative.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[narrative];r.summary=(r.activityType!=='Visita'?r.activityType+': ':'')+sentences.slice(0,2).join('').trim();if(r.summary.length>380)r.summary=r.summary.slice(0,377).replace(/\s+\S*$/,'')+'…';}
+ // An exhibition period remains a period even if its description advertises an opening or guided tour.
+ // Those associated sessions must not shorten the life of the exhibition in the agenda.
+ if(r.kind==='plan'&&r.activityType==='Exposición'){
+  const practical=E.practical(reading.mainHtml,reading.blocks,clean);
+  if(practical.date&&practical.endDate&&practical.endDate>practical.date){
+   const auxiliarySessions=r.scheduleMode==='sessions';
+   r.date=practical.date;r.endDate=practical.endDate;r.occurrences=[];r.scheduleMode='period';
+   r.time=practical.timeText||(auxiliarySessions||/inaugura/i.test(r.time)?'':r.time);
+   if(practical.price)r.price=practical.price;
+  }
+ }
  return r;
 }
 const API={enrich};if(typeof module!=='undefined')module.exports=API;else root.CultureData=API;

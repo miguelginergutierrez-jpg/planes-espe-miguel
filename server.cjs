@@ -14,7 +14,7 @@ http.createServer(async(req,res) => {
     try{let body='';for await(const chunk of req){body+=chunk;if(body.length>12000)return json(413,{error:'Enlace demasiado largo'})}const result=await require('./preview.cjs').inspect(JSON.parse(body).url);return json(200,result)}catch{return json(400,{error:'Enlace no válido'})}
   }
   if (!['GET','HEAD'].includes(req.method)) {res.writeHead(405);res.end();return;}
-  const files={'/':'index.html','/index.html':'index.html','/logo-espe-miguel.jpg':'logo-espe-miguel.jpg','/documents.js':'documents.js','/app.js':'app.js','/classifier.js':'classifier.js','/event-data.js':'event-data.js','/culture-data.js':'culture-data.js','/calm.css':'calm.css'};
+  const files={'/':'index.html','/index.html':'index.html','/logo-espe-miguel.jpg':'logo-espe-miguel.jpg','/documents.js':'documents.js','/app.js':'app.js','/classifier.js':'classifier.js','/event-data.js':'event-data.js','/culture-data.js':'culture-data.js','/cinema-data.js':'cinema-data.js','/calm.css':'calm.css'};
   const file=files[req.url.split('?')[0]];
   if(!file){res.writeHead(404);res.end('No encontrado');return;}
   res.writeHead(200, {'Content-Type':file.endsWith('.jpg')?'image/jpeg':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});

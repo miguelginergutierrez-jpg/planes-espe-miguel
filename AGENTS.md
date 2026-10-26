@@ -24,6 +24,7 @@ No hay framework de interfaz, compilación, base de datos del servidor, manifies
 | `documents.js` | Adjuntos en IndexedDB; añadir, descargar, eliminar y empaquetar/importar copias. |
 | `classifier.js` | Clasificación, contenido principal, metadatos, datos prácticos, título y resumen por extracción. Se usa en Node y en el navegador. |
 | `event-data.js` | Fechas, periodos, horarios, sesiones, recurrencias, sedes y delimitación de contenido. Módulo compartido. |
+| `cinema-data.js` | Resuelve películas, cines y sesiones enlazadas por `@id` en JSON-LD; conserva fecha/hora/precio de cada función. |
 | `culture-data.js` | Correcciones de formatos culturales: mínimos de precio, traslados, calendarios incrustados, sesiones de cine y títulos. Módulo compartido. |
 | `server.cjs` | Servidor HTTP de Node, archivos estáticos permitidos y API local. |
 | `preview.cjs` | Entrada al análisis, deduplicación de peticiones y caché en memoria. |
@@ -64,7 +65,7 @@ Límites actuales relevantes: hasta seis páginas en la investigación, presupue
 - Campos principales: título, enlace, zona, resumen, imagen, estado, notas; en planes, recinto, tipo de actividad, dirección, fechas y horario; en restaurantes, cocina y precio; en compras, categoría, estancia, coste, tienda, plazo y medidas.
 - `occurrences` conserva sesiones individuales con fecha, hora, posible hora final, etiqueta, modalidad y enlace. No sustituirlas por un rango continuo que añada días sin función.
 - `manualFields`, `titleMode` y `cityMode` protegen elecciones manuales durante el reanálisis.
-- `analysisVersion`, `summarySource`, `aiStatus` y `verification` conservan información del análisis. La versión vigente es **14**. La revisión incluye fecha, fuentes e incidencias; no certifica exactitud universal.
+- `analysisVersion`, `summarySource`, `aiStatus` y `verification` conservan información del análisis. La versión vigente es **15**. La revisión incluye fecha, fuentes e incidencias; no certifica exactitud universal.
 - `priority` y `links` sobreviven como compatibilidad de datos antiguos; no reintroducir sus controles eliminados.
 - Existe coordinación entre pestañas del mismo origen mediante eventos de almacenamiento y comprobación de cambios antes de guardar. No es sincronización entre dispositivos.
 
@@ -137,11 +138,13 @@ La comprobación ocurre al abrir, volver a la app y periódicamente, y también 
 
 ## 6. Estado y próximos pasos
 
-La aplicación local y el extractor de versión 14 están implementados. El último trabajo de producto fue ampliar la extracción cultural y validar el volcado. Después el usuario anunció que enviaría nuevos enlaces fallidos; **todavía no aportó esos nuevos enlaces** antes de solicitar este documento. Esperarlos, reproducir cada fallo y generalizar la corrección a estructuras similares; no inventar casos proporcionados por el usuario.
+La aplicación local y el extractor de versión **15** están implementados. La última revisión corrigió cinco enlaces aportados por el usuario: dos exposiciones de Guía Barcelona, Joan Verdú en Consorci Museus, Melanie Smith en IVAM y Moscas en Verdi. Se validaron las respuestas de la API local y la descarga de sus cinco imágenes. Las correcciones cubren estructuras reutilizables: títulos de contenido frente a marca, tablas de horarios, periodos en valenciano/catalán, imágenes responsivas, referencias JSON-LD de cine e información del recinto. No hay fechas o respuestas de esas obras fijadas en producción.
+
+El Centre del Carme publica horarios contradictorios en su pie de página y en Información general: se conserva la fuente inicial y se marca la discrepancia para revisión. En Verdi la cartelera retira las sesiones ya transcurridas; el 26 de octubre por la tarde quedaban 11 sesiones en la página consultada. Al abrir fichas antiguas se reanalizan con versión 15, se actualizan imágenes y clasificaciones automáticas erróneas y se conservan las elecciones manuales; Guardar persiste los cambios. Los avisos de contradicción siguen visibles tras guardar y reabrir.
 
 Pendientes identificados, sin tratarlos como ya autorizados para implantar todos a la vez:
 
-1. Recuperar o reconstruir las pruebas y fixtures históricos dentro de este repositorio; no están incluidos en el clon revisado.
+1. Recuperar las baterías históricas completas de versiones anteriores. Ya hay 28 pruebas de regresión sintéticas en `tests/content-media.test.cjs` y `tests/extraction-v15.test.cjs`, más la comprobación móvil aislada `tests/browser-v15.cjs`; estas no sustituyen a todos los fixtures históricos.
 2. Incorporar una instalación reproducible: manifiesto, versiones fijadas, lockfile, exclusión de dependencias/artefactos locales y scripts de pruebas. Evitar depender del runtime de una instalación concreta de Codex.
 3. Seguir mejorando extracción, resúmenes, identidad de obras, cambios de sede y evidencias; mantener casos negativos y conflictos en las pruebas.
 4. Validar la integración real de IA si el usuario decide configurarla, sin solicitar credenciales en el chat ni confundirla con la suscripción de una herramienta.
@@ -201,7 +204,7 @@ La clave permanece en el servidor. La petición de IA incluye evidencia de pági
 Invoke-RestMethod http://localhost:4173/api/status
 ```
 
-### Comprobación mínima disponible en este clon
+### Pruebas disponibles en este clon
 
 ```powershell
 Get-ChildItem -File -Path *.js,*.cjs | ForEach-Object {
@@ -210,9 +213,11 @@ Get-ChildItem -File -Path *.js,*.cjs | ForEach-Object {
 }
 ```
 
-Esto solo comprueba sintaxis; no sustituye a pruebas de comportamiento. Verificar en un navegador aislado: captura, clasificación, detalle y edición, Guardar, recarga, zonas, visitas de varios días, sesiones, ocultar/borrar, adjuntos y exportación/importación. Usar registros sintéticos y fechas futuras o reloj fijado; nunca borrar o importar sobre el almacenamiento real del usuario para probar.
+Esto solo comprueba sintaxis. Ejecutar las 28 pruebas de comportamiento sin red con `node --test tests/*.test.cjs`. Con el servidor encendido y Playwright/Edge disponibles, `node tests/browser-v15.cjs` comprueba captura, campos, guardado/recarga, avisos persistentes, reparación de fichas antiguas y protección de cambios manuales. Usa un contexto nuevo con respuestas sintéticas; no lee el almacenamiento real.
 
-En el entorno anterior existían estas baterías, **ausentes aquí**: `extraction-regression.cjs`, `event-extraction-regression.cjs`, `deep-extraction-regression.cjs`, `reader-v13-regression.cjs` y `culture-v14-regression.cjs`. No afirmar que se han ejecutado desde este repositorio hasta recuperarlas junto con sus fixtures. `pdf-lib` se utilizó para crear un PDF sintético de pruebas; no es una dependencia del lector de producción.
+Verificar también en un navegador aislado: captura, clasificación, detalle y edición, Guardar, recarga, zonas, visitas de varios días, sesiones, ocultar/borrar, adjuntos y exportación/importación. Usar registros sintéticos y fechas futuras o reloj fijado; nunca borrar o importar sobre el almacenamiento real del usuario para probar.
+
+En el entorno anterior existían estas baterías, **ausentes aquí**: `extraction-regression.cjs`, `event-extraction-regression.cjs`, `deep-extraction-regression.cjs`, `reader-v13-regression.cjs` y `culture-v14-regression.cjs`. No afirmar que estas cinco baterías históricas se han ejecutado desde este repositorio hasta recuperarlas junto con sus fixtures; son distintas de las pruebas nuevas de versión 15. `pdf-lib` se utilizó para crear un PDF sintético de pruebas; no es una dependencia del lector de producción.
 
 Casos de regresión a conservar: CCCB (exposición frente a taller relacionado; seminario), Time Out/TNC, Zumzeig, Lliure, Virreina, Liceu, IVC, Les Arts, IVAM, Babel/ReservaEntradas y los dos Palau. Las fechas históricas son expectativas de fixtures, no programación vigente ni constantes de producción. Probar también errores, fuentes contradictorias, datos ausentes, fechas inválidas, mínimo frente a rango, otro evento en JSON, texto al final de páginas largas y persistencia de ediciones manuales.
 
@@ -229,7 +234,7 @@ Casos de regresión a conservar: CCCB (exposición frente a taller relacionado; 
 
 ## 8. Continuidad entre ordenadores con GitHub
 
-**GitHub sincroniza código y documentación, no el historial completo del chat ni el almacenamiento del navegador.** Este archivo conserva las decisiones necesarias para retomar el trabajo. Leerlo al iniciar una conversación nueva; no asumir acceso a mensajes antiguos.
+**GitHub sincroniza código y documentación, no el historial completo del chat ni el almacenamiento del navegador.** Este archivo, actualizado durante el desarrollo, conserva las decisiones necesarias para retomar el trabajo. Leerlo al iniciar una conversación nueva; no asumir acceso a mensajes antiguos.
 
 1. Clonar la URL real del repositorio obtenida de GitHub; no inventar ni guardar aquí direcciones privadas o credenciales. Entrar en la raíz del clon y seguir la preparación anterior.
 2. Revisar `git status`, rama actual y remoto. La rama observada al crear este documento era `main`; comprobarlo de nuevo, no asumirlo para futuros trabajos.
@@ -243,6 +248,6 @@ Para llevar también los datos de uso: exportar una copia con documentos desde A
 
 No versionar `.env`, claves, contraseñas, tokens, perfiles de navegador, copias personales, adjuntos ni logs con contenido sensible. Configurar secretos separadamente en cada equipo. Si alguna vez se publica un secreto, eliminarlo del último archivo no basta: revocarlo y tratar también el historial.
 
-### Alcance de la tarea que creó este archivo
+### Alcance histórico de la tarea que creó este archivo
 
-Se autorizó crear únicamente `AGENTS.md` en la raíz, sin modificar archivos existentes, instalar dependencias, cambiar datos de la app ni publicar commits. Las instrucciones de instalación, empaquetado y Git anteriores son para tareas posteriores: no implican que esos trabajos estén hechos.
+En la tarea inicial de documentación se autorizó crear únicamente `AGENTS.md` en la raíz, sin modificar archivos existentes, instalar dependencias, cambiar datos de la app ni publicar commits. Después se autorizó y realizó la revisión del extractor de versión 15 descrita arriba. El empaquetado reproducible, la sincronización y el push no se han realizado por ello.

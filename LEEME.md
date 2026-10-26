@@ -1,3 +1,5 @@
+> Revisión posterior: el extractor actual es la versión 15. Consulta [REVISION-V15.md](REVISION-V15.md) para los cinco enlaces corregidos, las 28 pruebas nuevas y los límites comprobados. Las notas de versiones anteriores se conservan como historial.
+
 # Planes Espe & Miguel
 
 App local adaptada al móvil, compartida y sin perfiles de usuario.

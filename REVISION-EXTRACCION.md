@@ -1,3 +1,5 @@
+> Revisión posterior: el extractor actual es la versión 15. Consulta [REVISION-V15.md](REVISION-V15.md) para los cinco enlaces corregidos, las 28 pruebas nuevas y los límites comprobados. Las notas de versiones anteriores se conservan como historial.
+
 # Revisión del lector cultural — 26 de octubre de 2026
 
 La versión 14 amplía la lectura y comprueba los datos antes de devolver la ficha. Esta revisión cubre **15 fichas de ejemplo**: ocho nuevas páginas consultadas directamente y siete casos anteriores conservados como pruebas. No es un inventario exhaustivo de todos los recintos ni una garantía para cualquier página futura.

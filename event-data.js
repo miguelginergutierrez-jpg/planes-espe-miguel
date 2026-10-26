@@ -7,7 +7,7 @@ const monthNames=Object.keys(months).sort((a,b)=>b.length-a.length).join('|');
 function block(html,predicate){
  for(const m of html.matchAll(/<(main|section|article|div)\b[^>]*>/gi)){if(!predicate(m[0]))continue;const tag=m[1],tokens=new RegExp('<\\/?'+tag+'\\b[^>]*>','gi');tokens.lastIndex=m.index+m[0].length;let depth=1,n;while((n=tokens.exec(html))){depth+=/^<\//.test(n[0])?-1:1;if(!depth)return html.slice(m.index,tokens.lastIndex)}}return '';
 }
-function scope(html){return block(html,t=>/^<main\b/i.test(t)||/role=["']main["']/i.test(t))||block(html,t=>/class=["'][^"']*\b(?:ficha-confotos|espect-content-area)\b|id=["']event-page["']/i.test(t))||html;}
+function scope(html){return block(html,t=>/id=["'](?:contenidor-detall|event-page)["']/i.test(t))||block(html,t=>/^<main\b/i.test(t)||/role=["']main["']/i.test(t))||block(html,t=>/class=["'][^"']*\b(?:ficha-confotos|espect-content-area)\b/i.test(t))||html;}
 function explicitSessions(blocks,start,end){
  if(!start)return [];const years=[...new Set([start.slice(0,4),(end||start).slice(0,4)])];let inherited='',label='';const found=[];
  for(let i=0;i<blocks.length;i++){const line=blocks[i],s=fold(line);if(/^(?:funciones|sessions|sesiones)\s+(?:matinal|vespertin)/.test(s)){const t=s.match(/(\d{1,2})[:.]([0-5]\d)/);inherited=t?t[1].padStart(2,'0')+':'+t[2]:'';label=/matinal/.test(s)?'Función matinal':'';continue}
@@ -24,7 +24,7 @@ function dateIn(text){
  const s=fold(text).replace(/\s+/g,' ');
  let m=s.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);if(m)return iso(m[3],m[2],m[1]);
  m=s.match(/\b(\d{1,2})[/.](\d{1,2})[/.](\d{4}|\d{2})\b/);if(m)return iso(m[1],m[2],m[3]);
- m=s.match(new RegExp('\\b(\\d{1,2})\\s+(?:de\\s+)?('+monthNames+')\\.?\\s+(?:(?:de|del)\\s+)?(\\d{4}|\\d{2})\\b'));if(m)return iso(m[1],months[m[2]],m[3]);
+ m=s.match(new RegExp('\\b(\\d{1,2})\\s*(?:de\\s+|d[’\x27]\\s*)?('+monthNames+')\\.?\\s+(?:(?:de|del)\\s+)?(\\d{4}|\\d{2})\\b'));if(m)return iso(m[1],months[m[2]],m[3]);
  m=s.match(new RegExp('\\b('+monthNames+')\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?[,]?\\s+(\\d{4})\\b'));return m?iso(m[2],months[m[1]],m[3]):'';
 }
 function section(html,headingPattern,clean){
@@ -37,14 +37,37 @@ function practical(html,blocks,clean){
  const area=section(html,/informaci[o]n practica|informacio practica|practical information|event details/,clean);
  const dated=section(area||html,/^(?:fechas? y (?:horas?|horarios?)|dates? i horaris?|data i horari|dates? and times?|fechas?|dates?|data)$/,clean);
  const prices=section(area||html,/^(?:precios?|preus?|tarifas?|prices?|admission)$/,clean);
- const out={};const datedText=clean(dated),range=period(datedText),date=dateIn(datedText);
+ // Definition lists and labelled paragraphs are common in municipal agendas and museum CMSes.
+ // Read the explicitly labelled event period before any date mentioned in biography or related activities.
+ const labels=[...html.matchAll(/<dt\b[^>]*>([\s\S]*?)<\/dt>\s*<dd\b[^>]*>([\s\S]*?)<\/dd>/gi)];
+ const labelled=labels.filter(m=>/^(?:cuando|quan|fechas?|dates?|data|periodo|periode)\s*:?$/i.test(fold(clean(m[1])))).map(m=>clean(m[2]));
+ labelled.push(...blocks.filter(p=>/^(?:fechas?|dates?|data|cuando|quan|periodo|periode)\s*:/i.test(fold(p))&&!/inaugura|publica/i.test(fold(p))));
+ const out={};const datedText=clean(dated)||labelled[0]||'',range=period(datedText),date=dateIn(datedText);
  if(range.date)Object.assign(out,range);
  else if(date)out.date=date;
- else for(const b of blocks){if(/^(?:\d{1,2}\s+(?:de\s+)?[\p{L}]+|\d{4}-\d{2}-\d{2})/u.test(b)&&!/[–—]/.test(b)){const d=dateIn(b);if(d){out.date=d;break;}}}
+ else for(const b of blocks){if(/^(?:\d{1,2}\s+(?:de\s+|d[’']\s*)?[\p{L}]+|\d{4}-\d{2}-\d{2})/u.test(b)){const span=period(b);if(span.date){Object.assign(out,span);break;}if(!/[–—]/.test(b)){const d=dateIn(b);if(d){out.date=d;break;}}}}
  const hours=clean(dated).match(/\b([01]?\d|2[0-3])[:.]([0-5]\d)\s*(?:h\s*)?[-–—]\s*([01]?\d|2[0-3])[:.]([0-5]\d)/);
  if(hours&&!/lunes|martes|miercoles|jueves|viernes|sabados?|domingos?|dilluns|dimarts|dimecres|dijous|divendres|dissabtes?|diumenges?/i.test(fold(datedText)))out.timeText=hours[1].padStart(2,'0')+':'+hours[2]+' - '+hours[3].padStart(2,'0')+':'+hours[4];
  if(prices){const lines=prices.replace(/<\/(?:p|div|li)>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').split('\n').map(clean).filter(Boolean);const tariff=lines.find(l=>l.length<200&&(/\d\s*(?:€|EUR|euros?)/i.test(l)||/gratuit|gratis|free|entrada (?:libre|lliure)/i.test(fold(l))));if(tariff)out.price=tariff;}
+ const table=openingTables(html,clean);if(table.timeText)out.timeText=table.timeText;if(table.price&&!out.price)out.price=table.price;
  return out;
+}
+function openingTables(html,clean){
+ const lines=[],prices=[];
+ for(const table of html.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)){
+  const rows=[...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)];
+  const headers=rows.flatMap(r=>[...r[1].matchAll(/<th\b[^>]*>([\s\S]*?)<\/th>/gi)].map(m=>fold(clean(m[1]))));
+  if(!headers.some(h=>/^(?:dias?|dies?|days?|horarios?|horaris?|horas?|hores?|hours?)$/.test(h)))continue;
+  for(const row of rows){
+   const cells=[...row[1].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(m=>clean(m[1]));
+   const day=cells.find(c=>c.length<160&&/\b(?:lunes|martes|miercoles|jueves|viernes|sabados?|domingos?|dilluns|dimarts|dimecres|dijous|divendres|dissabtes?|diumenges?|festivos?|festius?|daily|diari)\b/i.test(fold(c)));
+   const hours=cells.find(c=>c.length<180&&/\d{1,2}[:.]\d{2}|\d{1,2}\s*h\b|cerrad|tancat/i.test(c));
+   if(!day||!hours)continue;
+   lines.push(day===hours?day:day+': '+hours);
+   const price=cells.find(c=>c!==hours&&c.length<180&&/\d\s*(?:€|EUR|euros?)|gratuit|gratis|free|entrada (?:libre|lliure)/i.test(fold(c)));if(price)prices.push(price);
+  }
+ }
+ return {timeText:[...new Set(lines)].join('; '),price:[...new Set(prices)].join('; ')};
 }
 function datedRows(html,clean){
  const items=[];
@@ -54,7 +77,12 @@ function datedRows(html,clean){
  for(const row of rows){
   const body=row[3];if(!/<time\b|session|performance|occurrence|funcion|funcio|session/i.test(row[2]+' '+body))continue;
   if(/<(?:tr|li|article)\b/i.test(body))continue;
-  const text=clean(body),date=dateIn(text);if(!date)continue;
+  // A complete film article may contain several day groups plus a release date.
+  // Only a bounded performance item can pair a date with all its clocks.
+  if(row[1].toLowerCase()!=='tr'&&!/\b(?:session|performance|occurrence|funcion|funcio)[\w-]*/i.test(row[2]))continue;
+  const dateLabels=[...new Set([...body.matchAll(/<time\b[^>]*>([\s\S]*?)<\/time>/gi)].map(m=>dateIn(clean(m[1]))).filter(Boolean))];
+  if(dateLabels.length>1)continue;
+  const text=clean(body),date=dateLabels[0]||dateIn(text);if(!date)continue;
   const visibleTimes=[...body.matchAll(/<(?:time|td|span)\b[^>]*>\s*(\d{1,2})[:.]([0-5]\d)\s*(?:h)?\s*<\//gi)].map(m=>m[1].padStart(2,'0')+':'+m[2]);
   const clocks=[...body.matchAll(/datetime\s*=\s*["'](\d{4}-\d{2}-\d{2})(?:T|\s|CET|CEST)(\d{2}:[0-5]\d)[^"']*["']/gi)];
   const times=visibleTimes.length?visibleTimes:clocks.filter(m=>m[1]===date).map(m=>m[2]);
@@ -104,9 +132,9 @@ function plotSummary(reading,type,entity){
 function period(text){
  const s=String(text).replace(/\s+/g,' '),out={};
  const named=s.match(/(\d{1,2}\s+[\p{L}]+\.?\s+\d{4})\s*[–—-]\s*(\d{1,2}\s+[\p{L}]+\.?\s+\d{4})/u);if(named){const date=dateIn(named[1]),endDate=dateIn(named[2]);if(date&&endDate&&endDate>=date)return {date,endDate};}
- const r=s.match(/\b(\d{1,2})[/.](\d{1,2})(?:[/.](\d{4}|\d{2}))?\s*[–—−-]\s*(\d{1,2})[/.](\d{1,2})[/.](\d{4}|\d{2})\b/);
+ const r=s.match(/\b(\d{1,2})[/.](\d{1,2})(?:[/.](\d{4}|\d{2}))?\s*(?:[–—−-]|al?|hasta|fins\s+(?:al?\s+)?)\s*(\d{1,2})[/.](\d{1,2})[/.](\d{4}|\d{2})\b/i);
  if(r){out.date=iso(r[1],r[2],r[3]||Number(r[6])-(Number(r[2])>Number(r[5])?1:0));out.endDate=iso(r[4],r[5],r[6]);if(out.date&&out.endDate>=out.date)return out;}
- const words=fold(s).match(new RegExp('\\b(\\d{1,2})\\s*(?:de\\s+)?('+monthNames+')?(?:\\s+(?:de\\s+)?(\\d{4}))?\\s*(?:al?|hasta|[-–—])\\s*(\\d{1,2})\\s*(?:de\\s+)?('+monthNames+')\\s*(?:(?:de|del)\\s+)?(\\d{4})\\b'));
+ const words=fold(s).match(new RegExp('\\b(\\d{1,2})\\s*(?:de\\s+|d[’\x27]\\s*)?('+monthNames+')?\\.?(?:\\s+(?:(?:de|del)\\s+)?(\\d{4}))?\\s*(?:al?|hasta|fins\\s+(?:al?\\s+)?|[-–—])\\s*(\\d{1,2})\\s*(?:de\\s+|d[’\x27]\\s*)?('+monthNames+')\\.?\\s*(?:(?:de|del)\\s+)?(\\d{4})\\b'));
  if(words){const sm=months[words[2]||words[5]],em=months[words[5]];const date=iso(words[1],sm,words[3]||Number(words[6])-(sm>em?1:0)),endDate=iso(words[4],em,words[6]);if(date&&endDate>=date)return {date,endDate};}
  return {};
 }
@@ -176,10 +204,16 @@ function location(html,reading,siteName,pageTitle,hostname,clean){
  const titleParts=pageTitle.split(/\s*[|]\s*|\s+[-–]\s+/);
  const brand=siteName||titleParts.slice(1).find(p=>/teatr|cine|cinema|muse|centre|centro|virreina/i.test(p))||'';
  const paragraphs=reading.paragraphs,main=fold(reading.text),out={venue:brand,address:''};
- const where=paragraphs.find(p=>/^where:|^lugar:|^lloc:/i.test(p));if(where&&!out.venue)out.venue=where.replace(/^[^:]+:\s*/,'');
+ const where=paragraphs.find(p=>/^where:|^lugar:|^lloc:/i.test(p));if(where)out.venue=where.replace(/^[^:]+:\s*/,'');
+ const labels=[...reading.mainHtml.matchAll(/<dt\b[^>]*>([\s\S]*?)<\/dt>\s*<dd\b[^>]*>([\s\S]*?)<\/dd>/gi)];
+ const labelled=pattern=>labels.find(m=>pattern.test(fold(clean(m[1])).replace(/:\s*$/,'')));
+ const place=labelled(/^(?:donde|on|where|lugar|lloc)$/)||labelled(/^se celebra en$/);
+ if(place)out.venue=clean((place[2].match(/<a\b[^>]*>([\s\S]*?)<\/a>/i)||[])[1]||place[2]).replace(/\s*\.\s*$/,'');
+ const streetLabel=labelled(/^(?:direccion|adreca|address)$/);
+ if(streetLabel){const cityLabel=labelled(/^(?:ciudad|municipi|poblacio|city)$/);out.address=[clean(streetLabel[2]),cityLabel&&clean(cityLabel[2])].filter(Boolean).join(', ');}
  const street=/^(?:(?:carrer|calle|avinguda|avenida|passeig|paseo|plaça|plaza|rambla|la rambla|pg\.|pl\.|c\.)(?:\s+|,\s*))[\s\S]*\d/i;
  const local=paragraphs.findIndex(p=>p.length<180&&street.test(p));
- if(local>=0){out.address=paragraphs[local];const tail=paragraphs[local+1]||'';if(tail.length<75&&/barcelona|valencia|\b\d{5}\b/i.test(tail)&&!out.address.includes(tail))out.address+=', '+tail;}
+ if(local>=0&&!out.address){out.address=paragraphs[local];const tail=paragraphs[local+1]||'';if(tail.length<75&&/barcelona|valencia|\b\d{5}\b/i.test(tail)&&!out.address.includes(tail))out.address+=', '+tail;}
  const footer=(html.match(/<footer\b[^>]*>([\s\S]*?)<\/footer>/i)||[])[1]||'';
  // Choose a branch using the event's room, rather than the first address in the footer.
  const branches=[];for(const m of footer.matchAll(/<address\b[^>]*>([\s\S]*?)<\/address>/gi)){

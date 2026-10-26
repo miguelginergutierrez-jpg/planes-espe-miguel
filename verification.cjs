@@ -4,7 +4,7 @@ const fold=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLo
 const fields=['date','endDate','time','price','address','venue','city'];
 function identity(a,b){const x=fold(a.workTitle||a.title),y=fold(b.workTitle||b.title);return !!x&&!!y&&x===y;}
 function verify(result,pages,baseline){
- const issues=[],rejected=new Set(result.rejectedFields||[]);const primary=pages[0];
+ const issues=[...(result.sourceConflicts||[])],rejected=new Set(result.rejectedFields||[]);const primary=pages[0];delete result.sourceConflicts;
  // AI may rewrite prose, but must not silently replace concrete source values.
  if(baseline&&result.aiStatus==='ready')for(const key of fields){if(baseline[key]&&result[key]&&fold(baseline[key])!==fold(result[key])){issues.push({field:key,reason:'La interpretación difiere del dato extraído de la fuente; se conserva la fuente.'});result[key]=baseline[key]}}
  if(baseline&&result.aiStatus==='ready'){
