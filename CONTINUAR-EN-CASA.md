@@ -106,3 +106,15 @@ resolver diferencias sin revisar el trabajo local.
 GitHub todavía NO despliega la app en los móviles. Esa conexión se hará después
 de implementar y probar la sincronización. El ordenador original no necesita
 seguir encendido para que desarrolles en casa con el clon local.
+
+## Verificación del PC de casa — 28/10/2026
+
+- Windows 11 (compilación 26200). Código recuperado desde origin/main, commit 59f6ae3; carpeta inicialmente sin archivos de trabajo ni commits locales.
+- Node 24.22.1 y npm 11.19.1 instalados en C:\Program Files\nodejs. La terminal de Codex no incluía npm en PATH; se usó la ruta instalada. Fuera de Codex, abrir una terminal nueva si no reconoce npm.cmd.
+- Instalación npm y reinstalación npm ci verificadas. Conservar package-lock.json (v3, URLs del registro npm e integridades). Para próximas instalaciones usar npm.cmd ci.
+- pdfjs-dist actualizado de 5.6.205 a 6.4.299 por GHSA-hq66-cqwq-w95j; npm informa cero vulnerabilidades. Extracción de texto de PDF sintético comprobada con el lector real.
+- Pasan 43 pruebas unitarias y las baterías browser-cloud, browser-v15 y browser-maps. Edge instalado; lector dinámico real comprobado con contenido JavaScript sintético. Las pruebas de nube siguen simuladas.
+- El aislamiento de Codex impide acceso normal al servidor y arranque de Edge: ejecutar el servidor y las pruebas con el permiso correspondiente fuera de ese aislamiento. No es un fallo de la app ni requiere modificar su seguridad.
+- GET /api/status: configured=false. No hay IA activa. Supabase /auth/v1/settings: HTTP 200 con la configuración pública. Pendiente verificar en este navegador la cuenta real desde Ajustes; no repetir migración, autorización ni copia inicial.
+- git push --dry-run origin main completado correctamente. Identidad Git configurada. No se trasladaron sesiones del PC anterior.
+- Próximo arranque: doble clic en ABRIR-APP.cmd, mantener la ventana abierta y abrir http://localhost:4173/. La colección del nuevo navegador puede estar vacía.

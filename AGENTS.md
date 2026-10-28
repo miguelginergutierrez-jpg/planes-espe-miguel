@@ -271,3 +271,7 @@ No versionar `.env`, claves, contraseñas, tokens, perfiles de navegador, copias
 ### Alcance histórico de la tarea que creó este archivo
 
 En la tarea inicial de documentación se autorizó crear únicamente `AGENTS.md` en la raíz, sin modificar archivos existentes, instalar dependencias, cambiar datos de la app ni publicar commits. Después se autorizó y realizó la revisión del extractor de versión 15 descrita arriba. Después se autorizó Supabase y el traslado a casa, incluido commit y push. La sincronización automática aún no está implementada. Consultar git para el estado de publicación; no tratar esta descripción histórica como prohibición de los cambios autorizados después.
+
+## Actualización desde casa — 28/10/2026
+
+Consultar la verificación del PC de casa al final de CONTINUAR-EN-CASA.md: Node 24.22.1, npm 11.19.1, Edge, instalación limpia y npm ci verificados. Ya existe package-lock.json; usar npm.cmd ci. pdfjs-dist ahora es 6.4.299 por corrección de seguridad; extracción PDF sintética y 43 pruebas pasan. Pasan también las tres baterías de navegador y el lector dinámico real con recurso sintético. IA desactivada según /api/status. Supabase público accesible (HTTP 200); el acceso de la cuenta real en el navegador nuevo sigue pendiente del usuario. Las referencias anteriores a falta de npm/lockfile son históricas. No hay sincronización automática todavía.
