@@ -118,3 +118,9 @@ seguir encendido para que desarrolles en casa con el clon local.
 - GET /api/status: configured=false. No hay IA activa. Supabase /auth/v1/settings: HTTP 200 con la configuración pública. Pendiente verificar en este navegador la cuenta real desde Ajustes; no repetir migración, autorización ni copia inicial.
 - git push --dry-run origin main completado correctamente. Identidad Git configurada. No se trasladaron sesiones del PC anterior.
 - Próximo arranque: doble clic en ABRIR-APP.cmd, mantener la ventana abierta y abrir http://localhost:4173/. La colección del nuevo navegador puede estar vacía.
+
+### Apertura sencilla desde el Escritorio
+
+En este equipo se prepara un acceso directo «Planes Espe y Miguel» en el Escritorio. Abre el navegador y arranca el servidor en segundo plano si hace falta. No requiere mantener una terminal visible. El servidor se detiene al apagar/reiniciar Windows; el siguiente doble clic vuelve a arrancarlo. Los archivos ABRIR-APP.cmd y ABRIR-APP.ps1 permiten lo mismo desde la carpeta del proyecto. El acceso directo es local a este PC.
+
+El usuario confirmó en la interfaz «Conexión verificada» en el navegador de casa: acceso real a Supabase comprobado, sin repetir migración ni copia inicial.
