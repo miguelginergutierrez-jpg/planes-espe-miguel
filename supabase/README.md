@@ -1,3 +1,14 @@
+## Prueba de adjunto real en curso — 28/10/2026
+
+El usuario mostró Chrome en localhost:4173 con estado «Sincronizado». Se añadió,
+desde el navegador integrado de Codex, `prueba-documento-compartido.txt` a la ficha
+separada «Prueba de sincronización» y se guardó. Ajustes volvió a mostrar
+«Sincronizado». El archivo es texto sintético, código PLANES-2810, SHA-256
+36af22dfd357f4a69b4afb5c6fe6b8c2b21ea5ae0aa6b7959623da1c18b5c151.
+La descarga y lectura en Chrome independiente siguen pendientes de confirmación.
+La herramienta de control nativo no puede verificar la URL de Chrome, así que
+esa comprobación la realiza el usuario; no afirmar que ya se ha completado.
+No se modificó la ficha anterior ni se borraron datos.
 ## Verificación real — 28/10/2026, después de activar
 
 La actualización 002 se aplicó desde el SQL Editor del proyecto existente con
