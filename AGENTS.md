@@ -1,3 +1,22 @@
+## Sincronización privada preparada — 28/10/2026
+
+La instalación de casa está verificada, incluido acceso real de la primera cuenta.
+El acceso directo del Escritorio abre la app sin terminal visible. Rama actual de
+trabajo: codex/sincronizacion-privada (parte de los commits de preparación de casa).
+
+Se implementaron sesión renovable, sincronización explícitamente activable de
+altas/cambios/borrados, revisión de conflictos, documentos remotos verificados y
+caché, Web Locks y diario recuperable. Mantiene la colección y las claves de datos.
+No hay cambios de RLS ni nuevos miembros. Falta aplicar únicamente la migración
+aditiva **002_sync_deletions.sql**, no repetir 001. El panel Supabase pide login
+administrativo al usuario; se ha abierto la página oficial. La activación real y
+la prueba con la nube quedan pendientes. No confundir pruebas simuladas con reales.
+
+68 pruebas unitarias y tres baterías Edge pasan. Detalles actuales y límites en
+supabase/README.md. No hay publicación/PWA, y la sincronización no está activada
+por defecto. Borrados con marca remota: no purgar las marcas ni los archivos
+remotos, pues los dispositivos desconectados necesitan detectar esos borrados.
+Pendiente publicación gratuita y adaptación del extractor, luego iPhone/Android.
 # Planes Espe & Miguel — contexto e instrucciones de continuidad
 
 Actualizado el **28 de octubre de 2026**. Leer este estado antes de las notas históricas. Para preparar otro equipo, seguir **CONTINUAR-EN-CASA.md**.

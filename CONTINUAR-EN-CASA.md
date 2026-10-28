@@ -124,3 +124,10 @@ seguir encendido para que desarrolles en casa con el clon local.
 En este equipo se prepara un acceso directo «Planes Espe y Miguel» en el Escritorio. Abre el navegador y arranca el servidor en segundo plano si hace falta. No requiere mantener una terminal visible. El servidor se detiene al apagar/reiniciar Windows; el siguiente doble clic vuelve a arrancarlo. Los archivos ABRIR-APP.cmd y ABRIR-APP.ps1 permiten lo mismo desde la carpeta del proyecto. El acceso directo es local a este PC.
 
 El usuario confirmó en la interfaz «Conexión verificada» en el navegador de casa: acceso real a Supabase comprobado, sin repetir migración ni copia inicial.
+
+## Continuación: sincronización privada (preparada, pendiente de activar)
+
+Se ha desarrollado en codex/sincronizacion-privada. Seguir el estado actual al
+principio de supabase/README.md. Falta entrar al panel del proyecto existente para
+aplicar solo 002_sync_deletions.sql y después verificar la sincronización real.
+No se necesita el ordenador anterior. No repetir 001 ni la copia inicial.

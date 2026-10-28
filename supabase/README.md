@@ -1,3 +1,70 @@
+# Sincronización privada — estado vigente 28/10/2026
+
+Implementación preparada en la rama codex/sincronizacion-privada. Falta aplicar
+la actualización **002_sync_deletions.sql** en el proyecto existente y verificar
+el flujo real desde la app. No ejecutar de nuevo 001, crear el proyecto, cambiar
+RLS, autorizar de nuevo al primer miembro ni repetir la copia inicial.
+
+- `cloud-session.js`: sesión renovable por Supabase Auth, persistida solo en este
+  navegador. No guarda contraseña ni correo. Renovación coordinada entre pestañas
+  mediante Web Locks. Desconectar elimina la sesión de este navegador y pausa la
+  sincronización; no borra fichas ni cierra sesiones de otros dispositivos.
+- `cloud-sync.js`: comparación de tres versiones (base conocida, local, remota),
+  altas con POST y cambios/borrados con PATCH condicionado por `revision`.
+  Nunca hace upsert ni DELETE. Una respuesta fallida nunca equivale a lista vacía.
+- `deleted_at` mantiene una marca para impedir que un móvil desconectado resucite
+  fichas borradas. La ficha deja de estar en la colección activa. La fila técnica
+  conserva su payload; no se ha implementado purga definitiva ni recogida de
+  documentos remotos huérfanos. Revisar almacenamiento antes de uso intensivo.
+- Documentos en rutas SHA-256 inmutables, verificados tras subir/descargar. La
+  caché es IndexedDB; `cloudPath` sobrevive normalización y exportación. Se
+  mantienen los límites existentes (10 MB/archivo, 50 MB/ficha, 60 MB/colección).
+- `cloud-controller.js`: activación explícita por navegador, envío tras guardar,
+  consulta cada 30 segundos mientras esté visible y al volver/encontrar red.
+  Usa exclusión entre pestañas, comprueba cambios durante peticiones y mantiene
+  un diario local para recuperar un cierre o fallo de cuota a mitad del guardado.
+- Ajustes permite activar, pausar, desconectar y revisar conflictos. Nunca se
+  elige automáticamente un ganador para ediciones simultáneas. Las dos versiones
+  se pueden consultar antes de elegir. Los conflictos se recalculan al conectar.
+- Una sesión temporal anterior requiere iniciar sesión de nuevo para obtener
+  renovación; no se recuperan contraseñas ni sesiones del PC anterior.
+
+## Aplicar 002 (único paso de esquema nuevo)
+
+Abrir SQL Editor del proyecto existente y ejecutar íntegramente
+`migrations/002_sync_deletions.sql`. Es una operación aditiva e idempotente: añade
+una columna, no modifica datos existentes, permisos ni miembros. Tras confirmar
+éxito, recargar la app, iniciar sesión y activar desde Ajustes. Si falta la columna,
+la activación falla antes de escribir fichas. El administrador debe entrar en el
+panel por su cuenta; no pedir credenciales administrativas en el chat.
+
+## Validación y límites
+
+68 pruebas unitarias: extracción previa, copia inicial, sincronización, conflictos,
+condiciones de revisión, fallos de red, adjuntos corruptos, renovación de sesión
+y recuperación del diario. `npm.cmd run test:cloud` prueba dos navegadores Edge
+móviles aislados: activación, adjunto, edición por interfaz, renovación, conflicto,
+resolución y borrado. `browser-v15` y `browser-maps` también pasan.
+Todo ello usa datos sintéticos. Pendiente: actualización 002 real, sincronización
+real en dos navegadores, permisos de segundo miembro y cuenta ajena contra RLS.
+El primer miembro sí verificó acceso real en el navegador de casa antes del cambio.
+
+No hay aún publicación ni PWA. iPhone y Android no reciben todavía una app
+instalada. El extractor sigue necesitando Node/Playwright local; estudiar su
+alojamiento antes de prometer extracción remota gratuita.
+
+El plan Free de Supabase permite 0 USD/mes con límites (500 MB de base, 1 GB de
+archivos y 5 GB de salida; puede pausar tras una semana de inactividad). No se
+contrató ni cambió ningún plan. La consulta actual descarga la colección completa;
+optimizar lectura incremental antes de colecciones grandes/uso continuo para
+reducir transferencia. No prometer coste cero sin límites.
+Fuentes: https://supabase.com/pricing y
+https://supabase.com/docs/guides/auth/sessions (consultadas 28/10/2026).
+
+---
+
+Las notas siguientes describen las fases anteriores; el estado de arriba prevalece.
+
 # Preparación de sincronización — pendiente de activación
 
 ## Confirmación posterior y traslado de equipo

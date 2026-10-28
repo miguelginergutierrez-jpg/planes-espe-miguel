@@ -1,0 +1,34 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {cycle,digest}=require('../cloud-sync.js');
+const clone=x=>structuredClone(x),idea=(id='one',title='Restaurante')=>({id,title,kind:'restaurant',attachments:[]});
+function backend(){const rows=new Map(),files=new Map(),writes=[];let fail=false,race=false,lost=false;
+ return {rows,files,writes,fail:()=>fail=true,race:()=>race=true,lost:()=>lost=true,request:async(path,o={})=>{
+  if(fail)throw TypeError('offline');const u=new URL(path,'https://test');
+  if(path.startsWith('/storage/')){const key=path.split('/planes-documents/')[1];if(o.method==='POST'){files.set(key,o.body);writes.push(path);return new Response('{}')}return files.has(key)?new Response(files.get(key)):new Response('',{status:404})}
+  if(!o.method)return Response.json([...rows.values()].slice(Number(u.searchParams.get('offset')),Number(u.searchParams.get('offset'))+500));
+  writes.push({path,o});const body=JSON.parse(o.body);let saved;
+  if(o.method==='POST'){if(rows.has(body.id))return new Response('',{status:409});saved={...body,revision:1};rows.set(body.id,saved)}
+  else{const id=u.searchParams.get('id').slice(3),revision=Number(u.searchParams.get('revision').slice(3)),old=rows.get(id);if(race){race=false;old.revision++;old.payload.title='Otro dispositivo'}if(old.revision!==revision)return Response.json([]);saved={...old,...body,revision:old.revision+1};rows.set(id,saved)}
+  if(lost){lost=false;throw Error('response lost')}return Response.json([saved]);
+ }}
+}
+function device(b,items=[]){let local=clone(items),base=[],files=new Map(),conflicts=[];return {
+ get items(){return local},get base(){return base},get conflicts(){return conflicts},files,
+ edit(items){local=clone(items)},run(extra={}){return cycle({items:local,base,request:b.request,getDocument:async id=>files.get(id),putDocuments:async fs=>fs.forEach(f=>files.set(f.id,f)),commit:(expected,next,nb,c)=>{assert.deepEqual(local,expected);local=next;base=nb;conflicts=c},...extra})}
+}}
+function remote(b,item,revision=1,deleted_at=null){b.rows.set(item.id,{id:item.id,payload:clone(item),revision,deleted_at})}
+test('sync uploads new records and second device downloads them',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();assert.deepEqual(c.items,a.items);assert.equal(b.rows.size,1)});
+test('sync propagates edits and deletion markers without DELETE',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([idea('one','Cambio')]);await a.run();await c.run();assert.equal(c.items[0].title,'Cambio');a.edit([]);await a.run();await c.run();assert.deepEqual(c.items,[]);assert.ok(b.rows.get('one').deleted_at);assert.ok(b.writes.every(w=>w.o.method!=='DELETE'))});
+test('two offline edits conflict and neither version is silently replaced',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([idea('one','A')]);c.edit([idea('one','B')]);await a.run();await c.run();assert.equal(c.items[0].title,'B');assert.equal(b.rows.get('one').payload.title,'A');assert.equal(c.conflicts.length,1)});
+test('offline edit against remote deletion conflicts rather than resurrects',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([]);await a.run();c.edit([idea('one','Offline')]);await c.run();assert.equal(c.conflicts.length,1);assert.ok(b.rows.get('one').deleted_at)});
+test('fresh browser with stale local copy cannot resurrect a deleted id',async()=>{const b=backend();remote(b,idea(),2,'2026-10-28T12:00:00Z');const a=device(b,[idea()]);await a.run();assert.equal(a.conflicts.length,1);assert.equal(b.writes.length,0)});
+test('initial different same id produces conflict',async()=>{const b=backend();remote(b,idea('one','Remota'));const a=device(b,[idea()]);await a.run();assert.equal(a.conflicts.length,1);assert.equal(b.writes.length,0)});
+test('network failure never commits empty collection',async()=>{const b=backend(),a=device(b,[idea()]);b.fail();await assert.rejects(a.run(),/offline/);assert.equal(a.items.length,1);assert.equal(a.base.length,0)});
+test('HTTP 401 and malformed reads do not write local or remote',async()=>{for(const response of [new Response('',{status:401}),Response.json({}),Response.json([{id:'invalid'}])]){let commits=0;await assert.rejects(cycle({items:[idea()],request:async()=>response,commit:()=>commits++}));assert.equal(commits,0)}});
+test('revision condition stops an edit racing with another device',async()=>{const b=backend(),a=device(b,[idea()]);await a.run();a.edit([idea('one','Local')]);b.race();await a.run();assert.equal(a.conflicts.length,1);assert.equal(b.rows.get('one').payload.title,'Otro dispositivo');assert.equal(a.items[0].title,'Local')});
+test('lost upload response is idempotent on retry',async()=>{const b=backend(),a=device(b,[idea()]);b.lost();await assert.rejects(a.run(),/response lost/);await a.run();assert.equal(a.conflicts.length,0);assert.equal(b.rows.size,1);assert.equal(b.writes.length,1)});
+test('missing known remote row is not interpreted as a deletion',async()=>{const b=backend(),a=device(b,[idea()]);await a.run();b.rows.clear();await assert.rejects(a.run(),/sin marca/);assert.equal(a.items.length,1)});
+test('verified attachments upload and download between two devices',async()=>{const b=backend(),item=idea();item.attachments=[{id:'doc',name:'menu.txt',size:4,type:'text/plain'}];const a=device(b,[item]),c=device(b);a.files.set('doc',{id:'doc',name:'menu.txt',blob:new Blob(['menu'])});await a.run();await c.run();assert.equal(await c.files.get('doc').blob.text(),'menu');assert.match(c.items[0].attachments[0].cloudPath,/^sync\//)});
+test('missing local file prevents uploading incomplete record',async()=>{const b=backend(),item=idea();item.attachments=[{id:'missing',size:4}];const a=device(b,[item]);await assert.rejects(a.run(),/Falta un documento/);assert.equal(b.rows.size,0)});
+test('corrupt remote attachment prevents replacing local collection',async()=>{const b=backend(),item=idea();const hash=await digest(new Blob(['menu']));item.attachments=[{id:'doc',name:'menu',size:4,cloudPath:'sync/'+hash}];remote(b,item);b.files.set('sync/'+hash,new Blob(['evil']));const a=device(b);await assert.rejects(a.run(),/No coincide/);assert.deepEqual(a.items,[]);assert.deepEqual(a.base,[])});
+test('old migration cloudPath metadata does not create false conflict',async()=>{const b=backend(),item=idea(),hash=await digest(new Blob(['menu']));item.attachments=[{id:'doc',name:'menu',size:4}];const remoteItem=clone(item);remoteItem.attachments[0].cloudPath='initial/'+hash;remote(b,remoteItem);b.files.set('initial/'+hash,new Blob(['menu']));const a=device(b,[item]);await a.run();assert.equal(a.conflicts.length,0);assert.equal(b.writes.length,0);assert.match(a.items[0].attachments[0].cloudPath,/^initial\//)});
