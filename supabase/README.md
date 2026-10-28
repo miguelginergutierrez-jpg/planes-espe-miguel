@@ -1,3 +1,17 @@
+## Verificación real — 28/10/2026, después de activar
+
+La actualización 002 se aplicó desde el SQL Editor del proyecto existente con
+resultado «Success. No rows returned». No se repitió 001 ni se cambiaron RLS o
+miembros. El acceso de la app se renovó y se activó la sincronización en el
+navegador de casa; Ajustes muestra «Sincronizado».
+
+Se comprobó la descarga real de la ficha anterior (plan sin fecha, estado Hecho;
+visible en Agenda al elegir Todos). Se creó aparte una ficha «Prueba de
+sincronización», fecha 2030-10-30, y se comprobó por una consulta SELECT en el
+panel que llegó automáticamente a Supabase (revision 1), y que una edición de notas desde la app elevó la revisión a 2. La ficha original se
+conserva. No se ha realizado ninguna prueba de borrado sobre datos reales.
+Todavía están pendientes la prueba real con un segundo navegador independiente,
+adjuntos reales, segundo miembro y Android. Publicación/PWA siguen pendientes.
 # Sincronización privada — estado vigente 28/10/2026
 
 Implementación preparada en la rama codex/sincronizacion-privada. Falta aplicar

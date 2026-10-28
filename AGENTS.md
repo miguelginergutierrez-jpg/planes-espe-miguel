@@ -1,3 +1,13 @@
+## Activación real completada — 28/10/2026
+
+002 aplicada con éxito desde SQL Editor. Sincronización activada y estado
+«Sincronizado» en el navegador de casa. Descarga real de la ficha anterior
+verificada (Agenda, estado Hecho, filtro Todos); alta automática real de una
+ficha separada de prueba confirmada por SELECT en Supabase. No se tocó la ficha
+anterior ni se probó borrar datos reales. Ver detalles actuales en supabase/README.md.
+Pendientes: segundo navegador independiente, adjuntos reales, segundo miembro,
+publicación gratuita/PWA e iPhone/Android. Las notas de abajo que dicen que falta
+002 o activar en el primer navegador son anteriores a esta comprobación.
 ## Sincronización privada preparada — 28/10/2026
 
 La instalación de casa está verificada, incluido acceso real de la primera cuenta.
