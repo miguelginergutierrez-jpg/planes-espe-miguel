@@ -1,0 +1,20 @@
+{
+  "provider": "render",
+  "workspace_name": "My Workspace",
+  "workspace_id": "tea-dbh66fom7kps73dcvvfg",
+  "service_id": "srv-dbh68ptg1s2s73d1ju00",
+  "initial_deploy_id": "dep-dbh68qlg1s2s73d1k040",
+  "source_branch": "codex/publicacion-movil",
+  "source_commit": "45578cf688328ff948f53d85830dfd15821e7486",
+  "region": "frankfurt",
+  "plan": "free",
+  "dashboard_url": "https://dashboard.render.com/web/srv-dbh68ptg1s2s73d1ju00",
+  "initial_status": "building",
+  "url": "https://planes-espe-miguel.onrender.com",
+  "latest_verified_deploy_id": "dep-dbh6bqc9v7es739upt3g",
+  "latest_verified_commit": "51d0d306025205908840cc56e589bbc7c65facef",
+  "verified_status": "live",
+  "dynamic_reader": "ready",
+  "hosted_attachment_sha256": "36af22dfd357f4a69b4afb5c6fe6b8c2b21ea5ae0aa6b7959623da1c18b5c151",
+  "last_verified_date": "2026-10-28"
+}

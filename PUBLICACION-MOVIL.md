@@ -1,6 +1,38 @@
+# Resultado verificado — 28/10/2026
+
+URL real: https://planes-espe-miguel.onrender.com
+Render confirma «Deploy succeeded | Live», plan Free. Versión de código 51d0d30,
+despliegue dep-dbh6bqc9v7es739upt3g. Los identificadores completos están en
+render-deployment.json. Auto-deploy On Commit comprobado con dos actualizaciones.
+Los commits solo documentales posteriores usan [skip render] para no gastar builds.
+
+Verificaciones exteriores: HTTPS y /healthz 200; /api/status authRequired=true,
+configured=false y dynamicReader.state=ready. Peticiones sin sesión o con token
+sintético rechazadas (401). .env, .git, fuentes del servidor y lockfile no se sirven.
+Manifiesto e iconos accesibles. No hay IA activa ni claves de pago configuradas.
+
+El usuario introdujo la contraseña de la app en la dirección publicada. Se activó
+allí la sincronización y se observó «Sincronizado», la ficha técnica remota y su
+adjunto. Se descargó el TXT desde la web HTTPS y su SHA-256 coincide exactamente
+con el original (36af22dfd357f4a69b4afb5c6fe6b8c2b21ea5ae0aa6b7959623da1c18b5c151).
+
+Lectura autenticada real comprobada desde el editor con https://example.org/,
+sin guardar cambios: devolvió un resultado con aviso de descripción/precio no
+publicados. Un primer intento falló durante las actualizaciones; la repetición
+tras el despliegue final terminó correctamente. Se descartó solo esa edición de
+prueba. Las fichas existentes siguen intactas.
+
+Pendiente intervención del usuario: abrir la URL en Safari del iPhone, iniciar
+sesión de la app y comprobar la colección; después Compartir → Añadir a pantalla
+de inicio. No dar la instalación en iPhone ni el Android por verificados todavía.
+No es necesario tener el PC encendido. El plan Free puede tardar alrededor de un
+minuto en despertar tras inactividad y tiene cuotas: no prometer disponibilidad
+inmediata o gratuidad sin límites. No se contrató un plan de pago.
+
+---
 # Publicación móvil
 
-Estado: preparada localmente, sin servicio remoto creado todavía.
+Estado: publicado y verificado en https://planes-espe-miguel.onrender.com.
 
 ## Opción elegida y coste
 
@@ -55,7 +87,11 @@ se aplican al cerrar y abrir las copias. Con red, los archivos se consultan al
 servidor; sin red se utiliza la interfaz almacenada. Esto no asegura extracción
 sin conexión ni que archivos nunca descargados estén disponibles sin Internet.
 
-## Pasos pendientes de despliegue
+## Servicio creado (28/10/2026)
+
+Workspace My Workspace (único espacio observado), plan Free, Frankfurt, Docker, rama codex/publicacion-movil, auto-deploy On Commit y health /healthz. Identificadores en render-deployment.json. El código inicial es 45578cf. GitHub quedó limitado solo al repositorio de esta app. No se configuraron tarjeta, base de datos ni secretos nuevos. La integración Render está instalada pero no expone herramientas MCP en esta sesión; creación realizada desde el Dashboard oficial.
+
+## Pasos de despliegue (histórico y verificaciones pendientes)
 
 1. Se encontró y sugirió la integración Render. Preferirla cuando el usuario la conecte; comprobar sus herramientas y cuenta antes de crear servicios. Si no ofrece la capacidad necesaria, entrar en dashboard.render.com con la cuenta del usuario. No solicitar
    contraseñas/tokens por el chat. Si hace falta crear cuenta o aceptar términos,
@@ -72,8 +108,8 @@ sin conexión ni que archivos nunca descargados estén disponibles sin Internet.
 
 ## Pruebas locales
 
-76 pruebas de Node y browser-pwa, browser-cloud, browser-maps pasan. PWA se ha
+78 pruebas de Node y browser-pwa, browser-cloud, browser-maps pasan. PWA se ha
 probado con Edge aislado: caché de interfaz, colección sin red y exclusión de API.
 No hay Docker instalado en este PC: la imagen Linux y Chromium de producción
-solo se podrán validar en el primer build/despliegue. No confundir estas pruebas
+se verificaron finalmente en Render: el build Linux terminó bien y /api/status informa dynamicReader.state=ready, tras ejecutar JavaScript sintético con Chromium y sandbox. No confundir estas pruebas
 locales con una publicación o una prueba en iPhone.

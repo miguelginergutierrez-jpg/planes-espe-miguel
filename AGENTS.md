@@ -1,3 +1,24 @@
+## Publicación real completada — 28/10/2026
+
+App publicada en https://planes-espe-miguel.onrender.com, Render Free, Frankfurt,
+Docker, usuario sin privilegios. Deploy final Live de 51d0d30. Auto-deploy On
+Commit desde codex/publicacion-movil probado. GitHub limitado solo a este repo.
+Consultar PUBLICACION-MOVIL.md y render-deployment.json antes de operar Render:
+reutilizar el servicio existente, no crear otro. MCP Render no expuesto en esta
+sesión; operaciones realizadas con el panel oficial (workspace My Workspace).
+
+Verificados HTTPS, sesión real, sincronización y descarga de adjunto idéntico al
+original desde la dirección remota. Lector autenticado real probado sin guardar
+cambios. /api/status: authRequired=true, configured=false, dynamicReader.state=ready.
+Chromium ejecutó JavaScript sintético con sandbox dentro de Linux. 78 pruebas
+unitarias; browser-hosting añade captura privada real de navegador con backend
+sintético, además de pwa/cloud/maps/v15. No se cambiaron RLS ni datos existentes.
+
+Pendiente: prueba e instalación por el usuario en Safari/iPhone, segundo miembro
+y Android. El PC puede apagarse para usar la web publicada. Aclarar límites Free
+(arranque lento tras inactividad y cuotas). Mantener el presupuesto 0 €, no
+contratar planes ni añadir claves de IA. Commits documentales: [skip render].
+Las notas siguientes que dicen «sin publicar» son históricas.
 ## Publicación móvil preparada — 28/10/2026
 
 Rama codex/publicacion-movil. Ver PUBLICACION-MOVIL.md: Docker para Render Free,
