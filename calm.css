@@ -34,3 +34,5 @@ textarea.sheet-title{min-height:0;resize:none;overflow:hidden;line-height:1.25}.
 .card-visibility{right:5px;top:5px;width:34px;height:34px}.card-delete{right:5px;top:auto;bottom:5px;width:34px;height:34px}.cards .card-wrap .card .body{padding-right:46px;min-height:94px}.card-visibility svg,.card-delete svg{width:16px;height:16px}
 
 .session-label{display:block;font-size:11px;color:var(--muted);max-width:250px;line-height:1.5}.session-details li{gap:12px}.session-details li>span:last-child{white-space:nowrap}
+
+.cloud-connect{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}.cloud-connect h3{font-size:16px}.cloud-connect form{display:grid;gap:12px}.cloud-connect form[hidden]{display:none}.cloud-connect label{display:grid;gap:6px;font-size:13px}.cloud-connect input{width:100%;box-sizing:border-box}.cloud-connect [role=status]{line-height:1.5}

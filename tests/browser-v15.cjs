@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const {chromium}=require(require('../reader-runtime.cjs').resolve('playwright'));
 const origin='http://localhost:4173';
 const url='https://agenda.example/exposiciones/natura';
-const result={kind:'plan',title:'Natura',workTitle:'Natura',activityType:'Exposición',venue:'Museu de Prova',url,city:'Barcelona',date:'2030-10-14',endDate:'2030-12-08',time:'Lunes a sábado: 09:00–19:30; domingos: 09:00–14:30',price:'Entrada gratuita',summary:'Exposición sobre las relaciones entre el arte y la naturaleza.',image:origin+'/logo-espe-miguel.jpg',address:'Carrer de Prova, 107, Barcelona',occurrences:[],scheduleMode:'period',analysisVersion:'15',summarySource:'extract',aiStatus:'unconfigured',verification:{status:'review',checkedAt:'2026-10-26T12:00:00Z',issues:[{field:'time',reason:'El recinto publica horarios distintos en sus páginas; confirmar antes de la visita.'}],sources:[url]},notice:'Hay diferencias entre fuentes o datos pendientes de revisar.'};
+const result={kind:'plan',title:'Natura',workTitle:'Natura',activityType:'Exposición',venue:'Museu de Prova',url,city:'Barcelona',date:'2030-10-14',endDate:'2030-12-08',time:'Lunes a sábado: 09:00–19:30; domingos: 09:00–14:30',price:'Entrada gratuita',summary:'Exposición sobre las relaciones entre el arte y la naturaleza.',image:origin+'/logo-espe-miguel.jpg',address:'Carrer de Prova, 107, Barcelona',occurrences:[],scheduleMode:'period',analysisVersion:'16',summarySource:'extract',aiStatus:'unconfigured',verification:{status:'review',checkedAt:'2026-10-26T12:00:00Z',issues:[{field:'time',reason:'El recinto publica horarios distintos en sus páginas; confirmar antes de la visita.'}],sources:[url]},notice:'Hay diferencias entre fuentes o datos pendientes de revisar.'};
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:'msedge'});
  try{
@@ -20,7 +20,7 @@ const result={kind:'plan',title:'Natura',workTitle:'Natura',activityType:'Exposi
   assert.match(await page.locator('[name="summary"]').inputValue(),/arte y la naturaleza/);
   assert.match(await page.locator('#analysisStatus').innerText(),/horarios distintos/);
   await page.locator('#editForm button[type="submit"]').click();await page.reload();
-  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('lo-nuestro-v1'))[0].analysisVersion),'15');
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('lo-nuestro-v1'))[0].analysisVersion),'16');
   console.log('PASS: capture, populated fields, persistent source-conflict warning, save/reload.');
 
   await page.evaluate(record=>localStorage.setItem('lo-nuestro-v1',JSON.stringify([record])),{id:'legacy',kind:'buy',title:'Portal antiguo',url,image:'https://agenda.example/undefined',analysisVersion:'14',status:'Pendiente',created:'2026-10-26T10:00:00Z',updated:'2026-10-26T10:00:00Z',notes:'Conservar esta nota',manualFields:['notes'],attachments:[]});

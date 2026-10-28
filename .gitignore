@@ -1,2 +1,11 @@
 .env
 .ai-config.json
+node_modules/
+.env.*
+!.env.example
+*.log
+test-results/
+playwright-report/
+.codex/
+planes-espe-miguel-*.json
+backups/

@@ -119,3 +119,11 @@ La redacción con IA sigue requiriendo OPENAI_API_KEY en el servidor. Sin esa co
 ## Revisión cultural, versión 14
 
 Consulta REVISION-EXTRACCION.md para el alcance contrastado, los errores corregidos y los casos aún pendientes. Las fichas guardan ahora las fuentes y el resultado de la revisión automática. No se confunde la consistencia de un dato con una garantía de exactitud de cualquier web.
+# Lectura de restaurantes de Google Maps (versión 16)
+
+Las fichas incluyen puntuación de Google, número de reseñas, teléfono, web, descripción y horario. El lector comprueba la identidad del local y señala los datos que no consigue verificar. Los precios generales y las fotos de comida no siempre están disponibles: consulta `REVISION-MAPS.md`. Reinicia el servidor y recarga la app después de actualizar el código; abrir una ficha antigua permite reanalizarla y Guardar conserva los cambios.
+# Continuar en otro ordenador
+
+Lee primero **[CONTINUAR-EN-CASA.md](CONTINUAR-EN-CASA.md)**. El contexto vigente está en **AGENTS.md**. Hay `package.json` para Node 24: `npm.cmd install`, `npm.cmd test` y `npm.cmd start`. También puedes arrancar con `ABRIR-APP.cmd` después de instalar Node. Las instrucciones antiguas de este archivo que dicen que no existe manifiesto o scripts están superadas.
+
+Supabase ya se configuró y se confirmó una copia real de una ficha de prueba. La sincronización automática sigue pendiente: abrir en otro PC no descarga aún esa ficha. No repetir la migración SQL inicial ni crear otro proyecto de Supabase.

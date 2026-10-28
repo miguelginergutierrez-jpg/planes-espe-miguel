@@ -1,6 +1,22 @@
 # Planes Espe & Miguel — contexto e instrucciones de continuidad
 
-Documento revisado el **26 de octubre de 2026**, contrastando la conversación de desarrollo y los archivos de esta raíz. Sirve de contexto para personas y agentes que continúen el proyecto desde otro equipo. No contiene datos de las fichas, documentos personales ni secretos.
+Actualizado el **28 de octubre de 2026**. Leer este estado antes de las notas históricas. Para preparar otro equipo, seguir **CONTINUAR-EN-CASA.md**.
+
+## Estado actual y siguiente trabajo
+
+- Se prepara traslado del desarrollo al PC de casa mediante GitHub. El usuario autoriza guardar y subir el código y contexto actuales. No se ha trasladado el historial íntegro de este chat ni sesiones del navegador.
+- La app sigue siendo local, adaptable al móvil. NO hay sincronización automática, PWA completa, despliegue público ni integración del menú Compartir.
+- Supabase ya está creado y la migración `supabase/migrations/001_shared_space.sql` está aplicada. Primera cuenta creada y autorizada en `planes_members`, slot 1. No repetir esos pasos.
+- Usuario confirmó conexión real y copia real de **1 ficha y 0 documentos**. Son datos de prueba; no necesita recuperar más, pero no es una orden para borrarlos. La copia JSON también se guardó en Drive.
+- `cloud-connect.js`: conexión desde Ajustes, validación de usuario, pertenencia y lectura. Token de acceso temporal en sessionStorage, sin guardar contraseña ni renovación.
+- `cloud-migrate.js`: copia inicial explícita; documentos en rutas inmutables SHA-256 y referencia `cloudPath` en payload remoto, verificación al finalizar, sin upserts ni borrado local. Reintentos idénticos no duplican. Una ficha remota distinta bloquea la copia. NO es sincronización diaria.
+- `supabase-public.json` contiene solo URL y clave publicable; servidor la sirve explícitamente. Las tablas tienen RLS y bucket privado. No almacenar contraseñas, correos/UID personales, tokens o claves secretas en Git.
+- Extractor versión **16** (cliente y servidor). `maps-reader.cjs` lee datos públicos de restaurantes de Maps con identidad comprobada; aún puede faltar precio general y foto de comida. Ver REVISION-MAPS.md.
+- Próxima tarea tras arrancar en casa: sesión duradera con renovación, sincronización de altas/cambios/borrados, conflictos usando revisión, documentos remotos y caché local. Los errores de red no deben convertirse en colección vacía ni borrar datos.
+- Después: alojamiento gratuito del cliente y adaptación del extractor Node/Playwright, PWA e iconos, compartir en Android y atajo iOS. Presupuesto objetivo 0 €/mes; límites gratuitos deben comunicarse. El Android de Esperanza se probará cuando esté disponible.
+- Sin perfiles visibles ni selector de usuario; el acceso privado ya fue aceptado para las dos personas. Mantener una misma colección. Guiar al usuario con pasos pequeños, no es técnico.
+- Hay `package.json` con Node 24.x y versiones directas fijadas de Playwright/PDF. Instalación en otro equipo: `npm.cmd install`, pruebas `npm.cmd test`, arranque `npm.cmd start`. No hay lockfile aún: este PC usa runtime de Codex sin npm. Versiones verificadas disponibles en npm; falta probar instalación limpia en casa.
+- Pruebas: 43 casos unitarios; `tests/browser-cloud.cjs` prueba móvil aislada de acceso/copia/reintento con adjunto, `tests/browser-maps.cjs` restaurantes. Las respuestas de nube son simuladas en pruebas. Escritura real confirmada solo de una ficha sin adjuntos.
 
 ## 1. Objetivo y necesidades
 
@@ -14,7 +30,7 @@ Barcelona representa toda Cataluña; Valencia, toda la Comunitat Valenciana. Tam
 
 Los archivos de la aplicación están directamente en la raíz de este repositorio. Las rutas antiguas de la conversación bajo `outputs/lo-nuestro` pertenecen al entorno anterior: no asumir que existen en un clon actual.
 
-No hay framework de interfaz, compilación, base de datos del servidor, manifiesto `package.json`, archivo de bloqueo de dependencias ni configuración de CI en esta revisión.
+No hay framework de interfaz ni compilación. Hay package.json con scripts y versiones directas fijadas, pero aún no lockfile ni CI. Supabase existe para la copia inicial; la operación diaria sigue local.
 
 | Archivo | Responsabilidad |
 |---|---|
@@ -36,9 +52,13 @@ No hay framework de interfaz, compilación, base de datos del servidor, manifies
 | `venue-data.cjs` | Información del recinto, separando museo, taquillas, biblioteca, aparcamiento y otros servicios. |
 | `verification.cjs` | Validaciones de fechas/horas, identidad de actividad, conflictos y evidencia de valores interpretados. |
 | `ai-reader.cjs` | Integración opcional con OpenAI Responses y esquema JSON; validación de la respuesta. |
-| `ABRIR-EN-MOVIL.cmd` | Lanzador Windows en modo LAN; contiene una ruta de runtime específica del equipo original y una alternativa con Node en PATH. |
+| `ABRIR-EN-MOVIL.cmd` | Lanzador Windows en modo LAN; usa Node en PATH, sin rutas específicas de este equipo. |
 | `CONFIGURAR-IA.cmd`, `CONFIGURAR-IA.ps1` | Configuración local de la clave mediante entrada protegida; no forman parte de la interfaz pública. |
 | `.env.example` | Nombres de variables y configuración de ejemplo, sin credenciales reales. |
+| `cloud-connect.js`, `cloud-migrate.js` | Acceso privado y copia inicial verificada a Supabase; todavía sin sincronización. |
+| `maps-reader.cjs` | Extracción pública de fichas de Google Maps. |
+| `package.json`, `ABRIR-APP.cmd` | Dependencias, scripts y arranque local portable. |
+| `CONTINUAR-EN-CASA.md` | Traslado de equipo y mensaje para retomar el desarrollo. |
 | `logo-espe-miguel.jpg` | Imagen original elegida por el usuario para la marca y las visitas de la pareja. |
 | `inicio.png`, `agenda.png`, `ficha.png`, `documentos.png` | Capturas de referencia, no pruebas ejecutables ni garantía del estado visual actual. |
 | `LEEME.md` | Guía de uso y notas acumuladas de versiones. |
@@ -65,7 +85,7 @@ Límites actuales relevantes: hasta seis páginas en la investigación, presupue
 - Campos principales: título, enlace, zona, resumen, imagen, estado, notas; en planes, recinto, tipo de actividad, dirección, fechas y horario; en restaurantes, cocina y precio; en compras, categoría, estancia, coste, tienda, plazo y medidas.
 - `occurrences` conserva sesiones individuales con fecha, hora, posible hora final, etiqueta, modalidad y enlace. No sustituirlas por un rango continuo que añada días sin función.
 - `manualFields`, `titleMode` y `cityMode` protegen elecciones manuales durante el reanálisis.
-- `analysisVersion`, `summarySource`, `aiStatus` y `verification` conservan información del análisis. La versión vigente es **15**. La revisión incluye fecha, fuentes e incidencias; no certifica exactitud universal.
+- `analysisVersion`, `summarySource`, `aiStatus` y `verification` conservan información del análisis. La versión vigente es **16**. La revisión incluye fecha, fuentes e incidencias; no certifica exactitud universal.
 - `priority` y `links` sobreviven como compatibilidad de datos antiguos; no reintroducir sus controles eliminados.
 - Existe coordinación entre pestañas del mismo origen mediante eventos de almacenamiento y comprobación de cambios antes de guardar. No es sincronización entre dispositivos.
 
@@ -138,14 +158,14 @@ La comprobación ocurre al abrir, volver a la app y periódicamente, y también 
 
 ## 6. Estado y próximos pasos
 
-La aplicación local y el extractor de versión **15** están implementados. La última revisión corrigió cinco enlaces aportados por el usuario: dos exposiciones de Guía Barcelona, Joan Verdú en Consorci Museus, Melanie Smith en IVAM y Moscas en Verdi. Se validaron las respuestas de la API local y la descarga de sus cinco imágenes. Las correcciones cubren estructuras reutilizables: títulos de contenido frente a marca, tablas de horarios, periodos en valenciano/catalán, imágenes responsivas, referencias JSON-LD de cine e información del recinto. No hay fechas o respuestas de esas obras fijadas en producción.
+La revisión cultural de versión **15** descrita a continuación es histórica; el estado vigente está al inicio de este archivo. La última revisión corrigió cinco enlaces aportados por el usuario: dos exposiciones de Guía Barcelona, Joan Verdú en Consorci Museus, Melanie Smith en IVAM y Moscas en Verdi. Se validaron las respuestas de la API local y la descarga de sus cinco imágenes. Las correcciones cubren estructuras reutilizables: títulos de contenido frente a marca, tablas de horarios, periodos en valenciano/catalán, imágenes responsivas, referencias JSON-LD de cine e información del recinto. No hay fechas o respuestas de esas obras fijadas en producción.
 
-El Centre del Carme publica horarios contradictorios en su pie de página y en Información general: se conserva la fuente inicial y se marca la discrepancia para revisión. En Verdi la cartelera retira las sesiones ya transcurridas; el 26 de octubre por la tarde quedaban 11 sesiones en la página consultada. Al abrir fichas antiguas se reanalizan con versión 15, se actualizan imágenes y clasificaciones automáticas erróneas y se conservan las elecciones manuales; Guardar persiste los cambios. Los avisos de contradicción siguen visibles tras guardar y reabrir.
+El Centre del Carme publica horarios contradictorios en su pie de página y en Información general: se conserva la fuente inicial y se marca la discrepancia para revisión. En Verdi la cartelera retira las sesiones ya transcurridas; el 26 de octubre por la tarde quedaban 11 sesiones en la página consultada. En esa revisión, las fichas antiguas se reanalizaban con versión 15, se actualizan imágenes y clasificaciones automáticas erróneas y se conservan las elecciones manuales; Guardar persiste los cambios. Los avisos de contradicción siguen visibles tras guardar y reabrir.
 
 Pendientes identificados, sin tratarlos como ya autorizados para implantar todos a la vez:
 
 1. Recuperar las baterías históricas completas de versiones anteriores. Ya hay 28 pruebas de regresión sintéticas en `tests/content-media.test.cjs` y `tests/extraction-v15.test.cjs`, más la comprobación móvil aislada `tests/browser-v15.cjs`; estas no sustituyen a todos los fixtures históricos.
-2. Incorporar una instalación reproducible: manifiesto, versiones fijadas, lockfile, exclusión de dependencias/artefactos locales y scripts de pruebas. Evitar depender del runtime de una instalación concreta de Codex.
+2. Completar instalación reproducible: ya hay manifiesto, versiones directas fijadas, ignore y scripts; faltan lockfile y comprobar instalación limpia con npm en casa.
 3. Seguir mejorando extracción, resúmenes, identidad de obras, cambios de sede y evidencias; mantener casos negativos y conflictos en las pruebas.
 4. Validar la integración real de IA si el usuario decide configurarla, sin solicitar credenciales en el chat ni confundirla con la suscripción de una herramienta.
 5. Diseñar persistencia compartida y sincronización entre dispositivos cuando se retome el escalado. No sustituir silenciosamente datos locales ni reintroducir perfiles de usuario.
@@ -164,7 +184,7 @@ node --version
 node server.cjs
 ```
 
-Abrir `http://localhost:4173/`. No abrir `index.html` mediante `file://`: la extracción depende de la API local. No hay `npm run dev`, build ni script `npm test` definidos actualmente.
+Abrir `http://localhost:4173/`. No abrir `index.html` mediante `file://`: la extracción depende de la API local. Ya existen npm start, npm test, npm run test:cloud y npm run test:restaurants. No hay build ni npm run dev.
 
 Para una red local privada:
 
@@ -178,13 +198,13 @@ También existe `ABRIR-EN-MOVIL.cmd` en Windows. Mantener el servidor encendido 
 
 El lector básico usa módulos estándar de Node. La lectura dinámica necesita `playwright` y un navegador; PDF necesita `pdfjs-dist`. `reader-runtime.cjs` busca paquetes resolubles localmente y después en una ruta relativa al ejecutable de Node. La existencia de paquetes en el equipo anterior no garantiza que estén en otro ordenador.
 
-Como preparación local provisional, sin manifiesto aún, pueden instalarse:
+Instalar las dependencias declaradas desde la raíz:
 
 ```powershell
-npm install --no-save --package-lock=false playwright pdfjs-dist
+npm.cmd install
 ```
 
-Este comando es una instrucción para preparar otro entorno, no una instalación realizada al crear este documento. No fija las versiones históricas: comprobar compatibilidad y priorizar el empaquetado reproducible pendiente. No ejecutar un `npm install` vacío suponiendo que hay un manifiesto.
+package.json fija las dos dependencias directas al runtime probado. Este PC no tiene npm disponible; la instalación limpia y la generación de lockfile quedan pendientes de validar en casa.
 
 El lector busca Edge en las ubicaciones habituales de Windows, permite configurar `PLANES_BROWSER_PATH`, o usa el navegador de Playwright. Si no hay Edge ni una ruta configurada:
 
@@ -192,7 +212,7 @@ El lector busca Edge en las ubicaciones habituales de Windows, permite configura
 npx playwright install chromium
 ```
 
-No agregar `node_modules` ni navegadores descargados a Git. **El `.gitignore` actual solo excluye `.env` y `.ai-config.json`**; no asumir que dependencias, copias, logs o archivos de trabajo están ignorados. Revisar siempre lo que se va a añadir.
+No agregar `node_modules` ni navegadores descargados a Git. El .gitignore excluye secretos, node_modules, logs, informes de pruebas, copias JSON con el nombre de exportación, backups y .codex. Otros nombres de copias personales deben mantenerse fuera del repositorio. Revisar siempre lo que se va a añadir.
 
 ### IA opcional
 
@@ -213,7 +233,7 @@ Get-ChildItem -File -Path *.js,*.cjs | ForEach-Object {
 }
 ```
 
-Esto solo comprueba sintaxis. Ejecutar las 28 pruebas de comportamiento sin red con `node --test tests/*.test.cjs`. Con el servidor encendido y Playwright/Edge disponibles, `node tests/browser-v15.cjs` comprueba captura, campos, guardado/recarga, avisos persistentes, reparación de fichas antiguas y protección de cambios manuales. Usa un contexto nuevo con respuestas sintéticas; no lee el almacenamiento real.
+Esto solo comprueba sintaxis. Ejecutar las 43 pruebas de comportamiento sin red con `node --test tests/*.test.cjs`. Con el servidor encendido y Playwright/Edge disponibles, `node tests/browser-v15.cjs` comprueba captura, campos, guardado/recarga, avisos persistentes, reparación de fichas antiguas y protección de cambios manuales. Usa un contexto nuevo con respuestas sintéticas; no lee el almacenamiento real.
 
 Verificar también en un navegador aislado: captura, clasificación, detalle y edición, Guardar, recarga, zonas, visitas de varios días, sesiones, ocultar/borrar, adjuntos y exportación/importación. Usar registros sintéticos y fechas futuras o reloj fijado; nunca borrar o importar sobre el almacenamiento real del usuario para probar.
 
@@ -250,4 +270,4 @@ No versionar `.env`, claves, contraseñas, tokens, perfiles de navegador, copias
 
 ### Alcance histórico de la tarea que creó este archivo
 
-En la tarea inicial de documentación se autorizó crear únicamente `AGENTS.md` en la raíz, sin modificar archivos existentes, instalar dependencias, cambiar datos de la app ni publicar commits. Después se autorizó y realizó la revisión del extractor de versión 15 descrita arriba. El empaquetado reproducible, la sincronización y el push no se han realizado por ello.
+En la tarea inicial de documentación se autorizó crear únicamente `AGENTS.md` en la raíz, sin modificar archivos existentes, instalar dependencias, cambiar datos de la app ni publicar commits. Después se autorizó y realizó la revisión del extractor de versión 15 descrita arriba. Después se autorizó Supabase y el traslado a casa, incluido commit y push. La sincronización automática aún no está implementada. Consultar git para el estado de publicación; no tratar esta descripción histórica como prohibición de los cambios autorizados después.

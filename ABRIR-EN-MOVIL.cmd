@@ -1,9 +1,10 @@
 @echo off
 cd /d "%~dp0"
-set "APP_NODE=C:\Users\mginer\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe"
-if exist "%APP_NODE%" (
-  "%APP_NODE%" server.cjs --lan
-) else (
-  node server.cjs --lan
+where node >nul 2>nul
+if errorlevel 1 (
+  echo Instala Node.js 24 y vuelve a abrir este archivo.
+  pause
+  exit /b 1
 )
+node server.cjs --lan
 pause

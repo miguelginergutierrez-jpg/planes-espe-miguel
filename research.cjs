@@ -36,12 +36,16 @@ function candidates(page,idea){
  const unique=new Map();for(const item of [...translations,...found].sort((a,b)=>b.score-a.score))if(!unique.has(item.url))unique.set(item.url,item);return [...unique.values()];
 }
 async function research(url,{readPage,renderPage,analyze=AI.analyze,configured=AI.configuration().configured}={}){
- const result={...classify(url),analysisVersion:'15',summarySource:'extract',aiStatus:configured?'unavailable':'unconfigured'};
+ const result={...classify(url),analysisVersion:'16',summarySource:'extract',aiStatus:configured?'unavailable':'unconfigured'};
  const deadline=Date.now()+40000;const pages=[],visited=new Set([url]);let linkedRenders=0;
  async function load(target,role='primary',label=''){const remaining=deadline-Date.now();if(remaining<=0)throw Error('Tiempo agotado');const signal=AbortSignal.timeout(Math.min(12000,remaining));let timer;try{const page=await Promise.race([readPage(target,{signal}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Tiempo agotado')),Math.min(12000,remaining));timer.unref?.()})]);if(role!=='primary'&&renderPage&&linkedRenders<2&&Date.now()<deadline-5000&&/<script\b/i.test(page.html)&&!page.notice){const info=classify(page.url,page.html);if(['practical','detail','synopsis'].includes(role)&&(!info.summary||!info.price&&role==='practical'||pageText(page.html).text.length<500)){linkedRenders++;try{const rendered=await renderPage(page.url,{signal:AbortSignal.timeout(Math.min(9000,deadline-Date.now()))});if(pageText(rendered.html).text.length>=pageText(page.html).text.length)Object.assign(page,rendered)}catch{}}}return {...page,role,label}}finally{clearTimeout(timer)}}
  let primary;try{primary=await load(url)}catch{if(renderPage){try{primary={...await renderPage(url,{signal:AbortSignal.timeout(Math.min(14000,deadline-Date.now()))}),role:'primary',label:''}}catch{}}}
  if(!primary)return {...result,notice:'No se ha podido acceder al contenido. El enlace queda guardado para reintentar.',needsReview:true};
- Object.assign(result,classify(primary.url,primary.html),{url,analysisUrl:url,analysisVersion:'15'});
+ if(require('./maps-reader.cjs').isMaps(primary.url)){
+  try{return {...await require('./maps-reader.cjs').readMaps(primary,{readResource:require('./public-reader.cjs').readResource,signal:AbortSignal.timeout(Math.max(1,Math.min(12000,deadline-Date.now())))}),url,analysisUrl:url}}
+  catch{return {...result,url,analysisVersion:'16',kind:'inbox',image:'',summary:'',notice:'No se ha podido verificar la ficha pública de Google Maps. Conservamos el enlace para reintentar.',needsReview:true}}
+ }
+ Object.assign(result,classify(primary.url,primary.html),{url,analysisUrl:url,analysisVersion:'16'});
  if(renderPage&&!primary.rendered&&primary.format!=='calendar'&&primary.format!=='json'&&/(?:<script\b|itemscope)/i.test(primary.html)&&needsRendering(primary,result)&&Date.now()<deadline-8000){
   try{const rendered=await renderPage(primary.url,{signal:AbortSignal.timeout(Math.min(14000,deadline-Date.now()))});const info=classify(rendered.url,rendered.html);if(pageText(rendered.html).text.length>=pageText(primary.html).text.length){primary={...primary,...rendered};for(const [key,value]of Object.entries(info))if(value&&(!Array.isArray(value)||value.length))result[key]=value;result.url=url;result.analysisUrl=url;}}catch{}
  }

@@ -1,0 +1,108 @@
+# Continuar desde el ordenador de casa
+
+Estado preparado el 28 de octubre de 2026. No necesitas el móvil Android todavía.
+
+## 1. Recuperar el proyecto
+
+En casa instala GitHub Desktop, Node.js **24.x** (incluye npm) y la aplicación
+de escritorio con Codex. Usa tus cuentas habituales.
+
+En GitHub Desktop elige **File → Clone repository**, selecciona
+`miguelginergutierrez-jpg/planes-espe-miguel` y elige una carpeta local.
+Si ya lo habías clonado, selecciona ese repositorio y pulsa **Fetch origin** y
+después **Pull origin**. Si tienes cambios locales, consérvalos antes de actualizar.
+No necesitas que la ruta de casa coincida con la de este ordenador.
+
+Alternativa por terminal:
+
+```powershell
+git clone https://github.com/miguelginergutierrez-jpg/planes-espe-miguel.git
+cd planes-espe-miguel
+```
+
+## 2. Instalar y arrancar
+
+Abre una terminal en la carpeta del proyecto y ejecuta:
+
+```powershell
+node --version
+npm.cmd install
+npm.cmd test
+npm.cmd start
+```
+
+El primer comando debe mostrar `v24...`. Abre http://localhost:4173/ y mantén
+la terminal encendida. Para siguientes arranques puedes hacer doble clic en
+`ABRIR-APP.cmd`. Si aparece «conexión rechazada», comprueba que está arrancado.
+
+Playwright y el lector PDF se instalan mediante `package.json`, con versiones
+directas fijadas a las usadas aquí. En este PC solo estaba el runtime Node de
+Codex, sin npm: la instalación limpia con npm debe comprobarse en casa.
+Si no tienes Microsoft Edge, instala Chromium para el lector dinámico:
+
+```powershell
+npx.cmd playwright install chromium
+```
+
+Las pruebas móviles actuales usan Edge. En Windows conviene tener Edge instalado.
+Para probar la copia a nube sin tocar datos reales: `npm.cmd run test:cloud`.
+
+## 3. Retomar el desarrollo en Codex
+
+Añade/abre la carpeta clonada como proyecto local en Codex. Si este chat no
+aparece, crea uno nuevo **dentro de ese proyecto** y pega:
+
+> Continúa el proyecto Planes Espe & Miguel. Lee primero AGENTS.md,
+> CONTINUAR-EN-CASA.md y supabase/README.md, revisa git status y comprueba el
+> arranque y las pruebas. Ya se creó Supabase, se ejecutó la migración 001, se
+> autorizó mi cuenta y se verificó una copia real de una ficha de prueba sin
+> adjuntos. No repitas esos pasos. Los datos actuales son pruebas y no necesito
+> recuperar más fichas, pero no los borres sin motivo. El siguiente desarrollo
+> es la sincronización automática privada: sesión con renovación, cambios y
+> borrados compartidos, conflictos y documentos. Todavía no hay sincronización,
+> PWA ni despliegue. Quiero 0 € mensuales, iPhone para mí y Android para Esperanza;
+> su Android se probará más adelante. Guíame paso a paso, no soy técnico. No pidas
+> contraseñas ni claves secretas en el chat. Primero deja funcionando este PC.
+
+## 4. La conversación y los archivos son cosas distintas
+
+GitHub transporta el código y los documentos de contexto, no el historial de
+este chat. Estar en la misma cuenta no asegura que un chat local de Codex
+aparezca en el historial de ChatGPT/Work del otro equipo. Comprueba la sección
+Codex, la cuenta y el espacio de trabajo; si no aparece, usa el mensaje anterior.
+
+La documentación oficial distingue conversaciones, proyectos locales y acceso
+a archivos. Los chats existentes pueden seguir siendo locales; no se ha
+verificado una transferencia automática de este chat exacto. No hemos exportado
+el historial completo ni creado un enlace público para él. No copies toda la
+carpeta `.codex` a GitHub: puede contener sesiones y credenciales.
+
+Referencia consultada: https://learn.chatgpt.com/docs/projects
+
+## 5. Datos y acceso a Supabase
+
+- El proyecto de Supabase ya está en la nube: no se vuelve a crear en casa.
+- La configuración **pública** está en `supabase-public.json`; no es una clave
+  administrativa. Inicia sesión en la app con tu correo/contraseña de la app.
+- La sesión de este PC no se transfiere. No envíes la contraseña al nuevo chat.
+- La copia real confirmada contenía **1 ficha y 0 documentos**. Son pruebas.
+- El navegador de casa puede aparecer vacío: hoy la app NO descarga aún la
+  colección remota automáticamente. Esto no significa que se hayan perdido datos.
+- Si quieres recuperar las pruebas locales, descarga de Drive la copia JSON y
+  usa Ajustes → Importar copia. La copia de Drive puede ser anterior a la subida
+  a Supabase. No hace falta recuperarla para seguir desarrollando.
+- No vuelvas a ejecutar `001_shared_space.sql`: ya está aplicada. No vuelvas a
+  crear la misma cuenta ni a copiar fichas cambiadas sobre la nube sin revisar.
+- El logo y archivos de la aplicación viajan con GitHub. Los adjuntos personales,
+  claves y configuración de sesión no van al repositorio.
+
+## 6. Trabajar después desde ambos ordenadores
+
+Antes de empezar: Fetch/Pull. Al terminar: revisar cambios, Commit y Push.
+Actualizar AGENTS.md cuando cambien decisiones o estado. No editar simultáneamente
+la misma rama en ambos equipos sin actualizar. Nunca usar `reset --hard` para
+resolver diferencias sin revisar el trabajo local.
+
+GitHub todavía NO despliega la app en los móviles. Esa conexión se hará después
+de implementar y probar la sincronización. El ordenador original no necesita
+seguir encendido para que desarrolles en casa con el clon local.
