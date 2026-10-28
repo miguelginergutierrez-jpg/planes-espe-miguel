@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');
+const {chromium}=require('../node_modules/playwright');const {createServer}=require('../server.cjs');
+(async()=>{const s=createServer({env:{},inspect:async()=>({kind:'restaurant',title:'Fixture'})});await new Promise(r=>s.listen(0,'127.0.0.1',r));let browser;
+try{browser=await chromium.launch({headless:true,channel:'msedge'});const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));const url='http://127.0.0.1:'+s.address().port;
+await page.goto(url);await page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true));await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+const names=await page.evaluate(()=>caches.keys());assert.ok(names.some(n=>/^planes-shell-[a-f0-9]{16}$/.test(n)));
+const cached=await page.evaluate(async()=>{const c=await caches.open((await caches.keys())[0]);return(await c.keys()).map(r=>new URL(r.url).pathname)});assert.ok(!cached.some(p=>p.startsWith('/api/')||p.includes('supabase')));
+await page.evaluate(()=>localStorage.setItem('lo-nuestro-v1',JSON.stringify([{id:'offline',kind:'restaurant',title:'Ficha disponible sin red',attachments:[]}])));
+await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-page=restaurant]').click();await page.getByRole('heading',{name:'Ficha disponible sin red',exact:true}).waitFor();assert.deepEqual(errors,[]);
+console.log('PASS PWA: mobile shell, hashed cache, offline collection and no API/session caching');await context.close();
+}finally{await browser?.close();await new Promise(r=>s.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,3 +1,13 @@
+## Publicación móvil preparada — 28/10/2026
+
+Rama codex/publicacion-movil. Ver PUBLICACION-MOVIL.md: Docker para Render Free,
+Node 24, /api/inspect autenticado por Supabase con membresía, origen y límites.
+Manifiesto e iconos de la marca, interfaz almacenada para apertura sin red,
+actualizaciones sin recargar ediciones abiertas. No se cambia Supabase ni datos.
+76 pruebas y browser-pwa/cloud/maps pasan. No hay Docker local: pendiente Linux
+alojado y sandbox Chromium. Aún NO se ha creado ni publicado el servicio remoto.
+Falta acceso del usuario a Render, vinculación limitada al repo, despliegue Free
+sin tarjeta y comprobación HTTPS/iPhone. No afirmar que ya está en Internet.
 ## Documento compartido verificado — 28/10/2026
 
 El usuario confirmó PLANES-2810 al abrir en Chrome el TXT adjuntado desde el

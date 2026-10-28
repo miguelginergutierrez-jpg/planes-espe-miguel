@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: planes-espe-miguel
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: codex/publicacion-movil
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    envVars:
+      - key: PLANES_REQUIRE_AUTH
+        value: "1"

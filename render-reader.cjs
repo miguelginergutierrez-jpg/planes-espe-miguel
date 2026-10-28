@@ -4,7 +4,7 @@ function runtime(){return require(require('./reader-runtime.cjs').resolve('playw
 // No profile, cookies, filesystem URLs, private network or form submissions.
 async function renderPage(url,{readResource,signal=AbortSignal.timeout(14000)}={}){
  const {chromium}=runtime();const edge=process.env.PLANES_BROWSER_PATH||[process.env['ProgramFiles(x86)'],process.env.ProgramFiles].filter(Boolean).map(p=>path.join(p,'Microsoft/Edge/Application/msedge.exe')).find(p=>fs.existsSync(p));
- const browser=await chromium.launch({headless:true,...(edge?{executablePath:edge}:{})});let requests=0,total=0;
+ const browser=await chromium.launch({headless:true,...(process.env.NODE_ENV==='production'?{chromiumSandbox:true}:{}),...(edge?{executablePath:edge}:{})});let requests=0,total=0;
  const close=()=>browser.close().catch(()=>{});signal.addEventListener('abort',close,{once:true});
  try{signal.throwIfAborted();const context=await browser.newContext({serviceWorkers:'block',acceptDownloads:false,locale:'es-ES',timezoneId:'Europe/Madrid'});
   await context.routeWebSocket('**/*',route=>route.close());

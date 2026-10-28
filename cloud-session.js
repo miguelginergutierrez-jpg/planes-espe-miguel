@@ -25,5 +25,6 @@ window.CloudSession=(()=>{
  async function check(){const token=await access();await verify(token);return true}
  function logout(){controller.abort();controller=new AbortController();localStorage.removeItem(key);sessionStorage.removeItem('planes-cloud-check-v1');notify();}
  window.addEventListener('storage',e=>{if(e.key===key)notify()});
- return {login,logout,request,check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
+ async function inspect(url,signal){const headers={'Content-Type':'application/json'};if(saved())headers.Authorization='Bearer '+await access();return fetch('/api/inspect',{method:'POST',headers,body:JSON.stringify({url}),signal});}
+ return {login,logout,request,inspect,check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
 })();
