@@ -1,3 +1,11 @@
+## Documento compartido verificado — 28/10/2026
+
+El usuario confirmó PLANES-2810 al abrir en Chrome el TXT adjuntado desde el
+navegador integrado a «Prueba de sincronización». Completadas la comprobación
+con segundo navegador independiente y la transferencia real de un adjunto.
+La ficha anterior permanece intacta; no se realizaron borrados de prueba.
+Siguiente fase: alojamiento gratuito y adaptación del extractor, publicación
+privada/PWA, iPhone y después segundo miembro/Android. Ver supabase/README.md.
 ## Simplificación de Ajustes — 28/10/2026
 
 Por petición del usuario, se retiraron de la interfaz los botones Sincronizar ahora, Pausar sincronización y Desconectar este navegador. Se conserva el estado visible y la sincronización automática, sin cambiar sesión ni datos.
@@ -9,7 +17,7 @@ Por petición del usuario, se retiraron de la interfaz los botones Sincronizar a
 verificada (Agenda, estado Hecho, filtro Todos); alta automática real de una
 ficha separada de prueba confirmada por SELECT en Supabase. No se tocó la ficha
 anterior ni se probó borrar datos reales. Ver detalles actuales en supabase/README.md.
-Pendientes: segundo navegador independiente, adjuntos reales, segundo miembro,
+Chrome independiente y adjunto real verificados por el usuario (código PLANES-2810). Pendientes: segundo miembro,
 publicación gratuita/PWA e iPhone/Android. Las notas de abajo que dicen que falta
 002 o activar en el primer navegador son anteriores a esta comprobación.
 ## Sincronización privada preparada — 28/10/2026
