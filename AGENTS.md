@@ -1,3 +1,7 @@
+## Simplificación de Ajustes — 28/10/2026
+
+Por petición del usuario, se retiraron de la interfaz los botones Sincronizar ahora, Pausar sincronización y Desconectar este navegador. Se conserva el estado visible y la sincronización automática, sin cambiar sesión ni datos.
+
 ## Activación real completada — 28/10/2026
 
 002 aplicada con éxito desde SQL Editor. Sincronización activada y estado
