@@ -1,0 +1,3 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),{check}=require('../reader-health.cjs');
+test('reader health verifies executed DOM instead of browser installation only',async()=>{assert.equal((await check(async()=>({rendered:true,html:'<html><body>planes-dynamic-ready</body></html>'}))).state,'ready');assert.equal((await check(async()=>({rendered:true,html:'<script>planes-dynamic-ready</script>'}))).state,'unavailable')});
+test('reader health reports browser/sandbox failure without reducing isolation',async()=>{assert.equal((await check(async()=>{throw Error('Sandbox unavailable')})).state,'unavailable')});

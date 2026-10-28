@@ -1,7 +1,7 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),crypto=require('node:crypto');
 try{process.loadEnvFile(path.join(__dirname,'.env'))}catch(e){if(e.code!=='ENOENT')console.error('No se pudo leer la configuración de IA')}
 const files={'/':'index.html','/index.html':'index.html','/logo-espe-miguel.jpg':'logo-espe-miguel.jpg','/icon-192.png':'icon-192.png','/icon-512.png':'icon-512.png','/manifest.webmanifest':'manifest.webmanifest','/pwa.js':'pwa.js','/documents.js':'documents.js','/supabase-public.json':'supabase-public.json','/cloud-migrate.js':'cloud-migrate.js','/cloud-sync.js':'cloud-sync.js','/cloud-session.js':'cloud-session.js','/cloud-controller.js':'cloud-controller.js','/cloud-connect.js':'cloud-connect.js','/app.js':'app.js','/classifier.js':'classifier.js','/event-data.js':'event-data.js','/culture-data.js':'culture-data.js','/cinema-data.js':'cinema-data.js','/calm.css':'calm.css'};
-function createServer({env=process.env,inspect=url=>require('./preview.cjs').inspect(url),authorize=header=>require('./host-auth.cjs').requireMember(header)}={}){
+function createServer({env=process.env,inspect=url=>require('./preview.cjs').inspect(url),authorize=header=>require('./host-auth.cjs').requireMember(header),readerStatus={state:'not-checked'}}={}){
  const hosted=env.PLANES_REQUIRE_AUTH==='1'||env.NODE_ENV==='production';let active=0;const rates=new Map();
  const hash=crypto.createHash('sha256');for(const name of Object.values(files)){if(fs.existsSync(path.join(__dirname,name)))hash.update(fs.readFileSync(path.join(__dirname,name)))}const shellVersion=hash.digest('hex').slice(0,16);
  return http.createServer(async(req,res)=>{
@@ -9,7 +9,7 @@ function createServer({env=process.env,inspect=url=>require('./preview.cjs').ins
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
   const json=(status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(data))};
   if(req.url==='/healthz'&&req.method==='GET')return json(200,{ok:true});
-  if(req.url==='/api/status'&&req.method==='GET')return json(200,{...require('./ai-reader.cjs').configuration(),authRequired:hosted});
+  if(req.url==='/api/status'&&req.method==='GET')return json(200,{...require('./ai-reader.cjs').configuration(),authRequired:hosted,dynamicReader:readerStatus});
   if(req.url==='/api/inspect'&&req.method==='POST'){
    const origin=hosted?(env.PLANES_PUBLIC_ORIGIN||env.RENDER_EXTERNAL_URL):'http://'+req.headers.host;
    if(!origin||req.headers.origin!==origin||!String(req.headers['content-type']).startsWith('application/json'))return json(403,{error:'Origen no permitido'});
@@ -39,8 +39,10 @@ function createServer({env=process.env,inspect=url=>require('./preview.cjs').ins
 }
 if(require.main===module){
  const hosted=process.env.PLANES_REQUIRE_AUTH==='1'||process.env.NODE_ENV==='production',lan=process.argv.includes('--lan'),port=Number(process.env.PORT||4173),host=hosted||lan?'0.0.0.0':'127.0.0.1';
- createServer().listen(port,host,()=>{
+ const readerStatus={state:hosted?'checking':'not-checked'};
+ createServer({readerStatus}).listen(port,host,()=>{
   console.log('Planes Espe & Miguel: '+(process.env.RENDER_EXTERNAL_URL||'http://localhost:'+port));
+  if(hosted)require('./reader-health.cjs').check().then(result=>{Object.assign(readerStatus,result);console.log('Lector dinámico: '+result.state)});
   if(lan)for(const entries of Object.values(os.networkInterfaces()))for(const addr of entries||[])if(addr.family==='IPv4'&&!addr.internal)console.log('Movil (misma Wi-Fi): http://'+addr.address+':'+port);
  }).on('error',e=>{console.error('No se pudo iniciar: '+e.message);process.exitCode=1});
 }
