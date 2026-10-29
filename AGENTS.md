@@ -1,3 +1,17 @@
+## Atajo en segundo plano — 29/10/2026
+
+Usuario confirmó el atajo de apertura pero quiere guardar sin abrir la app.
+Implementado POST /api/share con lectura y guardado autenticado por permiso de
+solo alta. 003_shortcut_access.sql aplicada con autorización explícita y éxito
+observado en SQL Editor. No repetir migraciones anteriores. Ver COMPARTIR-IPHONE.md.
+Ajustes permite crear/copiar/revocar el permiso; hash en DB, secreto solo una vez
+en UI y en el atajo del usuario, nunca en Git/chat. Crear permiso nuevo revoca el
+anterior de esa cuenta. Falta generar permiso en iPhone y verificar el POST real
+con Get Contents of URL. No afirmar que el flujo iOS está probado todavía.
+87 pruebas unitarias y SQL PostgreSQL aislado pasan. Los datos existentes no se
+modificaron. El alojamiento gratuito puede retrasar o agotar el tiempo del atajo;
+no prometer guardado instantáneo ni ejecución persistente en segundo plano.
+
 ## iPhone confirmado y recepción de enlaces — 29/10/2026
 
 El usuario confirmó funcionamiento en Chrome/iPhone, sincronización de una

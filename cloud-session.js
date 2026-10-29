@@ -26,5 +26,6 @@ window.CloudSession=(()=>{
  function logout(){controller.abort();controller=new AbortController();localStorage.removeItem(key);sessionStorage.removeItem('planes-cloud-check-v1');notify();}
  window.addEventListener('storage',e=>{if(e.key===key)notify()});
  async function inspect(url,signal){const headers={'Content-Type':'application/json'};if(saved())headers.Authorization='Bearer '+await access();return fetch('/api/inspect',{method:'POST',headers,body:JSON.stringify({url}),signal});}
- return {login,logout,request,inspect,check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
+ async function shortcutPermission(action){if(!['create','revoke'].includes(action))throw Error('Acción no válida');const r=await raw('/rest/v1/rpc/planes_shortcut_'+action,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'},await access());if(!r.ok)throw Error(r.status===404?'Falta aplicar la actualización 003 de Supabase.':'No se pudo cambiar el permiso de Atajos.');return r.json()}
+ return {shortcutPermission,login,logout,request,inspect,check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
 })();

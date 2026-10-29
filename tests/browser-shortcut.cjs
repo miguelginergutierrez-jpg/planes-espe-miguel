@@ -1,0 +1,8 @@
+const assert=require('node:assert/strict'),{chromium}=require('../node_modules/playwright'),{createServer}=require('../server.cjs');
+(async()=>{const server=createServer({env:{}});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
+try{browser=await chromium.launch({channel:'msedge',headless:true});const ctx=await browser.newContext();await ctx.addInitScript(()=>localStorage.setItem('planes-cloud-session-v1',JSON.stringify({token:'synthetic',refresh:'synthetic',expires:Date.now()+3600000,userId:'fixture'})));
+let calls=[];await ctx.route('https://*.supabase.co/rest/v1/rpc/planes_shortcut_*',r=>{calls.push(r.request().url().split('_').pop());return r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(r.request().url().endsWith('create')?'a'.repeat(64):null)})});
+const p=await ctx.newPage();p.on('dialog',d=>d.accept());await p.goto('http://127.0.0.1:'+server.address().port);await p.locator('#settings').click();await p.locator('#shortcutSetup summary').click();await p.locator('#shortcutCreate').click();await p.locator('#shortcutSecret:not([hidden])').waitFor();assert.equal(await p.getByLabel('Permiso para Atajos',{exact:true}).inputValue(),'a'.repeat(64));
+assert.equal(await p.evaluate(()=>Object.values(localStorage).some(v=>v.includes('a'.repeat(64)))),false);
+await p.locator('#shortcutRevoke').click();await p.locator('#shortcutSecret[hidden]').waitFor();assert.deepEqual(calls,['create','revoke']);console.log('PASS shortcut permission UI: authenticated creation, secret not persisted, revoke and clear');
+}finally{await browser?.close();await new Promise(r=>server.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});

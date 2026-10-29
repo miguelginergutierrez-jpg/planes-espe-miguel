@@ -1,3 +1,68 @@
+# Guardar sin abrir la app — 29/10/2026
+
+El usuario ya probó el atajo de apertura y solicita guardado automático en
+segundo plano. La actualización 003 fue autorizada y aplicada en Supabase:
+Success. No rows returned. No repetir 001/002 ni cambiar las fichas existentes.
+La comprobación real del nuevo atajo queda pendiente del iPhone.
+
+## Preparar el permiso una vez
+
+En la web publicada, Ajustes → Espacio compartido → Compartir desde iPhone sin
+abrir la app → Crear permiso para Atajos → Copiar permiso. Requiere sesión de
+miembro. Crear uno nuevo revoca el anterior de esa cuenta; dura un año y puede
+revocarse. No pegar el permiso en chats, GitHub, capturas o enlaces públicos.
+No es la contraseña ni la clave pública Supabase. Solo añade fichas; no permite
+leer, editar ni borrar la colección ni los documentos.
+
+## Modificar el atajo existente (interfaz en inglés)
+
+Conservar Show in Share Sheet, Get URLs from Shortcut Input y Get First Item
+from URLs. Eliminar URL Encode, el Text con #share= y Open URLs.
+
+1. Añadir URL con https://planes-espe-miguel.onrender.com/api/share.
+2. Añadir Get Contents of URL usando la URL anterior. Desplegar las opciones.
+3. Method: POST. Request Body: JSON.
+4. Añadir dos campos de tipo Text:
+   - url: variable Item from List (el enlace original, SIN URL Encode).
+   - token: pegar el permiso copiado de Ajustes, sin comillas ni espacios.
+5. Añadir Get Dictionary Value, clave message, del resultado Contents of URL.
+6. Añadir Show Notification con el resultado Dictionary Value.
+7. No añadir Open URLs, Open App ni Quick Look. Si no hay entrada, detener el
+   atajo. Si Apple pregunta si puede conectar al dominio de la app, permitirlo.
+
+Al compartir, iOS muestra el progreso del atajo mientras espera y una
+notificación al terminar; no se solicita navegar fuera de la web original.
+El alojamiento Free puede estar dormido y tardar; Atajos/iOS puede interrumpir
+una petición larga. Un timeout NO confirma guardado: reintentar el mismo enlace
+no duplica entre envíos de Atajos. Verificar resultado real en el iPhone.
+
+## Implementación y comprobaciones
+
+POST /api/share autentica el permiso, limita llamadas, usa el lector existente
+y guarda en Supabase antes de responder ok:true. No devuelve contenido privado.
+Errores devuelven ok:false y message; fallo de lectura guarda inbox para revisar.
+Una fecha histórica queda en inbox para no perder la ficha por caducidad.
+No hace procesamiento persistente después de responder ni usa un worker oculto.
+La extracción sigue teniendo las limitaciones de fuentes privadas y bloqueos.
+
+003 crea una tabla sin permisos directos y funciones restringidas. Solo el hash
+SHA-256 se guarda en la base. Un miembro genera/revoca su permiso; el portador
+puede comprobarlo y añadir fichas con campos permitidos, nunca modificarlas.
+La deduplicación y el límite de 8 envíos/minuto por permiso se validan también
+en la base; no se reviven borrados existentes. Compartir de nuevo explícitamente
+un enlace previamente borrado crea una ficha nueva.
+
+Pruebas: 87 unitarias, tests/browser-shortcut.cjs, las baterías previas y
+PostgreSQL aislado con tests/shortcut-sql.cjs. Para esa prueba opcional,
+PGLITE_MODULE apunta a @electric-sql/pglite, instalado fuera del proyecto.
+Valida migración idempotente, roles, miembro/no miembro, token, deduplicación,
+campos protegidos, rotación, límite y revocación. No contiene datos reales.
+
+Fuente de Apple: https://support.apple.com/guide/shortcuts/request-your-first-api-apd58d46713f/ios
+
+---
+## Versión anterior: abrir la app con un enlace preparado
+
 # Compartir enlaces desde iPhone
 
 Preparado el 29/10/2026. El usuario confirmó instalación desde el icono y una
