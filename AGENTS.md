@@ -1,3 +1,15 @@
+## iPhone confirmado y recepción de enlaces — 29/10/2026
+
+El usuario confirmó funcionamiento en Chrome/iPhone, sincronización de una
+nota hacia el ordenador y apertura desde el icono instalado. Pendientes:
+segundo miembro/Android y configuración/prueba real del atajo de Compartir.
+Ver COMPARTIR-IPHONE.md. Se recibe un único URL codificado en #share=, se rellena
+Inicio y el usuario pulsa Enviar. El borrador sobrevive login/recarga de pestaña;
+no se escribe automáticamente al navegar ni se reemplaza una edición pendiente.
+share-input.js está servido y en la caché PWA. No hay extensión nativa ni claves
+en el atajo. El enlace puede abrirse en navegador con sesión distinta del icono.
+La validación iOS del atajo queda pendiente del usuario, no afirmar completada.
+
 ## Publicación real completada — 28/10/2026
 
 App publicada en https://planes-espe-miguel.onrender.com, Render Free, Frankfurt,
