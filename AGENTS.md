@@ -1,3 +1,21 @@
+## Interfaz compacta y edición — 29/10/2026
+
+Implementado: refrescar junto a Ajustes (sincroniza y recarga conservando vista),
+controles de Agenda en una fila y estado inicial Todos; sin título Vuestros planes.
+Desde un día se pueden crear Plan de Miguel / Plan de Espe, además de las visitas.
+planOwner conserva el propietario sin crear perfiles: diagonal Miguel, horizontal
+Espe, sobre los colores de zona. Guardar cierra la ficha; no tiene botón X.
+Resumen, recinto, tipo, sesiones y demás campos de contenido admiten edición manual.
+Un enlace añadido a una ficha manual se analiza al salir del campo; no garantiza
+que la web publique todos los datos. Se protegen las ediciones durante reanálisis.
+Imágenes: URL o PNG/JPEG/WebP local; card-fields.js comprime a JPEG hasta 640 px y
+120 000 caracteres para persistencia compartida. No admite HEIC directamente.
+Pruebas: 89 unitarias; navegador compacto 320/390/768, cloud, PWA, Maps y compartir.
+Datos sintéticos aislados; no se modificaron fichas reales para comprobarlo.
+
+El usuario confirmó que el atajo de iPhone en segundo plano funciona y que el
+resultado llega a la app. Sustituye las notas históricas inferiores que lo dan
+por pendiente. Sigue pendiente incorporar el segundo miembro y probar Android.
 ## Atajo en segundo plano — 29/10/2026
 
 Usuario confirmó el atajo de apertura pero quiere guardar sin abrir la app.

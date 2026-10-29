@@ -36,3 +36,23 @@ textarea.sheet-title{min-height:0;resize:none;overflow:hidden;line-height:1.25}.
 .session-label{display:block;font-size:11px;color:var(--muted);max-width:250px;line-height:1.5}.session-details li{gap:12px}.session-details li>span:last-child{white-space:nowrap}
 
 .cloud-connect{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}.cloud-connect h3{font-size:16px}.cloud-connect form{display:grid;gap:12px}.cloud-connect form[hidden]{display:none}.cloud-connect label{display:grid;gap:6px;font-size:13px}.cloud-connect input{width:100%;box-sizing:border-box}.cloud-connect [role=status]{line-height:1.5}
+
+/* One compact agenda toolbar; keep touch targets tall while reducing width. */
+.header-actions{display:flex;align-items:center;gap:6px}.header-actions .avatar{width:40px;height:40px}
+.agenda-controls{display:flex;align-items:center;gap:8px;width:100%;margin:4px 0 8px}
+.agenda-controls .filter-panel{padding:0;margin:0;border:0;background:none;flex:1;min-width:0}
+.agenda-controls .filter-label,.agenda-controls .filter-caption{display:none}
+.agenda-controls .city{margin:0;gap:4px;flex-wrap:nowrap}
+.agenda-controls .pill{font-size:11px;padding:4px 7px;min-height:36px;white-space:nowrap;border-radius:10px;letter-spacing:0}
+.agenda-controls .toolbar{margin:0;gap:6px;flex-wrap:nowrap;flex-shrink:0}
+.agenda-controls .seg{gap:2px;flex-wrap:nowrap}
+.agenda-controls .seg .icon-toggle{width:32px;height:36px;padding:7px;border-radius:9px}
+.agenda-controls #statusFilter{width:82px;max-width:82px;padding:7px 2px 7px 5px;margin:0;font-size:11px;min-height:36px}
+.agenda-controls+#results .calendar{margin:0 0 8px}
+.calitem.owner-miguel{background-image:repeating-linear-gradient(135deg,transparent 0 5px,#2b435724 5px 7px)}
+.calitem.owner-espe{background-image:repeating-linear-gradient(0deg,transparent 0 4px,#2b435724 4px 6px)}
+.owner-miguel .badge{background-image:repeating-linear-gradient(135deg,transparent 0 5px,#2b435724 5px 7px)}
+.owner-espe .badge{background-image:repeating-linear-gradient(0deg,transparent 0 4px,#2b435724 4px 6px)}
+.image-editor{margin:12px 0;font-size:12px}.image-editor summary{cursor:pointer;color:var(--green);padding:8px 0}.image-editor .actions{justify-content:flex-start;margin-top:10px}.image-editor input{font-size:12px}
+.sheet-dialog .sheet-summary textarea{cursor:text}.session-details textarea{width:100%;font-size:12px;line-height:1.6}
+@media(max-width:370px){.agenda-controls{gap:4px}.agenda-controls .pill{font-size:10px;padding:4px}.agenda-controls .city{gap:2px}.agenda-controls .seg .icon-toggle{width:27px;padding:5px}.agenda-controls #statusFilter{width:74px;max-width:74px;font-size:10px}.agenda-controls .toolbar{gap:3px}}

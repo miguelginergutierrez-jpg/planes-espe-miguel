@@ -1,7 +1,7 @@
 // Fresh browser contexts and synthetic backend only. Never touches the user's session.
 const assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('../node_modules/playwright');const root=path.join(__dirname,'..');
-const allowed=new Set(['index.html','app.js','documents.js','classifier.js','event-data.js','culture-data.js','cinema-data.js','cloud-connect.js','cloud-migrate.js','cloud-sync.js','cloud-session.js','cloud-controller.js','calm.css','supabase-public.json','logo-espe-miguel.jpg']);
+const allowed=new Set(['index.html','app.js','card-fields.js','share-input.js','documents.js','classifier.js','event-data.js','culture-data.js','cinema-data.js','cloud-connect.js','cloud-migrate.js','cloud-sync.js','cloud-session.js','cloud-controller.js','calm.css','supabase-public.json','logo-espe-miguel.jpg']);
 const server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1).split('?')[0];if(req.url==='/api/status'){res.setHeader('content-type','application/json');return res.end('{"configured":false}')}if(!allowed.has(name)){res.writeHead(404);return res.end()}res.setHeader('content-type',name.endsWith('.js')?'text/javascript':name.endsWith('.json')?'application/json':name.endsWith('.css')?'text/css':name.endsWith('.html')?'text/html':'image/jpeg');res.end(fs.readFileSync(path.join(root,name)))});
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
