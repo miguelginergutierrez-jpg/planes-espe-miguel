@@ -44,6 +44,7 @@ textarea.sheet-title{min-height:0;resize:none;overflow:hidden;line-height:1.25}.
 .agenda-controls .filter-label,.agenda-controls .filter-caption{display:none}
 .agenda-controls .city{margin:0;gap:4px;flex-wrap:nowrap}
 .agenda-controls .pill{font-size:11px;padding:4px 7px;min-height:36px;white-space:nowrap;border-radius:10px;letter-spacing:0}
+.agenda-controls .pill[data-city="Barcelona"]{padding-left:5px;padding-right:5px}.agenda-controls button,.agenda-controls select{height:38px}
 .agenda-controls .toolbar{margin:0;gap:6px;flex-wrap:nowrap;flex-shrink:0}
 .agenda-controls .seg{gap:2px;flex-wrap:nowrap}
 .agenda-controls .seg .icon-toggle{width:32px;height:36px;padding:7px;border-radius:9px}
@@ -69,3 +70,6 @@ textarea.sheet-title{min-height:0;resize:none;overflow:hidden;line-height:1.25}.
 .filter-panel .city{gap:5px}.filter-panel .pill{min-height:38px;box-sizing:border-box}
 body[data-page="restaurant"] #statusFilter,body[data-page="buy"] #statusFilter{display:none}
 body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-content:flex-start}
+.calitem.owner-espe,.owner-espe .badge{background-image:radial-gradient(currentColor 1.3px,transparent 1.4px);background-size:7px 7px}
+.sheet-dialog .sheet form{display:flex;flex-direction:column}.sheet-dialog .sheet-heading{order:1}.sheet-dialog .sheet-save{order:2}.sheet-dialog .sheet-cover,.sheet-dialog .source-line,.sheet-dialog #urlLabel,.sheet-dialog .sheet-summary,.sheet-dialog .image-editor{order:3}.sheet-dialog .sheet-zone{order:4}.sheet-dialog .sheet-fields{order:5}.sheet-dialog .session-details,.sheet-dialog .documents-section{order:6}.sheet-dialog .sheet-state{order:3;margin:4px 0 8px;padding:0}.sheet-dialog .state-tags{gap:5px;flex-wrap:nowrap}.sheet-dialog .state-tag{padding:5px 8px;font-size:11px;white-space:nowrap}.sheet-dialog .sheet-zone{margin:8px 0 12px}.sheet-dialog .chips{gap:5px}.sheet-dialog .citytag{padding:5px 9px;font-size:11px}
+.sheet-dialog form:has(.sheet-cover) .image-editor{display:none}
