@@ -1,6 +1,11 @@
 # Continuar desde el ordenador de casa
 
-Estado preparado el 28 de octubre de 2026. No necesitas el móvil Android todavía.
+Estado comprobado el 30 de octubre de 2026. No necesitas el móvil Android todavía.
+
+La rama activa es `codex/publicacion-movil`, en el commit `c0b21e2`.
+La sincronización, PWA, atajo de iPhone y despliegue gratuito ya están
+implementados; las notas históricas que indiquen lo contrario quedan
+superadas por `AGENTS.md`.
 
 ## 1. Recuperar el proyecto
 
