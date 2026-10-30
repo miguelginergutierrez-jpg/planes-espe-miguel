@@ -391,3 +391,22 @@ En la tarea inicial de documentación se autorizó crear únicamente `AGENTS.md`
 ## Actualización desde casa — 28/10/2026
 
 Consultar la verificación del PC de casa al final de CONTINUAR-EN-CASA.md: Node 24.22.1, npm 11.19.1, Edge, instalación limpia y npm ci verificados. Ya existe package-lock.json; usar npm.cmd ci. pdfjs-dist ahora es 6.4.299 por corrección de seguridad; extracción PDF sintética y 43 pruebas pasan. Pasan también las tres baterías de navegador y el lector dinámico real con recurso sintético. IA desactivada según /api/status. Supabase público accesible (HTTP 200); el acceso de la cuenta real en el navegador nuevo sigue pendiente del usuario. Las referencias anteriores a falta de npm/lockfile son históricas. No hay sincronización automática todavía.
+## Cierre de sesión UI — 30/10/2026
+
+Estado publicado en `codex/publicacion-movil`, commit `8d2efbc`. Se añadieron
+deslizamiento horizontal para cambiar de mes en Agenda, selector compacto de
+tres propietarios (Plan Miguel, Plan Espe y Plan las dos), icono de cubiertos
+para Comer, patrones de propietario también en las franjas del calendario,
+fichas sin desplazamiento horizontal y prevención del zoom automático al
+enfocar campos en móvil. Las fichas con imagen automática se editan tocando la
+imagen; las nuevas muestran un espacio de imagen. La ficha usa Reservado y No
+Reservado como estados visibles. Se eliminaron espacios y separadores sobrantes
+entre Zona y Tipo de plan.
+
+Verificado: 89 pruebas unitarias y prueba móvil de interfaz. Google Maps sigue
+seleccionando una foto de comida con evidencia y conserva sus pruebas. Instagram
+usa metadatos, texto y datos estructurados públicos; páginas que requieren sesión,
+CAPTCHA o contenido privado quedan para revisión sin inventar datos. Pendientes:
+probar Android y seguir mejorando fuentes sociales cuando expongan contenido
+público adicional. No se modificaron datos reales ni migraciones.
+

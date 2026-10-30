@@ -2,7 +2,10 @@
 
 Estado comprobado el 30 de octubre de 2026. No necesitas el móvil Android todavía.
 
-La rama activa es `codex/publicacion-movil`, en el commit `c0b21e2`.
+Último commit publicado: `8d2efbc`. Incluye la última compactación de fichas,
+selector de propietarios, gesto de agenda y prevención del zoom móvil.
+
+La rama activa es `codex/publicacion-movil`, en el commit `8d2efbc`.
 La sincronización, PWA, atajo de iPhone y despliegue gratuito ya están
 implementados; las notas históricas que indiquen lo contrario quedan
 superadas por `AGENTS.md`.
