@@ -34,6 +34,11 @@ sin distorsionar la imagen. No hay decoración dentro de cada casilla. La capa
 queda detrás de números, líneas y planes; es aria-hidden y no captura toques.
 Opacidad: otoño 30 %, verano 32 %, primavera 35 %, invierno 43 %.
 
+La lectura se refuerza con números oscuros en negrita sobre círculos claros,
+líneas más contrastadas y planes con texto seminegrita y borde por zona.
+Las tramas personales son suaves para no competir con el texto. El día actual
+conserva fondo oscuro y número blanco. Estos ajustes no atenúan las escenas.
+
 ## Personajes y portadas
 
 - El logo original `logo-espe-miguel.jpg` sigue en la cabecera y en las tarjetas

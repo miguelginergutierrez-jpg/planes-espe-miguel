@@ -1,3 +1,13 @@
+## Contraste de la agenda — 31/10/2026
+
+Calendario más legible sobre las ilustraciones: números de 13 px en negrita,
+fondo claro y borde discreto; hoy conserva círculo oscuro y número blanco.
+Cabecera de días más oscura y líneas horizontales más definidas. Planes de 10 px,
+texto seminegrita, fondos opacos por zona y borde fino; tramas personales suavizadas.
+No se cambia la opacidad de las escenas ni la lógica de datos/filtros.
+Verificados agenda por mes y editor compacto en Edge con datos sintéticos,
+320/390/768/1100 px, y capturas de enero con planes y diciembre.
+
 ## Composiciones mensuales y portadas continuas — 31/10/2026
 
 Sustituye los motivos repetidos por día y los recortes CSS de personajes descritos
