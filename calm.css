@@ -122,3 +122,9 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 .calendar .calitem.none{color:#463758;background-color:#ece5f1;--plan-outline:#a394b6}
 .calendar .calitem.owner-espe{background-image:radial-gradient(#203b541f 1px,transparent 1.2px);background-size:7px 7px}
 .calendar .calitem.owner-miguel{background-image:repeating-linear-gradient(135deg,transparent 0 5px,#203b541f 5px 7px)}
+
+/* Comer: food selector at the right end of the shared filter row. */
+body[data-page="restaurant"] .collection-controls .toolbar{margin-left:auto;min-width:0;flex-shrink:1}
+body[data-page="restaurant"] .collection-controls .seg{display:none}
+#cuisineFilter{margin:0;font-size:13px;height:38px;min-height:38px;width:160px;max-width:100%;min-width:0;padding:0 24px 0 10px;text-overflow:ellipsis}
+@media(max-width:370px){#cuisineFilter{width:140px;font-size:12px;padding-left:8px}}

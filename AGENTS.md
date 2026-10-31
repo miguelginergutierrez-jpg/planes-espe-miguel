@@ -1,3 +1,19 @@
+## Tipos de comida y nuevos planes reservados — 31/10/2026
+
+Comer incorpora un desplegable de tipo de comida a la derecha de Todo/BCN/VLC,
+en la misma fila y con altura de 38 px. Combina ambos filtros. El tipo aparece
+en las tarjetas y solo los restaurantes tienen el selector editable en la ficha.
+food-types.js comparte catálogo e inferencia entre navegador y atajo: prioriza
+cuisine extraída, después título/resumen, sin deducir cocina por ciudad/dirección.
+Sin evidencia reconocible queda en Otros. cuisine conserva el texto original;
+cuisineType guarda la categoría y manualFields protege la selección personal.
+Las fichas anteriores se clasifican al leerlas, sin reescritura masiva.
+Planes nuevos manuales, desde enlace o atajo comienzan Reservado; no se cambian
+los estados guardados. Módulo servido y precargado por PWA, incluido en Docker.
+107 pruebas unitarias y Edge: filtro combinado, 320/390/768/1100 px, persistencia
+y reanálisis manual, estados nuevos; también agenda, interfaz compacta, nube,
+Maps y PWA sin red. Solo datos sintéticos, sin migraciones ni cambios reales.
+
 ## Ilustraciones diez puntos más transparentes — 31/10/2026
 
 Opacidad actual: otoño 13 %, invierno 26 %, primavera 18 %, verano 15 %.

@@ -25,6 +25,8 @@ function makePayload(info,url){
  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  const end=out.endDate||out.date;
  if(out.kind==='plan'&&/^\d{4}-\d{2}-\d{2}$/.test(end||'')&&end<today){out.kind='inbox';out.summary='La fuente indica una fecha pasada. Revisa las fechas. '+(out.summary||'');}
+ out.status=out.kind==='plan'?'Reservado':'Pendiente';
+ if(out.kind==='restaurant')out.cuisineType=require('./food-types.js').infer(out);else delete out.cuisineType;
  return out;
 }
 module.exports={createShortcutAPI,makePayload};

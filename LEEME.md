@@ -1,3 +1,11 @@
+## Comer: tipos de comida
+
+El desplegable de la derecha filtra restaurantes por cocina y se combina con
+Todo/BCN/VLC. La categoría se propone automáticamente; si no se reconoce, indica
+Otros. Puedes cambiarla en «Tipo de comida» dentro de cada restaurante: tu
+elección se conserva al releer el enlace. El tipo también se ve en la tarjeta.
+Los nuevos planes se crean como Reservado y puedes cambiarlo al editarlos.
+
 > Revisión posterior: el extractor actual es la versión 15. Consulta [REVISION-V15.md](REVISION-V15.md) para los cinco enlaces corregidos, las 28 pruebas nuevas y los límites comprobados. Las notas de versiones anteriores se conservan como historial.
 
 # Planes Espe & Miguel
