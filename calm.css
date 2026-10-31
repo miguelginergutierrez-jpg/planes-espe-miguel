@@ -91,13 +91,6 @@ body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-con
 /* Platform-independent line icons and portraits from the original brand image. */
 .header-actions .avatar svg,nav b svg{display:block;flex-shrink:0}
 nav b{display:flex;align-items:center;justify-content:center;height:25px}
-.cards .card .art.portrait-miguel,.cards .card .art.portrait-espe{position:relative}
-.cards .card .art.portrait-miguel img,.cards .card .art.portrait-espe img{position:absolute;top:0;left:0;width:200%;height:100%;max-width:none;object-fit:contain}
-.cards .card .art.portrait-espe img{transform:translateX(-50%)}
-.sheet-dialog .sheet-cover.portrait-miguel,.sheet-dialog .sheet-cover.portrait-espe{width:75px;height:150px;max-height:none;object-fit:cover;background:#eaddc9}
-.sheet-dialog .sheet-cover.portrait-miguel{object-position:left center}
-.sheet-dialog .sheet-cover.portrait-espe{object-position:right center}
-
 /* Consistent rhythm inside each group, and between the three groups. */
 .collection-controls{--control-gap:8px;--group-gap:12px;gap:var(--group-gap);justify-content:flex-start}
 .collection-controls .filter-panel{flex:0 0 auto}
@@ -105,15 +98,14 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 .collection-controls .toolbar{gap:var(--group-gap)}
 @media(max-width:370px){.collection-controls{--control-gap:6px;--group-gap:8px}}
 
-/* Felt seasons stay behind dates, dividing lines and plans. */
-.calendar[data-season="autumn"]{--season-motif:url('/season-autumn.png')}
-.calendar[data-season="winter"]{--season-motif:url('/season-winter.png')}
-.calendar[data-season="spring"]{--season-motif:url('/season-spring.png')}
-.calendar[data-season="summer"]{--season-motif:url('/season-summer.png')}
-.calendar .day{position:relative;isolation:isolate}
-.season-art{position:absolute;inset:2px;z-index:-1;pointer-events:none;opacity:var(--season-opacity)}
-.season-art i{position:absolute;width:72%;height:72%;background:var(--season-motif) center/contain no-repeat;pointer-events:none}
-.season-art i:nth-child(1){left:0;top:0;transform:rotate(-18deg)}
-.season-art i:nth-child(2){right:-5%;bottom:-7%;transform:rotate(25deg) scale(.8)}
-.season-art i:nth-child(3){left:-10%;bottom:-10%;transform:rotate(-35deg) scale(.6)}
-.season-art i:nth-child(4){right:-15%;top:-10%;transform:rotate(12deg) scale(.5)}
+/* One organic monthly composition, independent of the day grid. */
+.calendar .calgrid{position:relative;isolation:isolate}
+.month-scene{position:absolute;inset:22px 0 0;z-index:-1;opacity:.30;pointer-events:none;overflow:hidden;border-radius:12px}
+.month-scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none}
+.calendar[data-season="winter"] .month-scene{opacity:.43}
+.calendar[data-season="spring"] .month-scene{opacity:.35}
+.calendar[data-season="summer"] .month-scene{opacity:.32}
+.calendar .daynum{text-shadow:0 1px 2px #fff,0 0 3px #fff}
+.cards .card .art.brand-art img{width:100%;height:100%;max-width:100%;transform:none;object-fit:contain}
+.cards .card .art.brand-art{background:#d8c4a6}
+.sheet-dialog .sheet-cover.brand-cover{width:100%;height:auto;aspect-ratio:2;max-height:none;object-fit:contain;background:#d8c4a6}

@@ -5,7 +5,8 @@ try{browser=await chromium.launch({headless:true,channel:'msedge'});const contex
 await page.goto(url);await page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true));await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
 const names=await page.evaluate(()=>caches.keys());assert.ok(names.some(n=>/^planes-shell-[a-f0-9]{16}$/.test(n)));
 const cached=await page.evaluate(async()=>{const c=await caches.open((await caches.keys())[0]);return(await c.keys()).map(r=>new URL(r.url).pathname)});assert.ok(!cached.some(p=>p.startsWith('/api/')||p.includes('supabase')));
+assert.equal(cached.filter(p=>p.startsWith('/calendar-month-')).length,12);assert.ok(cached.includes('/portrait-espe-v3.jpg')&&cached.includes('/portrait-miguel-v3.jpg'));
 await page.evaluate(()=>localStorage.setItem('lo-nuestro-v1',JSON.stringify([{id:'offline',kind:'restaurant',title:'Ficha disponible sin red',attachments:[]}])));
-await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-page=restaurant]').click();await page.getByRole('heading',{name:'Ficha disponible sin red',exact:true}).waitFor();assert.deepEqual(errors,[]);
+await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-page=restaurant]').click();await page.getByRole('heading',{name:'Ficha disponible sin red',exact:true}).waitFor();await page.locator('button[data-page=plan]').click();await page.locator('.month-scene img').evaluate(e=>e.decode());assert.deepEqual(errors,[]);
 console.log('PASS PWA: mobile shell, hashed cache, offline collection and no API/session caching');await context.close();
 }finally{await browser?.close();await new Promise(r=>s.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -60,18 +60,28 @@ const {createServer}=require('../server.cjs');
   await p.setViewportSize({width:390,height:844});await p.locator('button[data-page=plan]').click();
   await p.evaluate(()=>{month=new Date(2035,0,1);renderResults()});
   await p.screenshot({path:'test-results/agenda-month.png',fullPage:true});
-  for(const [monthIndex,season] of [[9,'autumn'],[11,'winter'],[2,'spring'],[6,'summer']]){
+  const seasons=['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'];
+  for(let monthIndex=0;monthIndex<12;monthIndex++){
    await p.evaluate(m=>{month=new Date(2035,m,1);renderResults()},monthIndex);
-   assert.equal(await p.locator('.calendar').getAttribute('data-season'),season);
-   const layers=await p.locator('.season-art').evaluateAll(es=>es.map(e=>({opacity:Number(getComputedStyle(e).opacity),count:e.children.length,pointer:getComputedStyle(e).pointerEvents,z:getComputedStyle(e).zIndex})));
-   assert.ok(layers.at(-1).opacity>layers[0].opacity&&layers.at(-1).opacity<.1);
-   assert.ok(layers.at(-1).count>layers[0].count);
-   assert.ok(layers.every(l=>l.pointer==='none'&&l.z==='-1'));
-   const asset=await p.request.get(new URL('/season-'+season+'.png',p.url()).href);assert.equal(asset.status(),200);assert.match(asset.headers()['content-type'],/image\/png/);
-   await p.screenshot({path:'test-results/calendar-'+season+'.png',fullPage:true});
+   assert.equal(await p.locator('.calendar').getAttribute('data-season'),seasons[monthIndex]);
+   assert.equal(await p.locator('.month-scene').count(),1);
+   assert.equal(await p.locator('.day .season-art,.day img').count(),0);
+   const scene=p.locator('.month-scene');
+   assert.equal(await scene.getAttribute('aria-hidden'),'true');
+   const style=await scene.evaluate(e=>({opacity:Number(getComputedStyle(e).opacity),pointer:getComputedStyle(e).pointerEvents,z:getComputedStyle(e).zIndex}));
+   assert.ok(style.opacity>=.3&&style.opacity<=.45);
+   assert.equal(style.pointer,'none');assert.equal(style.z,'-1');
+   await scene.locator('img').evaluate(e=>e.decode());
+   assert.equal(await scene.locator('img').evaluate(e=>e.naturalWidth),512);
+   await p.screenshot({path:'test-results/calendar-month-'+String(monthIndex+1).padStart(2,'0')+'.png',fullPage:true});
   }
+  const easter=await p.evaluate(()=>[[2024,2],[2024,3],[2025,2],[2025,3]].map(([y,m])=>calendarArt(new Date(y,m,1)).src));
+  assert.deepEqual(easter,['calendar-month-04.webp','calendar-month-03.webp','calendar-month-03.webp','calendar-month-04.webp']);
+  await p.setViewportSize({width:1100,height:850});
+  await p.screenshot({path:'test-results/calendar-december-desktop.png',fullPage:true});
+  await p.setViewportSize({width:390,height:844});
   await p.locator('.day-add').first().click();assert.equal(await p.locator('.day-options').count(),1);
   assert.deepEqual(errors,[]);
-  console.log('PASS month filtering, chronological list, equal filter gaps at 320/390/768/1100px and progressive decorative seasons behind interactive dates');
+  console.log('PASS month filtering, chronological list, equal filter gaps at 320/390/768/1100px and 12 organic monthly scenes, movable Easter and interactive dates');
  }finally{await browser?.close();await new Promise(r=>server.close(r))}
 })().catch(e=>{console.error(e);process.exitCode=1});

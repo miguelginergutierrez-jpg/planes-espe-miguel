@@ -1,3 +1,22 @@
+## Composiciones mensuales y portadas continuas — 31/10/2026
+
+Sustituye los motivos repetidos por día y los recortes CSS de personajes descritos
+en notas anteriores. Ver ARTE-CALENDARIO.md para el catálogo y los recursos.
+Las visitas Espe en Barcelona / Miguel en Valencia usan los dos personajes,
+también si tienen planOwner individual o solo el título histórico sin trip.
+Planes individuales: retratos generados a partir del logo, centrados con fondo
+continuo; variantes cuadradas para tarjetas y horizontales para el editor.
+El logo original de cabecera no se modifica. Se conservan fotos manuales y la
+opción de quitar imagen. Icono Agenda con anillas y líneas, no cuadrícula.
+Doce escenas mensuales de fieltro en una capa detrás del calendario completo,
+sin repetición por día: nieve/Navidad/Reyes, brotes/flores/Pascua, río/poza/sol,
+hojas y transición al invierno. Pascua sigue el mes de la fecha gregoriana.
+Opacidad 30–43 %, más visible en invierno/primavera, sin capturar toques.
+17 imágenes optimizadas, unos 1,5 MB, servidas localmente y en caché PWA.
+Pruebas: 89 unitarias; Edge aislado verifica los 12 meses, Pascua marzo/abril,
+filtros 320/390/768/1100, portadas/visitas/fotos manuales, editor y PWA sin red.
+No se modifican fichas reales, claves de almacenamiento ni Supabase.
+
 ## Ritmo de filtros y estaciones en el calendario — 31/10/2026
 
 Todo/BCN/VLC y Calendario/Lista comparten separación interna de 8 px (6 px en
