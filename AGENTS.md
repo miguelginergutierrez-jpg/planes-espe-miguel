@@ -1,3 +1,9 @@
+## Ilustraciones cinco puntos más transparentes — 31/10/2026
+
+Opacidad actual: otoño 23 %, invierno 36 %, primavera 28 %, verano 25 %.
+Reducción de cinco puntos adicionales, sin cambiar tamaño, posición ni contraste
+de números, líneas o planes. Verificada la agenda en Edge con datos sintéticos.
+
 ## Fotos de Maps e Instagram y opacidad — 31/10/2026
 
 Extractor versión 17, coherente en backend, editor y atajo. Ver FOTOS-ENLACES.md.
