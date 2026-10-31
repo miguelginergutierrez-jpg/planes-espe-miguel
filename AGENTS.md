@@ -1,3 +1,11 @@
+## Orden de cocinas y ficha de Casa simplificada — 31/10/2026
+
+Catálogo de comida ordenado alfabéticamente con locale español, tanto en Comer
+como en el selector de la ficha; Toda la comida conserva la primera posición.
+Retirados de la ficha de Casa los desplegables Tipo de objeto y Estancia. Se
+conservan los valores anteriores al guardar y los demás campos de la ficha.
+Verificado en Edge con datos sintéticos, sin modificar fichas reales.
+
 ## Verde salvia de Barcelona en agenda — 31/10/2026
 
 Corregida la regla de contraste que sobrescribía Barcelona en azul dentro del

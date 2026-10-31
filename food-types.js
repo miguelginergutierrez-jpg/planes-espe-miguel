@@ -30,7 +30,7 @@
   ['Bodega',/\b(bodega|vinoteca|wine bar)\b/],
   ['Fusión',/\b(fusion|nikkei)\b/]
  ];
- const types=Object.freeze([...rules.map(([type])=>type),'Otros']);
+ const types=Object.freeze([...rules.map(([type])=>type),'Otros'].sort((a,b)=>a.localeCompare(b,'es',{sensitivity:'base'})));
  const text=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  function infer(record){
   // Structured cuisine takes precedence. Do not infer cuisine from city/address.
