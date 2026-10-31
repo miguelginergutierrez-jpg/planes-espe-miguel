@@ -8,11 +8,12 @@ const url='https://www.instagram.com/p/Testing123/';
 const image='https://scontent.example.cdninstagram.com/v/photo.jpg?a=1&b=2';
 const page=html=>({url,html});
 
-test('Instagram accepts canonical account prefixes and share links, never lookalike hosts or profiles',()=>{
+test('Instagram accepts posts, profiles and share links, never lookalike hosts or account controls',()=>{
  assert.equal(postURL('https://www.instagram.com/restaurant/p/Testing123/?igsh=tracking'),url);
  assert.equal(postURL('https://instagram.com/reel/Testing123/'),'https://www.instagram.com/reel/Testing123/');
  assert.equal(isInstagramLink('https://www.instagram.com/share/reel/Sharing123/'),true);
- for(const bad of ['https://instagram.com.evil.org/p/Testing123/','https://a:b@instagram.com/p/Testing123/','http://instagram.com/p/Testing123/','https://instagram.com/account/'])assert.equal(isInstagramLink(bad),false);
+ assert.equal(isInstagramLink('https://instagram.com/account/'),true);
+ for(const bad of ['https://instagram.com.evil.org/p/Testing123/','https://a:b@instagram.com/p/Testing123/','http://instagram.com/p/Testing123/','https://instagram.com/accounts/','https://instagram.com/explore/'])assert.equal(isInstagramLink(bad),false);
 });
 test('Instagram reads encoded public preview URLs despite the CDN name and account canonical',()=>{
  const html='<meta property="og:url" content="https://www.instagram.com/restaurant/p/Testing123/"><meta property="og:image" content="'+image.replace('&','&amp;')+'">';

@@ -1,3 +1,21 @@
+## Perfiles y publicaciones de Instagram — 31/10/2026
+
+Ver FOTOS-ENLACES.md. Instagram usa análisis 18 (resto de fuentes sigue 17).
+instagram-content.cjs extrae biografía, caption y medios asociados a identidad;
+instagram-reader.cjs admite perfiles y p/reel con el mismo shortcode, categorías
+Comer/Agenda/Casa y complemento desde la web declarada del perfil, con identidad.
+Fotos propias, sin avatar/recomendaciones; prioridad por textos de comida, no
+reconocimiento visual. Copia WebP privada de hasta 480 px/45 000 caracteres.
+Cliente reconoce versión por fuente y mantiene versión devuelta. Reanálisis al
+abrir, guardado explícito; respeta fotos/campos manuales y limpia campos automáticos
+no sustentados, sin usar fechas de publicación como fechas de planes. Sin IA,
+servicios de pago, dependencias nuevas, migraciones ni ediciones de fichas reales.
+Tres ejemplos reales leídos sin guardar: restaurante ISKCON, perfil Tapas 2254
+(foto de plato, contacto/web), plan Picos de Europa sin fecha. Fotos 24/11/24 KB.
+Primer post solo publica imagen del comedor con texto; no afirmar foto de comida.
+115 unitarias y Edge de Instagram, imágenes/pegado, compacto, comida, PWA y nube.
+Tiendas probadas con fuentes sintéticas; no afirmar prueba real de una tienda.
+
 ## Orden de cocinas y ficha de Casa simplificada — 31/10/2026
 
 Catálogo de comida ordenado alfabéticamente con locale español, tanto en Comer

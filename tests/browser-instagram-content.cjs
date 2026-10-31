@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),{chromium}=require('playwright');
+const {createServer}=require('../server.cjs'),{readInstagram}=require('../instagram-reader.cjs'),{prepareSocialImage}=require('../preview.cjs'),{copyImage}=require('../image-reader.cjs');
+(async()=>{
+ const photo=await copyImage('https://scontent.example.cdninstagram.com/photo.jpg',{readResource:async()=>({body:fs.readFileSync('icon-192.png')})});
+ const restaurant='https://www.instagram.com/mesa_sintetica/',place='https://www.instagram.com/p/Landscape123/',shop='https://www.instagram.com/muebles_sinteticos/';let reads=0;
+ const sources={
+  [restaurant]:{username:'mesa_sintetica',full_name:'Mesa de prueba',biography:'Restaurante de cocina mexicana. Abierto de 13h a 23h.',polaris_ordered_timeline_connection:{edges:[{node:{code:'Food123',user:{username:'mesa_sintetica'},display_uri:'https://scontent.example.cdninstagram.com/food.jpg',caption:{text:'Tacos recién hechos'}}}]}},
+  [place]:{code:'Landscape123',caption:{text:'Visita los lagos y las rutas de montaña de esta escapada.'},location:{name:'Lagos de prueba'},taken_at:1600000000,display_uri:'https://scontent.example.cdninstagram.com/lake.jpg'},
+  [shop]:{username:'muebles_sinteticos',full_name:'Muebles de prueba',biography:'Tienda de muebles y decoración. Sofás y mesas de madera.',polaris_ordered_timeline_connection:{edges:[{node:{code:'Shop123',user:{username:'muebles_sinteticos'},display_uri:'https://scontent.example.cdninstagram.com/sofa.jpg'}}]}}
+ };
+ const inspect=async url=>{reads++;return prepareSocialImage(await readInstagram(url,{readPage:async target=>({url:target,html:'<script type="application/json">'+JSON.stringify(sources[target])+'</script>'})}),url,{copyImage:async()=>photo})};
+ const server=createServer({env:{},inspect});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
+ try{
+  browser=await chromium.launch({channel:'msedge',headless:true});const p=await browser.newPage({viewport:{width:390,height:844}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://127.0.0.1:'+server.address().port);
+  for(const url of [restaurant,place,shop]){await p.locator('nav [data-page=home]').click();await p.locator('#link').fill(url);await p.locator('#capture button').click();await p.waitForFunction(url=>records.some(r=>r.url===url),url)}
+  const result=await p.evaluate(()=>records);assert.deepEqual(result.map(r=>r.kind),['restaurant','plan','buy']);for(const item of result){assert.equal(item.analysisVersion,'18');assert.equal(item.image,photo)}assert.equal(result[1].date,'');assert.equal(result[1].status,'Reservado');assert.equal(result[2].shop,'Muebles de prueba');
+  await p.locator('nav [data-page=restaurant]').click();assert.match(await p.locator('.card').innerText(),/Mexicana/);await p.locator('.card img').evaluate(e=>e.decode());await p.locator('.card').click();assert.equal(await p.locator('[name=cuisineType]').inputValue(),'Mexicana');assert.equal(reads,3);await p.locator('#editForm button[type=submit]').click();await p.waitForFunction(()=>!document.querySelector('#modal').open);
+  await p.locator('nav [data-page=plan]').click();await p.locator('[data-mode=list]').click();assert.match(await p.locator('.card').innerText(),/Lagos de prueba/);
+  await p.evaluate(url=>{const item=records.find(r=>r.url===url);item.analysisVersion='17';item.date='2099-10-18';item.endDate='2099-10-18';item.venue='Instagram';item.title='Mi título';item.titleMode='manual';item.summary='Mi resumen';item.manualFields=['title','summary'];item.summaryMode='manual';persist(records);editor(item.id)},place);
+  await p.waitForFunction(()=>document.querySelector('#analysisStatus')?.textContent.includes('Resumen extraído'));assert.equal(await p.locator('[name=title]').inputValue(),'Mi título');assert.equal(await p.locator('[name=summary]').inputValue(),'Mi resumen');assert.equal(await p.locator('[name=date]').inputValue(),'');assert.equal(await p.locator('[name=venue]').inputValue(),'Lagos de prueba');await p.locator('#editForm button[type=submit]').click();await p.waitForFunction(()=>!document.querySelector('#modal').open);assert.equal(await p.evaluate(url=>records.find(r=>r.url===url).analysisVersion,place),'18');
+  await p.locator('nav [data-page=buy]').click();await p.locator('.card').click();assert.equal(await p.locator('[name=shop]').inputValue(),'Muebles de prueba');assert.equal(await p.locator('[name=room],[name=category]').count(),0);assert.deepEqual(errors,[]);
+  console.log('PASS Instagram profiles/posts -> Comer/Agenda/Casa, compact photos, cuisine, reserved plans and protected v17 reanalysis without publication dates');
+ }finally{await browser?.close();await new Promise(r=>server.close(r))}
+})().catch(e=>{console.error(e);process.exitCode=1});

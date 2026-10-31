@@ -1,4 +1,4 @@
-# Fotos de enlaces — extractor 17
+# Fotos de enlaces — Instagram 18 / lector general 17
 
 Revisión del 31/10/2026. No se han modificado fichas reales para probarla.
 
@@ -10,7 +10,8 @@ visible cuando el enlace temporal de la foto caduque. No se guarda como un recur
 estático público ni en la caché PWA de la interfaz; sigue la privacidad de la ficha.
 La sincronización y el borrado mínimo ya existentes incluyen ese campo de imagen.
 
-Las fichas anteriores a la versión 17 se reanalizan al abrirlas. Hay que pulsar
+Instagram usa la versión 18; las demás fuentes conservan la 17. Las fichas de
+Instagram anteriores a la 18 se reanalizan al abrirlas. Hay que pulsar
 Guardar para conservar la imagen obtenida. No se hace un reemplazo masivo de datos
 ni se sustituyen fotos elegidas manualmente.
 
@@ -34,15 +35,35 @@ No se captura una pantalla de login, consentimiento o CAPTCHA como si fuera una 
 
 ## Instagram
 
-- Publicaciones, reels, rutas canónicas con nombre de cuenta y enlaces share.
-- Lee vistas previas públicas y JSON ligado al código de la publicación; ignora
-  recomendaciones de otros posts, perfiles, iconos y fotografías de avatar.
-- Se corrige el filtro general que rechazaba fotos por tener cdninstagram.com
-  en la dirección. También se reconoce la canónica /cuenta/p/código/.
-- Puede probar la vista incrustada pública y el lector dinámico cuando la página
-  pública no ofrece metadatos, sin iniciar sesión ni usar cookies del usuario.
-- No garantiza acceso a todas las publicaciones, perfiles, contenido privado,
-  enlaces caducados o pantallas de acceso. La alternativa manual sigue disponible.
+- Admite perfiles públicos, publicaciones, reels, canónicas con nombre de cuenta
+  y enlaces share. Un /p/código/ y un /reel/código/ pueden ser el mismo contenido.
+- Lee biografía/categoría/nombre del perfil y texto, ubicación y fotos de la
+  publicación solicitada. Excluye contadores, fechas de publicación, datos de
+  recomendaciones y fotos de otras cuentas. No usa el nombre del periodista
+  como si fuese el restaurante o el lugar descrito. Normaliza letras decorativas.
+- Clasifica contenido reconocible como restaurante (Comer), lugar/actividad
+  (Agenda) o muebles/decoración (Casa). Lo ambiguo sigue Por revisar. Extrae
+  resumen, cocina, precios, horarios, dirección, teléfono y web cuando constan.
+  No inventa el número de una calle, una fecha de visita ni un precio ausente.
+- Para perfiles, prioriza fotos propias con descripción de comida en restaurantes
+  y excluye el avatar. Para posts usa sus fotos/portadas, incluidos carruseles;
+  no toma las fotos del perfil de quien recomienda un lugar. La prioridad usa
+  textos publicados, sin reconocimiento visual por IA: no garantiza que toda
+  publicación tenga una foto de comida. Una foto del local es válida si es la
+  que publica el post, pero no se presenta como comida comprobada.
+- La web que el propio perfil declara puede completar datos cuando coincide
+  la identidad. Hasta portada y una página de contacto del mismo origen; no
+  se investiga la web del autor de una recomendación. Las fotos siguen siendo
+  de Instagram. Cada petición conserva el lector público con DNS/IP validados.
+- Puede probar vista incrustada pública y lector dinámico, sin sesión ni cookies
+  del usuario. No elude cuentas privadas, login o CAPTCHA. Si no hay acceso,
+  ofrece completar manualmente y elegir/pegar una foto. No garantiza todos los
+  perfiles ni posts: Instagram cambia y puede restringir lectura desde Render.
+- El reanálisis conserva campos/fotos manuales. Solo al pulsar Guardar se
+  persiste la nueva ficha; no hay reescritura masiva ni pruebas con datos reales.
+  Los campos automáticos no sustentados (incluidas falsas fechas) se limpian.
+- Presupuesto de lectura 30 s más hasta 11 s de copia/compresión de imagen,
+  sin nuevos servicios, dependencias, claves de IA ni costes contratados.
 
 ## Tamaño y aislamiento
 
@@ -79,3 +100,22 @@ DNS privado, bombas de descompresión, formato de imagen y conservación en el a
 foto disponible sin conexión, pegado, protección manual y alternativa tras error.
 También pasan agenda, editor compacto, nube, Maps, PWA, atajo, compartir y acceso
 alojado, con contextos nuevos y datos sintéticos. El lector dinámico aislado da ready.
+
+## Ampliación de perfiles y contenido — 31/10/2026
+
+Verificados por inspect() real los tres enlaces aportados, sin guardarlos:
+
+- Deo9rRviCtb: Comer; Hare Krishna ISKCON Barcelona, zona/plaza, menú 9 €,
+  apertura entre semana al mediodía. La única foto muestra el comedor con texto
+  (24 396 bytes), no un plato.
+- tapas2254: Comer; Tapas 2254, cocina italo-catalana, horario, dirección y
+  teléfono de su web declarada. Foto propia de comida, 10 604 bytes.
+- Dee4Y-LCn_Q: Agenda; Picos de Europa, sin fecha inventada ni zona BCN/VLC.
+  Canónica reel reconocida; miniatura del paisaje, 24 022 bytes.
+
+No se almacenan estas respuestas o fotos reales en Git. Tiendas de muebles
+verificadas con fixtures sintéticos, sin atribuir una prueba real no realizada.
+115 pruebas unitarias y Edge: perfiles/posts hacia Comer/Agenda/Casa, fotos
+compactas, cocina, Reservado en nuevos planes, reanálisis 17→18 y protección
+manual. También pasan imágenes/pegado/sin red, editor compacto, filtros de
+comida, PWA y nube (esta última comprobada de forma aislada).
