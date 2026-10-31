@@ -34,8 +34,9 @@ sin distorsionar la imagen. No hay decoración dentro de cada casilla. La capa
 queda detrás de números, líneas y planes; es aria-hidden y no captura toques.
 Opacidad: otoño 30 %, verano 32 %, primavera 35 %, invierno 43 %.
 
-La lectura se refuerza con números oscuros en negrita sobre círculos claros,
-líneas más contrastadas y planes con texto seminegrita y borde por zona.
+La lectura se refuerza con números oscuros sin círculo blanco,
+líneas más contrastadas y planes con un borde interior por zona, conservando
+el tamaño, el peso y la tipografía anteriores al ajuste de contraste.
 Las tramas personales son suaves para no competir con el texto. El día actual
 conserva fondo oscuro y número blanco. Estos ajustes no atenúan las escenas.
 
