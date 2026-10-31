@@ -13,6 +13,7 @@ function createShortcutAPI({config=require('./supabase-public.json'),fetchImpl=f
 }
 function makePayload(info,url){
  const out={};for(const [k,v]of Object.entries(info||{})){if(typeof v==='string')out[k]=v.slice(0,10000)}
+ out.image=require('./card-fields.js').imageSource(info?.image);
  out.title=(out.workTitle||out.title||new URL(url).hostname).slice(0,160);
  out.kind=['plan','restaurant','buy','inbox'].includes(out.kind)?out.kind:'inbox';
  if(!['Valencia','Barcelona'].includes(out.city)||out.kind==='buy')out.city='';

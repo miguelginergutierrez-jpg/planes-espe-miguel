@@ -22,7 +22,7 @@ function pageImage(html,reading,entity,metas,url,title){
  const decorative=value=>/(?:^|[\s/_\-.])(?:logo|favicon|icon|ico|sprite|placeholder|loading|loader|pixel|redessociales|sponsor|patrocinador)(?:[\s/_\-.]|$)|facebook|twitter|instagram|youtube|linkedin/i.test(value);
  function add(value,score,label='',width=0){
   if(Array.isArray(value)){value.forEach(v=>add(v,score,label,width));return;}if(value&&typeof value==='object'){add(value.contentUrl||value.url,score,label,Number(value.width)||width);return;}
-  const image=canonical(value);if(!image||decorative(image+' '+label))return;
+  const image=canonical(value);if(!image||decorative(label)||/(?:^|[\s/_\-.])(?:logo|favicon|icon|sprite|placeholder|pixel)(?:[\s/_\-.]|$)/i.test(new URL(image).pathname)||/\/(?:instagram|facebook|twitter|linkedin)(?:[-_](?:icon|logo))?\.(?:png|svg|gif|webp)$/i.test(new URL(image).pathname))return;
   const size=image.match(/[-_.](\d{2,4})x(\d{2,4})(?:[._-]|$)/);width=width||Number(size?.[1])||0;
   if(width&&width<100)return;const matching=tokens.filter(t=>flat(image+' '+label).includes(t)).length;
   candidates.push({image,score:score+Math.min(matching,3)*3+(width>=600?4:width&&width<400?-4:0),width});

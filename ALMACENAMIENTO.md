@@ -22,8 +22,10 @@ de las escenas, el encuadre y las opacidades del calendario.
 Nuevas fotos añadidas como archivo: WebP, con alternativa JPEG si el navegador
 no puede codificar WebP. Lado mayor hasta 640 px, máximo 60 000 caracteres de
 data URL. Se siguen leyendo las fotos antiguas de hasta 120 000 caracteres.
-No se han recomprimido automáticamente fotos de fichas ya guardadas ni imágenes
-enlazadas a webs externas. Estas últimas dependen del servidor de origen.
+No se han recomprimido en bloque fotos de fichas ya guardadas. Desde el extractor
+17, las imágenes públicas recuperadas de Maps e Instagram se copian como WebP
+de hasta 480 px y 45 000 caracteres, dentro de la ficha. Ver FOTOS-ENLACES.md.
+Las demás imágenes externas siguen dependiendo del servidor de origen.
 
 ## Qué sucede al borrar o caducar una ficha
 

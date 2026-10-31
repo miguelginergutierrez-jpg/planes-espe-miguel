@@ -1,3 +1,11 @@
+# Fotos y lugares de Maps — versión 17
+
+Actualización del 31/10/2026: ver FOTOS-ENLACES.md. Se verifican también Place ID
+y CID numérico. Se prioriza comida etiquetada, pero se admite una foto representativa
+del local sin llamarla comida verificada. Museos y otros lugares visitables pueden
+ser planes sin fecha; categorías desconocidas quedan por revisar. Fotos copiadas
+como miniaturas WebP privadas. Las notas de versión 16 siguientes son históricas.
+
 # Restaurantes de Google Maps — versión 16
 
 Revisión del 27/10/2026. Se añade `maps-reader.cjs` y se amplía el modelo y la ficha de restaurantes. No se modifica el almacenamiento del usuario ni se publican cambios en GitHub.

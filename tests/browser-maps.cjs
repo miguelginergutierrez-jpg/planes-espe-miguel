@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(require('../reader-runtime.cjs').resolve('playwright'));
 const root=path.join(__dirname,'..');
-const result={kind:'restaurant',title:'Restaurante de prueba',url:'https://maps.app.goo.gl/test',city:'Barcelona',address:'Carrer de Prova, 3',summary:'Restaurante de cocina mediterránea.',cuisine:'Mediterránea',price:'10–20 €',phone:'931 11 22 33',website:'https://example.org/',googleRating:'4.5',googleReviews:'460',time:'Martes a sábado: 10:00–20:00',analysisVersion:'16',aiStatus:'unconfigured',summarySource:'extract'};
+const result={kind:'restaurant',title:'Restaurante de prueba',url:'https://maps.app.goo.gl/test',city:'Barcelona',address:'Carrer de Prova, 3',summary:'Restaurante de cocina mediterránea.',cuisine:'Mediterránea',price:'10–20 €',phone:'931 11 22 33',website:'https://example.org/',googleRating:'4.5',googleReviews:'460',time:'Martes a sábado: 10:00–20:00',analysisVersion:'17',aiStatus:'unconfigured',summarySource:'extract'};
 const server=http.createServer((req,res)=>{
  if(req.url==='/api/status'){res.setHeader('content-type','application/json');return res.end('{"configured":false}')}
  if(req.url==='/api/inspect'){res.setHeader('content-type','application/json');return res.end(JSON.stringify(result))}

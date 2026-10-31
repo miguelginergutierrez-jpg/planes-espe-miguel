@@ -69,7 +69,7 @@ const {createServer}=require('../server.cjs');
    const scene=p.locator('.month-scene');
    assert.equal(await scene.getAttribute('aria-hidden'),'true');
    const style=await scene.evaluate(e=>({opacity:Number(getComputedStyle(e).opacity),pointer:getComputedStyle(e).pointerEvents,z:getComputedStyle(e).zIndex}));
-   assert.ok(style.opacity>=.3&&style.opacity<=.45);
+   assert.ok(style.opacity>=.28&&style.opacity<=.41);
    assert.equal(style.pointer,'none');assert.equal(style.z,'-1');
    await scene.locator('img').evaluate(e=>e.decode());
    assert.equal(await scene.locator('img').evaluate(e=>e.naturalWidth),512);

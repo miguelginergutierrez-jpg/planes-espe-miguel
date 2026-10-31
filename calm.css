@@ -74,7 +74,7 @@ body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-con
 .calitem.owner-ambos,.owner-ambos .badge{background-image:repeating-linear-gradient(135deg,transparent 0 5px,currentColor 5px 7px),radial-gradient(currentColor 1.2px,transparent 1.3px);background-size:auto,7px 7px}
 .calitem.owner-ambos,.owner-ambos .badge{background-image:none}
 .sheet-dialog .sheet form{display:flex;flex-direction:column}.sheet-dialog .sheet-heading{order:1}.sheet-dialog .sheet-save{order:2}.sheet-dialog .sheet-cover,.sheet-dialog .source-line,.sheet-dialog #urlLabel,.sheet-dialog .sheet-summary,.sheet-dialog .image-editor{order:3}.sheet-dialog .sheet-zone{order:4}.sheet-dialog .sheet-fields{order:5}.sheet-dialog .session-details,.sheet-dialog .documents-section{order:6}.sheet-dialog .sheet-state{order:3;margin:4px 0 8px;padding:0}.sheet-dialog .state-tags{gap:5px;flex-wrap:nowrap}.sheet-dialog .state-tag{padding:5px 8px;font-size:11px;white-space:nowrap}.sheet-dialog .sheet-zone{margin:8px 0 12px}.sheet-dialog .chips{gap:5px}.sheet-dialog .citytag{padding:5px 9px;font-size:11px}
-.sheet-dialog form:has(.sheet-cover) .image-editor{display:none}
+.sheet-dialog form:has(.sheet-cover:not([hidden])) .image-editor{display:none}
 .sheet-dialog .sheet-heading .eyebrow{display:none}.sheet-dialog .sheet-heading{padding-right:150px}.sheet-dialog .sheet-save{position:absolute;top:0;right:0;margin:0;padding:0;border:0;background:transparent;z-index:3;justify-content:flex-end}.sheet-dialog .sheet{overflow-x:hidden}.sheet-dialog .sheet form>*{max-width:100%;box-sizing:border-box}.sheet-dialog .sheet-state{order:4}.sheet-dialog .sheet-zone{order:5}.sheet-dialog .sheet-fields{order:6}.sheet-dialog .session-details,.sheet-dialog .documents-section{order:7}.sheet-dialog .sheet-summary{margin-top:8px;margin-bottom:8px}.sheet-dialog .sheet-summary textarea{min-height:0}.sheet-dialog .state-tag{padding:4px 7px;font-size:11px}
 .sheet-dialog .chips{padding-left:9px;overflow:visible}.sheet-dialog .citytag{flex-shrink:0}
 .sheet-dialog .sheet-fields{border-top:0;padding-top:0}.sheet-dialog input,.sheet-dialog select,.sheet-dialog textarea{font-size:16px}.sheet-dialog .sheet-fields input,.sheet-dialog .sheet-fields select,.sheet-dialog .sheet-fields textarea{font-size:16px}
@@ -101,11 +101,11 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 /* One organic monthly composition, independent of the day grid. */
 .calendar{position:relative;isolation:isolate;overflow:hidden}
 .calendar .calgrid{position:relative;isolation:auto}
-.month-scene{position:absolute;inset:22px 0 0;z-index:-1;opacity:.30;pointer-events:none;overflow:visible;container-type:size}
+.month-scene{position:absolute;inset:22px 0 0;z-index:-1;opacity:.28;pointer-events:none;overflow:visible;container-type:size}
 .month-scene img{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100cqw,100cqh);height:max(100cqw,100cqh);max-width:none;object-fit:contain;pointer-events:none}
-.calendar[data-season="winter"] .month-scene{opacity:.43}
-.calendar[data-season="spring"] .month-scene{opacity:.35}
-.calendar[data-season="summer"] .month-scene{opacity:.32}
+.calendar[data-season="winter"] .month-scene{opacity:.41}
+.calendar[data-season="spring"] .month-scene{opacity:.33}
+.calendar[data-season="summer"] .month-scene{opacity:.30}
 .calendar .daynum{text-shadow:0 1px 2px #fff,0 0 3px #fff}
 .cards .card .art.brand-art img{width:100%;height:100%;max-width:100%;transform:none;object-fit:contain}
 .cards .card .art.brand-art{background:#d8c4a6}

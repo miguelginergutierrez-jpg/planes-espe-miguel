@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),{chromium}=require('../node_modules/playwright'),{createServer}=require('../server.cjs');
 (async()=>{let deny=true,calls=0;const env={PLANES_REQUIRE_AUTH:'1'};
- const server=createServer({env,authorize:async()=>{if(deny)throw Object.assign(Error('Sesión necesaria'),{status:401});return 'fixture'},inspect:async url=>{calls++;return {kind:'restaurant',title:'Restaurante compartido',url,analysisVersion:'16'}}});
+ const server=createServer({env,authorize:async()=>{if(deny)throw Object.assign(Error('Sesión necesaria'),{status:401});return 'fixture'},inspect:async url=>{calls++;return {kind:'restaurant',title:'Restaurante compartido',url,analysisVersion:'17'}}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;env.PLANES_PUBLIC_ORIGIN=base;let browser;
  try{browser=await chromium.launch({channel:'msedge',headless:true});const ctx=await browser.newContext(),page=await ctx.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const url='https://example.org/menu?uno=1&dos=2#precio';

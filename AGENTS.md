@@ -1,3 +1,29 @@
+## Fotos de Maps e Instagram y opacidad — 31/10/2026
+
+Extractor versión 17, coherente en backend, editor y atajo. Ver FOTOS-ENLACES.md.
+Calendario dos puntos porcentuales más transparente: otoño 28 %, invierno 41 %,
+primavera 33 %, verano 30 %, sin cambiar encuadre ni tamaños.
+Maps: identidad por identificador hexadecimal, Place ID o CID, incluida búsqueda
+oficial. Prioriza comida etiquetada; acepta foto representativa del lugar sin
+presentarla como comida, nunca avatares de reseñas. Museos/parques/lugares de
+visita se reconocen como planes sin inventar fecha; otros tipos quedan por revisar.
+Instagram: metadatos públicos y JSON del post, canónicas con cuenta, reels y
+enlaces share. Se corrige el rechazo de CDN legítimos por el nombre instagram.
+Vista pública incrustada o renderizado como alternativa; sin login, perfiles
+personales de navegador ni evasión de bloqueos. No garantiza todas las publicaciones.
+Miniatura copiada dentro de la ficha: WebP hasta 480 px y 45 000 caracteres,
+sin depender del CDN temporal. Descarga limitada a 2 MB, ráster verificado y
+8 MP; codificación aislada con red bloqueada y sandbox en producción.
+El editor admite pegar PNG/JPEG/WebP como captura, con la compresión existente.
+Una imagen rota deja visible la opción de elegir otra. Se respetan fotos manuales.
+El atajo conserva el data URL completo: antes lo truncaba a 10 000 caracteres.
+Fichas antiguas se reanalizan al abrir, pero solo Guardar persiste la nueva foto.
+Probado por lectura pública real: Maps de muestra 6 602 bytes, enlace corto
+aportado por el usuario 11 520 bytes, publicación Instagram 9 330 bytes.
+No se guardaron fichas reales ni se tocaron Supabase/migraciones/RLS o claves.
+104 pruebas unitarias; Edge aislado: fotos/pegado/offline, agenda, edición, nube,
+Maps, PWA, atajo, compartir, acceso alojado y lectura dinámica sintética.
+
 ## Compresión y contenido de fichas borradas — 31/10/2026
 
 Ver ALMACENAMIENTO.md. Los 20 recursos gráficos descargados pasan de 2 191 439
