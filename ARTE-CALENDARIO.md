@@ -29,16 +29,20 @@ manteniendo transparencia. No hay llamadas de generación desde la aplicación.
 en marzo, intercambia las composiciones 03 y 04; no depende del año actual.
 Son imágenes ambientales del mes, no marcadores de festivos ni pronóstico.
 
-Una sola capa `.month-scene` cubre la rejilla completa, con encuadre adaptable
-sin distorsionar la imagen. No hay decoración dentro de cada casilla. La capa
+Una sola capa `.month-scene` cubre la rejilla completa. Conserva la escala y
+posición del encuadre anterior, sin distorsión ni reducción para hacerla caber.
+La imagen puede sobresalir de la rejilla por detrás de la cabecera: su único
+límite de recorte es el marco exterior redondeado de la agenda.
+No hay decoración dentro de cada casilla. La capa
 queda detrás de números, líneas y planes; es aria-hidden y no captura toques.
 Opacidad: otoño 30 %, verano 32 %, primavera 35 %, invierno 43 %.
 
 La lectura se refuerza con números oscuros sin círculo blanco,
 líneas más contrastadas y planes con un borde interior por zona, conservando
 el tamaño, el peso y la tipografía anteriores al ajuste de contraste.
-Las tramas personales son suaves para no competir con el texto. El día actual
-conserva fondo oscuro y número blanco. Estos ajustes no atenúan las escenas.
+Las tramas personales son suaves para no competir con el texto. El número del
+día actual tiene el mismo estilo que los demás, sin burbuja ni fondo propio.
+Estos ajustes no atenúan las escenas.
 
 ## Personajes y portadas
 

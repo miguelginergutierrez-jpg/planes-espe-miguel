@@ -1,7 +1,7 @@
 ## Contraste de la agenda — 31/10/2026
 
 Calendario más legible sobre las ilustraciones: números oscuros de 12 px sin
-círculo blanco y con peso moderado; hoy conserva círculo oscuro y número blanco.
+círculo y con peso moderado; hoy tiene el mismo estilo de número que los demás.
 Cabecera de días más oscura y líneas horizontales más definidas, aceptadas.
 Por corrección del usuario, los planes conservan tamaño, peso, fuente y padding
 anteriores al ajuste de contraste. Se mantiene borde visual mediante sombra interior,
@@ -9,6 +9,12 @@ sin aumentar dimensiones, fondos opacos por zona y tramas personales suavizadas.
 No se cambia la opacidad de las escenas ni la lógica de datos/filtros.
 Verificados agenda por mes y editor compacto en Edge con datos sintéticos,
 320/390/768/1100 px, y capturas de enero con planes y diciembre.
+
+Encuadre corregido: la ilustración conserva la escala y posición del antiguo
+cover de la rejilla, pero ya no se corta en esa caja ni en la propia imagen.
+Puede extenderse por detrás de la cabecera y solo recorta en el marco exterior
+redondeado de la agenda. Verificado por medidas a 320/390/1100 px, sin modificar
+los recursos, su opacidad ni el tamaño de la rejilla.
 
 ## Composiciones mensuales y portadas continuas — 31/10/2026
 
