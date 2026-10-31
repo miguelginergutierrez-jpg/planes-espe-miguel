@@ -79,7 +79,7 @@ body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-con
 .sheet-dialog .chips{padding-left:9px;overflow:visible}.sheet-dialog .citytag{flex-shrink:0}
 .sheet-dialog .sheet-fields{border-top:0;padding-top:0}.sheet-dialog input,.sheet-dialog select,.sheet-dialog textarea{font-size:16px}.sheet-dialog .sheet-fields input,.sheet-dialog .sheet-fields select,.sheet-dialog .sheet-fields textarea{font-size:16px}
 .sheet-dialog .sheet-zone{margin-bottom:0}.sheet-dialog .sheet-fields{margin-top:0;gap:10px 14px}
-.owner-options{display:flex;gap:5px;flex-wrap:nowrap}.owner-option{flex:1;border:1px solid var(--line);border-radius:9px;padding:6px 7px;font-size:11px;white-space:nowrap;background:transparent;color:var(--muted)}.owner-option.selected{background:#e1eaf1;color:var(--green);border-color:#9db4c4;font-weight:650}.owner-picker{grid-column:1/-1}.owner-picker .field-heading{display:block;margin-bottom:5px}.owner-picker input{display:none}nav button[data-page="restaurant"] b{font-size:0}nav button[data-page="restaurant"] b:after{content:'🍴';font-size:21px}
+.owner-options{display:flex;gap:5px;flex-wrap:nowrap}.owner-option{flex:1;border:1px solid var(--line);border-radius:9px;padding:6px 7px;font-size:11px;white-space:nowrap;background:transparent;color:var(--muted)}.owner-option.selected{background:#e1eaf1;color:var(--green);border-color:#9db4c4;font-weight:650}.owner-picker{grid-column:1/-1}.owner-picker .field-heading{display:block;margin-bottom:5px}.owner-picker input{display:none}
 
 /* Shared controls stay aligned across Agenda, Comer and Casa. */
 .collection-controls .city{gap:4px}
@@ -87,3 +87,13 @@ body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-con
 .collection-controls .filter-panel .city .pill[data-city="Todas"]{width:52px}
 .collection-controls .filter-panel .city .pill,.collection-controls .seg .icon-toggle,.collection-controls #statusFilter{height:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;line-height:normal}
 @media(max-width:370px){.collection-controls .city{gap:3px}.collection-controls .filter-panel .city .pill{width:38px}.collection-controls .filter-panel .city .pill[data-city="Todas"]{width:42px}}
+
+/* Platform-independent line icons and portraits from the original brand image. */
+.header-actions .avatar svg,nav b svg{display:block;flex-shrink:0}
+nav b{display:flex;align-items:center;justify-content:center;height:25px}
+.cards .card .art.portrait-miguel,.cards .card .art.portrait-espe{position:relative}
+.cards .card .art.portrait-miguel img,.cards .card .art.portrait-espe img{position:absolute;top:0;left:0;width:200%;height:100%;max-width:none;object-fit:contain}
+.cards .card .art.portrait-espe img{transform:translateX(-50%)}
+.sheet-dialog .sheet-cover.portrait-miguel,.sheet-dialog .sheet-cover.portrait-espe{width:75px;height:150px;max-height:none;object-fit:cover;background:#eaddc9}
+.sheet-dialog .sheet-cover.portrait-miguel{object-position:left center}
+.sheet-dialog .sheet-cover.portrait-espe{object-position:right center}

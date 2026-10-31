@@ -1,3 +1,15 @@
+## Iconos planos y retratos individuales — 31/10/2026
+
+Actualizar tiene flechas dentro del viewBox, sin puntas recortadas. Ajustes y
+toda la navegación usan SVG de línea monocromos, sin emoji dependiente del móvil.
+Los planes individuales sin foto propia muestran por defecto el personaje del
+logo: Miguel verde (izquierda), Espe naranja (derecha), también en visitas.
+El encuadre usa el logo original, sin modificar el archivo ni los datos guardados.
+La ficha actualiza la vista previa al cambiar propietario; conserva fotos propias
+y la opción de quitar imagen. Las tarjetas mantienen su altura compacta.
+Verificados visualmente y con tests/browser-icons-portraits.cjs en Edge aislado;
+también pasan interfaz compacta, agenda por mes y las 89 pruebas unitarias.
+
 ## Agenda por mes y controles unificados — 31/10/2026
 
 En calendario, las fichas inferiores muestran solo planes del mes visible,
