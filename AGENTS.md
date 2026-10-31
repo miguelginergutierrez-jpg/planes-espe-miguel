@@ -1,3 +1,9 @@
+## Ilustraciones diez puntos más transparentes — 31/10/2026
+
+Opacidad actual: otoño 13 %, invierno 26 %, primavera 18 %, verano 15 %.
+Diez puntos menos respecto al ajuste anterior, sin modificar tamaños, posición
+ni los números, líneas o fichas. Agenda verificada con datos sintéticos en Edge.
+
 ## Ilustraciones cinco puntos más transparentes — 31/10/2026
 
 Opacidad actual: otoño 23 %, invierno 36 %, primavera 28 %, verano 25 %.

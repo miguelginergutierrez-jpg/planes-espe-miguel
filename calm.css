@@ -101,11 +101,11 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 /* One organic monthly composition, independent of the day grid. */
 .calendar{position:relative;isolation:isolate;overflow:hidden}
 .calendar .calgrid{position:relative;isolation:auto}
-.month-scene{position:absolute;inset:22px 0 0;z-index:-1;opacity:.23;pointer-events:none;overflow:visible;container-type:size}
+.month-scene{position:absolute;inset:22px 0 0;z-index:-1;opacity:.13;pointer-events:none;overflow:visible;container-type:size}
 .month-scene img{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100cqw,100cqh);height:max(100cqw,100cqh);max-width:none;object-fit:contain;pointer-events:none}
-.calendar[data-season="winter"] .month-scene{opacity:.36}
-.calendar[data-season="spring"] .month-scene{opacity:.28}
-.calendar[data-season="summer"] .month-scene{opacity:.25}
+.calendar[data-season="winter"] .month-scene{opacity:.26}
+.calendar[data-season="spring"] .month-scene{opacity:.18}
+.calendar[data-season="summer"] .month-scene{opacity:.15}
 .calendar .daynum{text-shadow:0 1px 2px #fff,0 0 3px #fff}
 .cards .card .art.brand-art img{width:100%;height:100%;max-width:100%;transform:none;object-fit:contain}
 .cards .card .art.brand-art{background:#d8c4a6}

@@ -35,8 +35,8 @@ La imagen puede sobresalir de la rejilla por detrás de la cabecera: su único
 límite de recorte es el marco exterior redondeado de la agenda.
 No hay decoración dentro de cada casilla. La capa
 queda detrás de números, líneas y planes; es aria-hidden y no captura toques.
-Opacidad: otoño 23 %, verano 25 %, primavera 28 %, invierno 36 %.
-Se redujo cinco puntos porcentuales adicionales sin cambiar tamaños ni encuadre.
+Opacidad: otoño 13 %, verano 15 %, primavera 18 %, invierno 26 %.
+Se redujo otros diez puntos porcentuales sin cambiar tamaños ni encuadre.
 
 La lectura se refuerza con números oscuros sin círculo blanco,
 líneas más contrastadas y planes con un borde interior por zona, conservando
