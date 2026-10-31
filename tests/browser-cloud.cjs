@@ -1,7 +1,7 @@
 // Fresh browser contexts and synthetic backend only. Never touches the user's session.
 const assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('../node_modules/playwright');const root=path.join(__dirname,'..');
-const allowed=new Set(['index.html','app.js','food-types.js','card-fields.js','share-input.js','documents.js','classifier.js','event-data.js','culture-data.js','cinema-data.js','cloud-connect.js','cloud-migrate.js','cloud-sync.js','cloud-session.js','cloud-controller.js','calm.css','supabase-public.json','logo-espe-miguel.jpg']);
+const allowed=new Set(['index.html','app.js','checklists.js','lists-controller.js','lists-ui.js','food-types.js','card-fields.js','share-input.js','documents.js','classifier.js','event-data.js','culture-data.js','cinema-data.js','cloud-connect.js','cloud-migrate.js','cloud-sync.js','cloud-session.js','cloud-controller.js','calm.css','supabase-public.json','logo-espe-miguel.jpg']);
 const server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1).split('?')[0];if(req.url==='/api/status'){res.setHeader('content-type','application/json');return res.end('{"configured":false}')}if(!allowed.has(name)){res.writeHead(404);return res.end()}res.setHeader('content-type',name.endsWith('.js')?'text/javascript':name.endsWith('.json')?'application/json':name.endsWith('.css')?'text/css':name.endsWith('.html')?'text/html':'image/jpeg');res.end(fs.readFileSync(path.join(root,name)))});
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
@@ -10,6 +10,7 @@ try{
   if(offline)return route.abort();const req=route.request(),u=new URL(req.url()),method=req.method();
   if(u.pathname==='/auth/v1/token'){if(u.searchParams.get('grant_type')==='refresh_token')refreshes++;return route.fulfill({json:{access_token:'synthetic-access',refresh_token:'synthetic-refresh',expires_in:3600}})}
   if(u.pathname==='/auth/v1/user')return route.fulfill({json:{id:'synthetic-user'}});
+  if(u.pathname==='/rest/v1/planes_lists')return route.fulfill({json:[]});
   if(u.pathname==='/rest/v1/planes_members')return route.fulfill({json:[{slot:1}]});
   if(u.pathname.startsWith('/storage/')){const key=u.pathname.split('/planes-documents/')[1];if(method==='POST'){files.set(key,req.postDataBuffer());return route.fulfill({json:{}})}return files.has(key)?route.fulfill({body:files.get(key)}):route.fulfill({status:404,body:''})}
   if(u.pathname==='/rest/v1/planes_items'){

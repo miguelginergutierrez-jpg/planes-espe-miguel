@@ -1,11 +1,11 @@
 # Continuar desde el ordenador de casa
 
-Estado comprobado el 30 de octubre de 2026. No necesitas el móvil Android todavía.
+Estado comprobado el 31 de octubre de 2026. No necesitas el móvil Android todavía.
 
-Último commit publicado: `8d2efbc`. Incluye la última compactación de fichas,
-selector de propietarios, gesto de agenda y prevención del zoom móvil.
-
-La rama activa es `codex/publicacion-movil`, en el commit `8d2efbc`.
+La rama activa es `codex/publicacion-movil`. Recupera siempre el último commit
+desde GitHub: no vuelvas al commit histórico de esta guía. Incluye Listas con
+acceso exclusivo, tipos de comida e imágenes por URL. Ver LISTAS-COMPARTIDAS.md.
+004 ya aplicada: no repetirla ni las anteriores.
 La sincronización, PWA, atajo de iPhone y despliegue gratuito ya están
 implementados; las notas históricas que indiquen lo contrario quedan
 superadas por `AGENTS.md`.

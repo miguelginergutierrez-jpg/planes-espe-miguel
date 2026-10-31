@@ -119,3 +119,16 @@ verificadas con fixtures sintéticos, sin atribuir una prueba real no realizada.
 compactas, cocina, Reservado en nuevos planes, reanálisis 17→18 y protección
 manual. También pasan imágenes/pegado/sin red, editor compacto, filtros de
 comida, PWA y nube (esta última comprobada de forma aislada).
+
+## Imágenes manuales por URL — 31/10/2026
+
+La URL puede apuntar a la foto o a una página que la contiene, como Archivo:
+de Wikipedia. /api/image obtiene una copia por el lector público protegido y
+la reduce a WebP privado (480 px/45 000 caracteres). Misma autorización/origen/
+límites de uso que inspect; no copia cookies ni credenciales del navegador.
+Se conserva hasta Guardar; no modifica automáticamente la colección.
+La vista previa se actualiza en fichas nuevas/existentes, Guardar espera a que
+termine la copia y los errores se muestran con opción de cambiar/quitar foto.
+No garantiza páginas privadas, enlaces caducados ni fuentes que bloquean la lectura.
+Probado el Archivo:EU_Elections_2024_-_Voting_in_Luxembourg_-_5.jpg de Wikipedia:
+WebP 9 744 bytes. Respuesta/foto real solo en test-results ignorado.

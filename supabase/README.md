@@ -1,3 +1,11 @@
+## Listas privadas — 31/10/2026
+
+004_shared_lists.sql aplicada con éxito y privacidad verificada. NO repetirla.
+Nuevas tablas planes_lists/planes_list_locks, con RPC de acceso/guardado y
+exclusión de un editor por lista. No altera tablas/permisos anteriores.
+Sin listas de prueba en producción. Ver ../LISTAS-COMPARTIDAS.md para límites,
+borradores, copias y comprobación de dos cuentas en PostgreSQL aislado.
+
 ## Prueba de adjunto real completada — 28/10/2026
 
 El usuario mostró Chrome en localhost:4173 con estado «Sincronizado». Se añadió,

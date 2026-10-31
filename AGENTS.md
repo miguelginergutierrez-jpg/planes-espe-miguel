@@ -1,3 +1,27 @@
+## Listas exclusivas e imágenes por URL — 31/10/2026
+
+Ver LISTAS-COMPARTIDAS.md. Quinta sección Listas tras Casa: +, título, puntos,
+casillas, Guardar y Borrar. Cambio explícito del usuario: solo una persona edita
+cada lista. Se descarta la propuesta anterior de fusiones/conflictos por punto.
+Avisos «Lista en uso por amorcito» / «Amorcito quiere acceder a la lista».
+Lease de 45 s renovable cada 10 s, escritura validada por RPC en servidor,
+solo lectura al perder acceso y borrador local recuperable como otra lista si
+la versión cambió. No hay edición compartida sin conexión ni perfiles nuevos.
+004_shared_lists.sql YA aplicada con éxito en el proyecto existente, tablas
+planes_lists/list_locks y RPC access/save; no repetirla ni migraciones anteriores.
+Privacidad verificada por consulta: RLS ambas true, anónimo/direct-write/locks-read
+false. Sin nuevas cuentas ni cambios a fichas/miembros/reglas existentes.
+Copias versión 3 añaden listas; importación 1/2 conserva compatibilidad.
+
+Imágenes manuales: /api/image, misma autenticación/origen/límites de inspect;
+acepta URL directa o página con foto. Wikipedia Archivo usa la vista de esa foto,
+no iconos de la página; copia WebP privada y compacta. Enlace real aportado: foto
+9 744 bytes, sin crear ficha. Guardar espera a la carga y explica errores; las
+fotos de fichas ya creadas permiten abrir «Cambiar imagen». Sin reescritura masiva.
+121 unitarias, SQL PostgreSQL en memoria con dos miembros, Edge listas/URL,
+compacto/agenda/imágenes/PWA/nube. Ninguna lista ni ficha real creada/borrada para
+pruebas. Pendiente prueba de listas entre dispositivos reales de la pareja.
+
 ## Perfiles y publicaciones de Instagram — 31/10/2026
 
 Ver FOTOS-ENLACES.md. Instagram usa análisis 18 (resto de fuentes sigue 17).

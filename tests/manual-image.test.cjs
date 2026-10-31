@@ -1,0 +1,14 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),{resolveImage}=require('../manual-image.cjs'),{createServer}=require('../server.cjs');
+const compact='data:image/webp;base64,YQ==';
+test('Wikipedia file page uses its image preview, not the HTML page or unrelated icons',async()=>{
+ const calls=[],url='https://es.wikipedia.org/wiki/Archivo:Fixture.jpg';const result=await resolveImage(url,{readPage:async()=>({url,html:'<div class="fullImageLink"><a href="https://upload.wikimedia.org/original.jpg"><img src="//upload.wikimedia.org/thumb/preview.jpg"></a></div><meta property="og:image" content="https://example.org/unrelated.jpg">'}),copyImage:async target=>{calls.push(target);return compact}});assert.equal(result,compact);assert.deepEqual(calls,['https://upload.wikimedia.org/thumb/preview.jpg']);
+});
+test('direct photos and public page previews become compact copies; private routes keep network validation',async()=>{
+ assert.equal(await resolveImage('https://example.org/photo.jpg',{copyImage:async()=>compact,readPage:()=>assert.fail()}),compact);
+ const calls=[];assert.equal(await resolveImage('https://example.org/page',{copyImage:async target=>{calls.push(target);if(target.endsWith('/page'))throw Error('HTML');return compact},readPage:async()=>({url:'https://example.org/page',html:'<meta property="og:image" content="https://example.org/photo.jpg">'})}),compact);assert.deepEqual(calls,['https://example.org/page','https://example.org/photo.jpg']);
+ await assert.rejects(resolveImage('file:///private'),/enlace público/);await assert.rejects(resolveImage('https://a:b@example.org/'),/enlace público/);
+});
+test('image API requires hosted membership and matching origin and reports public load failures',async()=>{
+ let called=0;const env={PLANES_REQUIRE_AUTH:'1'},server=createServer({env,authorize:async token=>{if(token!=='Bearer fixture')throw Object.assign(Error('Acceso requerido'),{status:401});return 'fixture'},imageForUrl:async url=>{called++;if(url.endsWith('/broken'))throw Error('No hay foto pública');return compact}});await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;env.PLANES_PUBLIC_ORIGIN=base;
+ try{const call=(token,origin=base,url='https://example.org/photo.jpg')=>fetch(base+'/api/image',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',Authorization:token},body:JSON.stringify({url})});assert.equal((await call('')).status,401);assert.equal((await call('Bearer fixture','https://other.example')).status,403);assert.equal(called,0);const result=await call('Bearer fixture');assert.equal((await result.json()).image,compact);const bad=await call('Bearer fixture',base,'https://example.org/broken');assert.equal(bad.status,422);assert.match((await bad.json()).error,/foto pública/)}finally{await new Promise(r=>server.close(r))}
+});

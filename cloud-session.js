@@ -21,11 +21,11 @@ window.CloudSession=(()=>{
    throw Error('Este navegador necesita una conexión segura y soporte de bloqueo de sesión.');
   })().finally(()=>refreshPromise=null);return refreshPromise;
  }
- async function request(path,options={}){if(!/^\/(rest\/v1\/planes_items|storage\/v1\/object\/)/.test(path))throw Error('Ruta remota no permitida.');return raw(path,options,await access());}
+ async function request(path,options={}){if(!/^\/(?:rest\/v1\/(?:planes_items|planes_lists|rpc\/planes_lists_(?:access|save))(?:\?|$)|storage\/v1\/object\/)/.test(path))throw Error('Ruta remota no permitida.');return raw(path,options,await access());}
  async function check(){const token=await access();await verify(token);return true}
  function logout(){controller.abort();controller=new AbortController();localStorage.removeItem(key);sessionStorage.removeItem('planes-cloud-check-v1');notify();}
  window.addEventListener('storage',e=>{if(e.key===key)notify()});
- async function inspect(url,signal){const headers={'Content-Type':'application/json'};if(saved())headers.Authorization='Bearer '+await access();return fetch('/api/inspect',{method:'POST',headers,body:JSON.stringify({url}),signal});}
+ async function inspect(url,signal,endpoint='/api/inspect'){const headers={'Content-Type':'application/json'};if(saved())headers.Authorization='Bearer '+await access();return fetch(endpoint,{method:'POST',headers,body:JSON.stringify({url}),signal});}
  async function shortcutPermission(action){if(!['create','revoke'].includes(action))throw Error('Acción no válida');const r=await raw('/rest/v1/rpc/planes_shortcut_'+action,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'},await access());if(!r.ok)throw Error(r.status===404?'Falta aplicar la actualización 003 de Supabase.':'No se pudo cambiar el permiso de Atajos.');return r.json()}
- return {shortcutPermission,login,logout,request,inspect,check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
+ return {shortcutPermission,login,logout,request,inspect,image:(url,signal)=>inspect(url,signal,'/api/image'),check,connected:()=>!!saved(),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)}};
 })();

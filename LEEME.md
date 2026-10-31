@@ -1,3 +1,11 @@
+## Listas compartidas
+
+En Listas, a la derecha de Casa, pulsa + para crear una lista. Escribe título
+y puntos; Enter añade otro y las casillas marcan lo completado. Guardar cierra
+y deja libre la lista. Si la tiene abierta la otra persona, aparece «Lista en
+uso por amorcito» y se le avisa de que quieres entrar. Requiere conexión para
+editar; los borradores se conservan si se pierde el acceso. Ver LISTAS-COMPARTIDAS.md.
+
 ## Comer: tipos de comida
 
 El desplegable de la derecha filtra restaurantes por cocina y se combina con
