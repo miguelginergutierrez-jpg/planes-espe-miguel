@@ -1,3 +1,10 @@
+## Verde salvia de Barcelona en agenda — 31/10/2026
+
+Corregida la regla de contraste que sobrescribía Barcelona en azul dentro del
+calendario: fondo --bcn-soft, texto verde oscuro y borde salvia. Conserva tamaños,
+tipografía, tramas personales, ilustraciones y colores de Valencia/otras zonas.
+Verificado en Edge con planes sintéticos y agenda por mes.
+
 ## Tipos de comida y nuevos planes reservados — 31/10/2026
 
 Comer incorpora un desplegable de tipo de comida a la derecha de Todo/BCN/VLC,

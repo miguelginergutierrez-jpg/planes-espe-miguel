@@ -117,7 +117,7 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 .calendar .daynum.day-add{font-size:12px;font-weight:500;color:#233e53;background:transparent;border:0;text-shadow:0 1px 2px #fff,0 0 3px #fff;box-shadow:none}
 .calendar .daynum.day-add:hover{color:#233e53;background:transparent;text-decoration:underline}
 .calendar .calitem{box-shadow:inset 0 0 0 1px var(--plan-outline,#879aaa),0 1px 2px #203b5420}
-.calendar .calitem.bcn{color:#233f56;background-color:#dbeaf3;--plan-outline:#7e9bad}
+.calendar .calitem.bcn{color:#294735;background-color:var(--bcn-soft);--plan-outline:#819c87}
 .calendar .calitem.vlc{color:#4b390d;background-color:#f3e5ba;--plan-outline:#aa945a}
 .calendar .calitem.none{color:#463758;background-color:#ece5f1;--plan-outline:#a394b6}
 .calendar .calitem.owner-espe{background-image:radial-gradient(#203b541f 1px,transparent 1.2px);background-size:7px 7px}
