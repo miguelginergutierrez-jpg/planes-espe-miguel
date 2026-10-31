@@ -39,8 +39,10 @@ RLS, autorizar de nuevo al primer miembro ni repetir la copia inicial.
   Nunca hace upsert ni DELETE. Una respuesta fallida nunca equivale a lista vacía.
 - `deleted_at` mantiene una marca para impedir que un móvil desconectado resucite
   fichas borradas. La ficha deja de estar en la colección activa. La fila técnica
-  conserva su payload; no se ha implementado purga definitiva ni recogida de
-  documentos remotos huérfanos. Revisar almacenamiento antes de uso intensivo.
+  conserva la marca. Desde la actualización del 31/10/2026, los nuevos borrados
+  sustituyen el payload por id, kind, título genérico y adjuntos vacíos: no se
+  guarda el texto ni la foto integrada. Borrados antiguos y documentos remotos
+  huérfanos aún no se purgan. Ver ../ALMACENAMIENTO.md para los límites actuales.
 - Documentos en rutas SHA-256 inmutables, verificados tras subir/descargar. La
   caché es IndexedDB; `cloudPath` sobrevive normalización y exportación. Se
   mantienen los límites existentes (10 MB/archivo, 50 MB/ficha, 60 MB/colección).

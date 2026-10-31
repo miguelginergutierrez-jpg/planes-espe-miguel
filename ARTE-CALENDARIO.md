@@ -56,8 +56,12 @@ Estos ajustes no atenúan las escenas.
 - Son imágenes por defecto derivadas al mostrar la ficha; no se escriben en
   los registros ni sustituyen las fotos elegidas manualmente. Se conserva quitar imagen.
 
-Las 17 imágenes nuevas pesan unos 1,5 MB en total. Están en la lista explícita
-del servidor, COPY de Docker y caché PWA. El servidor calcula la versión de caché
+Los 20 recursos gráficos descargados (incluidos logo e iconos) pesan unos 1,34 MB
+tras la compresión, frente a 2,19 MB. Ver ALMACENAMIENTO.md. Logo, retratos y
+portadas se sirven en WebP desde sus URLs históricas .jpg; sus originales siguen
+en el repositorio como referencia. Están en la lista explícita del servidor,
+COPY de Docker y caché PWA, que reutiliza imágenes de su versión sin redescargarlas.
+El servidor calcula la versión de caché
 incluyendo sus bytes: reiniciarlo tras cambiar los recursos.
 
 ## Verificación

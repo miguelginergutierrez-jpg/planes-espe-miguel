@@ -19,6 +19,25 @@ function device(b,items=[]){let local=clone(items),base=[],files=new Map(),confl
 function remote(b,item,revision=1,deleted_at=null){b.rows.set(item.id,{id:item.id,payload:clone(item),revision,deleted_at})}
 test('sync uploads new records and second device downloads them',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();assert.deepEqual(c.items,a.items);assert.equal(b.rows.size,1)});
 test('sync propagates edits and deletion markers without DELETE',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([idea('one','Cambio')]);await a.run();await c.run();assert.equal(c.items[0].title,'Cambio');a.edit([]);await a.run();await c.run();assert.deepEqual(c.items,[]);assert.ok(b.rows.get('one').deleted_at);assert.ok(b.writes.every(w=>w.o.method!=='DELETE'))});
+
+test('deletion strips card content while keeping offline deletion and conflict protection',async()=>{
+ const b=backend(),item={...idea(),notes:'Notas privadas',image:'data:image/jpeg;base64,'+'a'.repeat(4000),attachments:[{id:'doc',name:'privado.txt',size:4}]};
+ const a=device(b,[item]),unchanged=device(b),offline=device(b);a.files.set('doc',{id:'doc',name:'privado.txt',blob:new Blob(['menu'])});
+ await a.run();await unchanged.run();await offline.run();offline.edit([{...offline.items[0],title:'Cambio sin conexión'}]);
+ a.edit([]);await a.run();const row=b.rows.get('one');
+ assert.ok(row.deleted_at);assert.deepEqual(row.payload,{id:'one',kind:'restaurant',title:'Ficha eliminada',attachments:[]});
+ assert.ok(JSON.stringify(row.payload).length<200);assert.equal(a.base[0].payload.image,undefined);
+ await unchanged.run();assert.deepEqual(unchanged.items,[]);assert.equal(unchanged.base[0].payload.notes,undefined);
+ await offline.run();assert.equal(offline.conflicts.length,1);assert.equal(offline.items[0].title,'Cambio sin conexión');assert.ok(b.rows.get('one').deleted_at);
+ // Shared remote files require a separate safe garbage collector.
+ assert.equal(b.files.size,1);
+});
+
+test('lost deletion response retries without restoring content or duplicating writes',async()=>{
+ const b=backend(),a=device(b,[idea()]);await a.run();a.edit([]);b.lost();
+ await assert.rejects(a.run(),/response lost/);const writes=b.writes.length;
+ await a.run();assert.equal(b.writes.length,writes);assert.deepEqual(a.items,[]);assert.equal(a.base[0].payload.title,'Ficha eliminada');
+});
 test('two offline edits conflict and neither version is silently replaced',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([idea('one','A')]);c.edit([idea('one','B')]);await a.run();await c.run();assert.equal(c.items[0].title,'B');assert.equal(b.rows.get('one').payload.title,'A');assert.equal(c.conflicts.length,1)});
 test('offline edit against remote deletion conflicts rather than resurrects',async()=>{const b=backend(),a=device(b,[idea()]),c=device(b);await a.run();await c.run();a.edit([]);await a.run();c.edit([idea('one','Offline')]);await c.run();assert.equal(c.conflicts.length,1);assert.ok(b.rows.get('one').deleted_at)});
 test('fresh browser with stale local copy cannot resurrect a deleted id',async()=>{const b=backend();remote(b,idea(),2,'2026-10-28T12:00:00Z');const a=device(b,[idea()]);await a.run();assert.equal(a.conflicts.length,1);assert.equal(b.writes.length,0)});

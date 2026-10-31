@@ -1,3 +1,24 @@
+## Compresión y contenido de fichas borradas — 31/10/2026
+
+Ver ALMACENAMIENTO.md. Los 20 recursos gráficos descargados pasan de 2 191 439
+a 1 336 313 bytes (39 % menos), sin cambiar dimensiones, encuadre ni opacidad.
+Escenas recomprimidas; logo, retratos y portadas servidos como WebP usando sus
+URLs históricas .jpg; originales JPG permanecen como referencias del repositorio.
+Iconos siguen en PNG de 192/512 px, con paleta optimizada. Docker usa los WebP.
+La caché PWA sirve primero las imágenes de su versión y evita nuevas descargas;
+no cachea API, sesión ni imágenes privadas de las fichas. Las fotos nuevas que
+se añaden como archivo se comprimen a WebP (JPEG como alternativa), máximo
+640 px y 60 000 caracteres; sigue admitiendo las imágenes antiguas de 120 000.
+Las imágenes externas enlazadas no se recomprimen ni se reescriben fichas reales.
+Nuevos borrados sincronizados, manuales o por caducidad: conservan deleted_at,
+revisión y payload mínimo (id/kind/título genérico/adjuntos vacíos), sin texto,
+foto integrada ni referencias a documentos. Protege desconectados y conflictos.
+NO se han purgado filas ni documentos de Supabase; los borrados antiguos pueden
+conservar contenido y quedan adjuntos remotos/cachés locales huérfanos pendientes
+de un recolector seguro. No confundir marca mínima con borrado total de archivos.
+91 pruebas unitarias y Edge: PWA sin red/sin redescargar imágenes, editor/foto WebP,
+dos navegadores de nube, 12 escenas y retratos. Solo datos sintéticos.
+
 ## Contraste de la agenda — 31/10/2026
 
 Calendario más legible sobre las ilustraciones: números oscuros de 12 px sin

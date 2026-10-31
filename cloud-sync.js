@@ -6,6 +6,9 @@
  // cloudPath is transport metadata; old copies can have it only on the server.
  function content(x){if(!x)return null;const y=clone(x);for(const a of y.attachments||[])delete a.cloudPath;return y}
  const equal=(a,b)=>stable(content(a))===stable(content(b));
+ // Keep only the small identity marker needed by devices reconnecting later.
+ // The deleted card's text, embedded photo and attachment references are removed.
+ const deletionPayload=item=>({id:item.id,kind:item.kind,title:'Ficha eliminada',attachments:[]});
  function validate(item){if(!item||typeof item.id!=='string'||!item.id||item.id.length>200||!['plan','restaurant','buy','inbox'].includes(item.kind)||typeof item.title!=='string'||!item.title.trim()||!Array.isArray(item.attachments||[]))throw Error('La nube contiene una ficha no válida. Se conserva la copia local.');return item}
  function rowValid(row){validate(row.payload);if(row.id!==row.payload.id||!Number.isSafeInteger(row.revision)||row.revision<1||!(row.deleted_at===null||typeof row.deleted_at==='string'))throw Error('Respuesta de sincronización no válida.');return row}
  async function readRows(request){const all=[];for(let offset=0;offset<=10000;offset+=500){const r=await request('/rest/v1/planes_items?select=id,payload,revision,deleted_at&order=id&limit=500&offset='+offset);if(!r.ok)throw Error(r.status===400?'Falta preparar la sincronización en Supabase (actualización 002).':'No se pudieron leer las fichas compartidas. Tu copia local se conserva.');const rows=await r.json();if(!Array.isArray(rows))throw Error('Respuesta de nube no válida.');rows.forEach(rowValid);all.push(...rows);if(rows.length<500){if(new Set(all.map(x=>x.id)).size!==all.length)throw Error('La colección cambió durante la lectura. Reintentando sin sustituir datos.');return all}}throw Error('La colección supera el límite de sincronización.');}
@@ -56,7 +59,7 @@
    const remoteChanged=b?(!r||r.revision!==b.revision):!!r;
    if(localChanged&&remoteChanged){conflicts.push({id,local:l,remote:r});continue;}
    if(!localChanged){if(r)await take(r);continue;}
-   const payload=l?await prepare(l,{getDocument,request}):r.payload;
+   const payload=l?await prepare(l,{getDocument,request}):deletionPayload(r.payload);
    const body={payload,deleted_at:l?null:new Date().toISOString()};
    const response=await request('/rest/v1/planes_items'+(r?'?id=eq.'+encodeURIComponent(id)+'&revision=eq.'+r.revision:''),{
     method:r?'PATCH':'POST',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify(r?body:{id,...body})});

@@ -6,5 +6,12 @@ self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise
 self.addEventListener('fetch',e=>{
  const u=new URL(e.request.url);
  if(e.request.method!=='GET'||u.origin!==self.location.origin||!SHELL.includes(u.pathname))return;
+ // Artwork belongs to this versioned shell: reuse it until a new version installs.
+ if(/\.(?:jpg|png|webp)$/.test(u.pathname)){
+  e.respondWith(caches.open(CACHE).then(async cache=>{
+   const cached=await cache.match(e.request);if(cached)return cached;
+   const response=await fetch(e.request);if(response.ok)await cache.put(e.request,response.clone());return response;
+  }));return;
+ }
  e.respondWith(fetch(e.request).then(r=>{if(r.ok){const copy=r.clone();e.waitUntil(caches.open(CACHE).then(c=>c.put(u.pathname,copy)))}return r}).catch(()=>caches.match(u.pathname).then(r=>r||Response.error())));
 });
