@@ -1,3 +1,11 @@
+## Papelera en tarjetas de Listas — 31/10/2026
+
+Cada tarjeta muestra una papelera roja a la derecha, separada del botón que
+abre la lista. Pide confirmación, adquiere el bloqueo existente antes de borrar
+y libera el acceso al terminar. Si está en uso, no la borra y muestra el aviso
+de amorcito. No cambia permisos ni migraciones. Verificado con dos navegadores
+y PostgreSQL aislado; no se borraron listas reales para probarlo.
+
 ## Listas exclusivas e imágenes por URL — 31/10/2026
 
 Ver LISTAS-COMPARTIDAS.md. Quinta sección Listas tras Casa: +, título, puntos,

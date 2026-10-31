@@ -8,7 +8,9 @@ Pulsa +, escribe el título y los puntos. Enter añade otro punto; también pued
 pegar varias líneas. Cada casilla marca/tacha el punto. Guardar conserva título
 y texto y cierra/libera la lista. Las casillas de puntos ya guardados se comparten
 al tocarlas; las de puntos nuevos se guardan con Guardar. Borrar lista pide
-confirmación. Hasta 500 puntos de 2 000 caracteres y títulos de 160 caracteres.
+confirmación. También hay una papelera a la derecha de cada tarjeta, para borrar
+sin abrir la ficha. Respeta el acceso exclusivo y no borra si la usa amorcito.
+Hasta 500 puntos de 2 000 caracteres y títulos de 160 caracteres.
 
 ## Solo una persona editando
 
