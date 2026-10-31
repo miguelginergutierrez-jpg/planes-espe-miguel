@@ -39,24 +39,24 @@ textarea.sheet-title{min-height:0;resize:none;overflow:hidden;line-height:1.25}.
 
 /* One compact agenda toolbar; keep touch targets tall while reducing width. */
 .header-actions{display:flex;align-items:center;gap:6px}.header-actions .avatar{width:40px;height:40px}
-.agenda-controls{display:flex;align-items:center;gap:8px;width:100%;margin:4px 0 8px}
-.agenda-controls .filter-panel{padding:0;margin:0;border:0;background:none;flex:1;min-width:0}
-.agenda-controls .filter-label,.agenda-controls .filter-caption{display:none}
-.agenda-controls .city{margin:0;gap:4px;flex-wrap:nowrap}
-.agenda-controls .pill{font-size:11px;padding:4px 7px;min-height:36px;white-space:nowrap;border-radius:10px;letter-spacing:0}
-.agenda-controls .pill[data-city="Barcelona"]{padding-left:5px;padding-right:5px}.agenda-controls button,.agenda-controls select{height:38px}
-.agenda-controls .toolbar{margin:0;gap:6px;flex-wrap:nowrap;flex-shrink:0}
-.agenda-controls .seg{gap:2px;flex-wrap:nowrap}
-.agenda-controls .seg .icon-toggle{width:32px;height:36px;padding:7px;border-radius:9px}
-.agenda-controls #statusFilter{width:82px;max-width:82px;padding:7px 2px 7px 5px;margin:0;font-size:11px;min-height:36px}
-.agenda-controls+#results .calendar{margin:0 0 8px}
+.collection-controls{display:flex;align-items:center;gap:8px;width:100%;margin:4px 0 8px}
+.collection-controls .filter-panel{padding:0;margin:0;border:0;background:none;flex:1;min-width:0}
+.collection-controls .filter-label,.collection-controls .filter-caption{display:none}
+.collection-controls .city{margin:0;gap:4px;flex-wrap:nowrap}
+.collection-controls .filter-panel .city .pill{font-size:11px;padding:4px 7px;min-height:36px;white-space:nowrap;border-radius:10px;letter-spacing:0}
+.collection-controls .filter-panel .city .pill[data-city="Barcelona"]{padding-left:5px;padding-right:5px}.collection-controls button,.collection-controls select{height:38px}
+.collection-controls .toolbar{margin:0;gap:6px;flex-wrap:nowrap;flex-shrink:0}
+.collection-controls .seg{gap:2px;flex-wrap:nowrap}
+.collection-controls .seg .icon-toggle{width:32px;height:36px;padding:7px;border-radius:9px}
+.collection-controls #statusFilter{width:82px;max-width:82px;padding:7px 2px 7px 5px;margin:0;font-size:11px;min-height:36px}
+.collection-controls+#results .calendar{margin:0 0 8px}
 .calitem.owner-miguel{background-image:repeating-linear-gradient(135deg,transparent 0 5px,#2b435724 5px 7px)}
 .calitem.owner-espe{background-image:repeating-linear-gradient(0deg,transparent 0 4px,#2b435724 4px 6px)}
 .owner-miguel .badge{background-image:repeating-linear-gradient(135deg,transparent 0 5px,#2b435724 5px 7px)}
 .owner-espe .badge{background-image:repeating-linear-gradient(0deg,transparent 0 4px,#2b435724 4px 6px)}
 .image-editor{margin:12px 0;font-size:12px}.image-editor summary{cursor:pointer;color:var(--green);padding:8px 0}.image-editor .actions{justify-content:flex-start;margin-top:10px}.image-editor input{font-size:12px}
 .sheet-dialog .sheet-summary textarea{cursor:text}.session-details textarea{width:100%;font-size:12px;line-height:1.6}
-@media(max-width:370px){.agenda-controls{gap:4px}.agenda-controls .pill{font-size:10px;padding:4px}.agenda-controls .city{gap:2px}.agenda-controls .seg .icon-toggle{width:27px;padding:5px}.agenda-controls #statusFilter{width:74px;max-width:74px;font-size:10px}.agenda-controls .toolbar{gap:3px}}
+@media(max-width:370px){.collection-controls{gap:4px}.collection-controls .filter-panel .city .pill{font-size:10px;padding:4px}.collection-controls .city{gap:2px}.collection-controls .seg .icon-toggle{width:27px;padding:5px}.collection-controls #statusFilter{width:74px;max-width:74px;font-size:10px}.collection-controls .toolbar{gap:3px}}
 
 /* Personal plans: quick identification and compact editing. */
 .owner-espe .badge,.owner-espe .owner-banner{background-image:radial-gradient(currentColor 1.3px,transparent 1.4px);background-size:7px 7px}
@@ -80,3 +80,10 @@ body[data-page="restaurant"] .toolbar,body[data-page="buy"] .toolbar{justify-con
 .sheet-dialog .sheet-fields{border-top:0;padding-top:0}.sheet-dialog input,.sheet-dialog select,.sheet-dialog textarea{font-size:16px}.sheet-dialog .sheet-fields input,.sheet-dialog .sheet-fields select,.sheet-dialog .sheet-fields textarea{font-size:16px}
 .sheet-dialog .sheet-zone{margin-bottom:0}.sheet-dialog .sheet-fields{margin-top:0;gap:10px 14px}
 .owner-options{display:flex;gap:5px;flex-wrap:nowrap}.owner-option{flex:1;border:1px solid var(--line);border-radius:9px;padding:6px 7px;font-size:11px;white-space:nowrap;background:transparent;color:var(--muted)}.owner-option.selected{background:#e1eaf1;color:var(--green);border-color:#9db4c4;font-weight:650}.owner-picker{grid-column:1/-1}.owner-picker .field-heading{display:block;margin-bottom:5px}.owner-picker input{display:none}nav button[data-page="restaurant"] b{font-size:0}nav button[data-page="restaurant"] b:after{content:'🍴';font-size:21px}
+
+/* Shared controls stay aligned across Agenda, Comer and Casa. */
+.collection-controls .city{gap:4px}
+.collection-controls .filter-panel .city .pill{width:44px;padding:4px;flex:0 0 auto}
+.collection-controls .filter-panel .city .pill[data-city="Todas"]{width:52px}
+.collection-controls .filter-panel .city .pill,.collection-controls .seg .icon-toggle,.collection-controls #statusFilter{height:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;line-height:normal}
+@media(max-width:370px){.collection-controls .city{gap:3px}.collection-controls .filter-panel .city .pill{width:38px}.collection-controls .filter-panel .city .pill[data-city="Todas"]{width:42px}}

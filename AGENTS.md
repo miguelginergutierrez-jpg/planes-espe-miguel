@@ -1,3 +1,15 @@
+## Agenda por mes y controles unificados — 31/10/2026
+
+En calendario, las fichas inferiores muestran solo planes del mes visible,
+incluidos rangos que lo atraviesan y sesiones concretas en ese mes. Sin fecha
+solo aparece en Lista, que conserva todos los planes en orden cronológico
+con los filtros de zona y reserva vigentes. No cambia ni elimina datos.
+Agenda, Comer y Casa comparten posición y dimensiones de Todo/BCN/VLC;
+los controles de vista y reserva tienen la misma altura de 38 px.
+Verificado con datos sintéticos: meses vacíos, rangos, sesiones discontinuas,
+lista sin fecha, filtros y medidas idénticas a 320/390/768/1100 px
+(`tests/browser-agenda-month.cjs`), interfaz compacta y 89 pruebas unitarias.
+
 ## Interfaz compacta y edición — 29/10/2026
 
 Implementado: refrescar junto a Ajustes (sincroniza y recarga conservando vista),
