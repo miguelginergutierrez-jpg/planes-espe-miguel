@@ -43,6 +43,14 @@ const {createServer}=require('../server.cjs');
     if(section==='plan'){
      const heights=await p.locator('[data-mode],#statusFilter').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().height));
      assert.ok(heights.every(h=>h===38),JSON.stringify(heights));
+     const gaps=await p.evaluate(()=>{
+      const cities=[...document.querySelectorAll('[data-city]')].map(e=>e.getBoundingClientRect());
+      const modes=[...document.querySelectorAll('[data-mode]')].map(e=>e.getBoundingClientRect());
+      const status=document.querySelector('#statusFilter').getBoundingClientRect();
+      return {inside:[cities[1].left-cities[0].right,cities[2].left-cities[1].right,modes[1].left-modes[0].right],groups:[modes[0].left-cities[2].right,status.left-modes[1].right]};
+     });
+     assert.ok(gaps.inside.every(g=>g===gaps.inside[0]&&g>=6),JSON.stringify(gaps));
+     assert.equal(gaps.groups[0],gaps.groups[1],JSON.stringify(gaps));
      await p.locator('[data-mode=calendar]').click();
      assert.deepEqual(await p.locator('[data-city]').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}})),boxes);
     }
@@ -52,7 +60,18 @@ const {createServer}=require('../server.cjs');
   await p.setViewportSize({width:390,height:844});await p.locator('button[data-page=plan]').click();
   await p.evaluate(()=>{month=new Date(2035,0,1);renderResults()});
   await p.screenshot({path:'test-results/agenda-month.png',fullPage:true});
+  for(const [monthIndex,season] of [[9,'autumn'],[11,'winter'],[2,'spring'],[6,'summer']]){
+   await p.evaluate(m=>{month=new Date(2035,m,1);renderResults()},monthIndex);
+   assert.equal(await p.locator('.calendar').getAttribute('data-season'),season);
+   const layers=await p.locator('.season-art').evaluateAll(es=>es.map(e=>({opacity:Number(getComputedStyle(e).opacity),count:e.children.length,pointer:getComputedStyle(e).pointerEvents,z:getComputedStyle(e).zIndex})));
+   assert.ok(layers.at(-1).opacity>layers[0].opacity&&layers.at(-1).opacity<.1);
+   assert.ok(layers.at(-1).count>layers[0].count);
+   assert.ok(layers.every(l=>l.pointer==='none'&&l.z==='-1'));
+   const asset=await p.request.get(new URL('/season-'+season+'.png',p.url()).href);assert.equal(asset.status(),200);assert.match(asset.headers()['content-type'],/image\/png/);
+   await p.screenshot({path:'test-results/calendar-'+season+'.png',fullPage:true});
+  }
+  await p.locator('.day-add').first().click();assert.equal(await p.locator('.day-options').count(),1);
   assert.deepEqual(errors,[]);
-  console.log('PASS month filtering, spanning plans, discrete sessions, undated list, chronological order, filters and identical controls at 320/390/768/1100px');
+  console.log('PASS month filtering, chronological list, equal filter gaps at 320/390/768/1100px and progressive decorative seasons behind interactive dates');
  }finally{await browser?.close();await new Promise(r=>server.close(r))}
 })().catch(e=>{console.error(e);process.exitCode=1});

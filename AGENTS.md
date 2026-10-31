@@ -1,3 +1,18 @@
+## Ritmo de filtros y estaciones en el calendario — 31/10/2026
+
+Todo/BCN/VLC y Calendario/Lista comparten separación interna de 8 px (6 px en
+pantallas de hasta 370 px). La separación entre los tres bloques es de 12 px
+(8 px en esas pantallas). Se conserva altura 38 px y posición entre secciones.
+El calendario incorpora motivos originales de fieltro generados con imagegen,
+usando el logo solo como referencia estética: hojas, nieve, flores y sol/calor.
+Cuatro PNG transparentes locales de 256 px, unos 200 KB en total, sin peticiones
+a servicios de imágenes ni dependencias nuevas. Cantidad y opacidad aumentan
+durante el mes y al avanzar la estación; la opacidad siempre es menor del 10 %.
+Son decoraciones estáticas, aria-hidden, sin capturar toques y detrás del contenido.
+Incluidos en la lista estática del servidor, caché PWA y COPY de Docker.
+Pasan 89 pruebas unitarias, agenda por mes/espaciados/estaciones a 320/390/768/1100,
+interfaz compacta, iconos/retratos y PWA sin conexión, con datos sintéticos.
+
 ## Iconos planos y retratos individuales — 31/10/2026
 
 Actualizar tiene flechas dentro del viewBox, sin puntas recortadas. Ajustes y

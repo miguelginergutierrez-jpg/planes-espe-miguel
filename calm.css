@@ -97,3 +97,23 @@ nav b{display:flex;align-items:center;justify-content:center;height:25px}
 .sheet-dialog .sheet-cover.portrait-miguel,.sheet-dialog .sheet-cover.portrait-espe{width:75px;height:150px;max-height:none;object-fit:cover;background:#eaddc9}
 .sheet-dialog .sheet-cover.portrait-miguel{object-position:left center}
 .sheet-dialog .sheet-cover.portrait-espe{object-position:right center}
+
+/* Consistent rhythm inside each group, and between the three groups. */
+.collection-controls{--control-gap:8px;--group-gap:12px;gap:var(--group-gap);justify-content:flex-start}
+.collection-controls .filter-panel{flex:0 0 auto}
+.collection-controls .city,.collection-controls .seg{gap:var(--control-gap)}
+.collection-controls .toolbar{gap:var(--group-gap)}
+@media(max-width:370px){.collection-controls{--control-gap:6px;--group-gap:8px}}
+
+/* Felt seasons stay behind dates, dividing lines and plans. */
+.calendar[data-season="autumn"]{--season-motif:url('/season-autumn.png')}
+.calendar[data-season="winter"]{--season-motif:url('/season-winter.png')}
+.calendar[data-season="spring"]{--season-motif:url('/season-spring.png')}
+.calendar[data-season="summer"]{--season-motif:url('/season-summer.png')}
+.calendar .day{position:relative;isolation:isolate}
+.season-art{position:absolute;inset:2px;z-index:-1;pointer-events:none;opacity:var(--season-opacity)}
+.season-art i{position:absolute;width:72%;height:72%;background:var(--season-motif) center/contain no-repeat;pointer-events:none}
+.season-art i:nth-child(1){left:0;top:0;transform:rotate(-18deg)}
+.season-art i:nth-child(2){right:-5%;bottom:-7%;transform:rotate(25deg) scale(.8)}
+.season-art i:nth-child(3){left:-10%;bottom:-10%;transform:rotate(-35deg) scale(.6)}
+.season-art i:nth-child(4){right:-15%;top:-10%;transform:rotate(12deg) scale(.5)}
