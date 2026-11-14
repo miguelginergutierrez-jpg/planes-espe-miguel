@@ -1,3 +1,20 @@
+## Atajo Android real funciona; logo y duplicado pendientes — 14/11/2026
+
+Usuario confirma importación de guardar-en-planes-android.zip y envío real desde
+Compartir mediante HTTP Shortcuts sin abrir Planes. Sustituye el pendiente de
+prueba física indicado abajo. No recrear ni revocar el permiso ya funcional.
+El usuario informa que Guardar en Planes muestra icono HTTP también dentro de
+HTTP Shortcuts; convive con el destino PWA antiguo con logo y resulta confuso.
+Pendiente ajustar icono del atajo y comprobar Direct Share en su Android antes
+de dar por resuelto el menú. No afirmar que el icono se importó correctamente.
+Archivo ZIP contiene PNG original válido y nombre custom-icon_planes.png según
+IconUtil oficial. No se ha determinado la causa física (icono/caché/versión).
+LauncherShortcut true ya habilita acceso directo/Direct Share en código actual;
+la posición y presencia final dependen del selector de compartir de Android.
+Guiar edición manual del icono sin tocar URL, JSON ni permiso privado. No pedir
+exportar el atajo con secretos, regenerarlo ni reinstalar la app a ciegas.
+Mantener opciones funcionales hasta comprobar sustituto con logo.
+
 ## Atajo Android sin abrir Planes preparado — 14/11/2026
 
 Usuario instaló HTTP Request Shortcuts desde Google Play oficial. Ajustes >

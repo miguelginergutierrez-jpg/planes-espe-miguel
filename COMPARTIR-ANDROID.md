@@ -1,3 +1,11 @@
+# Estado real — 14/11/2026
+
+Usuario confirma el atajo importado y el guardado en segundo plano funcionando.
+Pendiente logo: ve icono de HTTP también dentro del atajo. El destino PWA anterior
+con logo sigue en Compartir y confunde. Próximo paso: editar solo icono del atajo
+y verificar Direct Share, conservando permiso y flujo ya funcionales. La prueba
+física anterior prevalece sobre las notas históricas de pendiente inferiores.
+
 # Compartir enlaces desde Android
 
 Publicado el 14/11/2026: manifiesto share_target verificado en Render. Usuario
