@@ -1,3 +1,15 @@
+## Android instalado y Compartir real confirmado — 14/11/2026
+
+Usuario confirma WebAPK con logo, acceso propio de Espe y sincronización.
+La actualización Chrome quedó Pending/Scheduled/Failed; tras desinstalar desde
+Ajustes de Android y reinstalar, Planes aparece al compartir y crea la ficha.
+No repetir instalación ni autorización de cuenta. Nuevo requisito del usuario:
+compartir sin traer Planes al primer plano, como el atajo iPhone. Web Share
+Target actual abre la app. Se investiga HTTP Shortcuts (gratuito, fuente oficial)
+como receptor nativo con POST /api/share y permiso propio de Espe. Aún no está
+configurado ni probado; no prometer ejecución invisible fiable en su dispositivo.
+No crear/revocar el permiso de Miguel: cada cuenta tiene su permiso independiente.
+
 ## Recepción Android preparada — 14/11/2026
 
 Ver COMPARTIR-ANDROID.md. Manifest share_target POST, SW y servidor reciben

@@ -3,7 +3,10 @@
 Publicado el 14/11/2026: manifiesto share_target verificado en Render. Usuario
 confirma cuenta de Espe creada y SQL «Segundo acceso preparado» (slot 2).
 Usuario confirma login y estado «Sincronizado» en Android. Pendientes
-instalación y prueba física de Compartir; no confundir con Edge.
+Instalación con logo y Compartir físico confirmados por el usuario: crea ficha.
+Chrome Update falló; se solucionó reinstalando la app desde Ajustes Android.
+Nuevo pendiente: envío sin primer plano mediante atajo nativo, por petición del
+usuario. El receptor PWA actual abre Planes; no afirmar que cumple segundo plano.
 
 1. Crear cuenta propia en Authentication > Users del Supabase existente. El
 usuario introduce correo/contraseña allí; no pedirlos en el chat ni guardarlos.
