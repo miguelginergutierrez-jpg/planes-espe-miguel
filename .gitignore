@@ -9,3 +9,7 @@ playwright-report/
 .codex/
 planes-espe-miguel-*.json
 backups/
+
+# Private Android shortcut permission exports
+guardar-en-planes-android*.zip
+guardar-en-planes-android*.json

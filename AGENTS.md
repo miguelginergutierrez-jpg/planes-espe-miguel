@@ -1,3 +1,22 @@
+## Atajo Android sin abrir Planes preparado — 14/11/2026
+
+Usuario instaló HTTP Request Shortcuts desde Google Play oficial. Ajustes >
+Guardar enlaces sin abrir la app > Preparar atajo Android genera ZIP local
+con permiso propio de la cuenta, POST /api/share, logo y recepción de texto.
+No crea permisos por sí solo: el usuario debe pulsar y confirmar en el Android
+con la cuenta de Espe. No operar el permiso iPhone de Miguel. Si ya hay un permiso
+recién creado visible, descargar otra vez lo reutiliza sin rotación adicional.
+Configuración import/export v90 según fuentes oficiales, UUID estables para
+fusionar sin sustituir otros atajos. Notificaciones de éxito/error, sin scripts
+posteriores ni apertura de navegador; timeout 120 s y sin espera offline.
+Permitir notificaciones; comprobar ahorro de batería/datos si no se ejecuta.
+El ZIP privado lleva el permiso: borrar de Descargas tras importar, no enviarlo
+ni usar el editor web remoto. Excluido en Git; variables secretas y excluidas de
+reexportación e historial. El secreto no se guarda en datos de Planes ni caché.
+126 unitarias y Edge permiso/descarga, PWA, Android-share e iPhone pasan con datos
+sintéticos. Importación y ejecución en Android físico pendientes: no afirmarlas.
+No migraciones ni cambios de reglas/datos reales. Ver COMPARTIR-ANDROID.md.
+
 ## Android instalado y Compartir real confirmado — 14/11/2026
 
 Usuario confirma WebAPK con logo, acceso propio de Espe y sincronización.
