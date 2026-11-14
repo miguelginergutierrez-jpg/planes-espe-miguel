@@ -1,115 +1,102 @@
-# Resultado verificado — 28/10/2026
+# Publicación móvil — estado verificado 14/11/2026
 
-URL real: https://planes-espe-miguel.onrender.com
-Render confirma «Deploy succeeded | Live», plan Free. Versión de código 51d0d30,
-despliegue dep-dbh6bqc9v7es739upt3g. Los identificadores completos están en
-render-deployment.json. Auto-deploy On Commit comprobado con dos actualizaciones.
-Los commits solo documentales posteriores usan [skip render] para no gastar builds.
+La aplicación está activa en https://planes-espe-miguel.onrender.com y funciona
+independientemente de este PC. Reutilizar siempre el servicio existente, cuyos
+identificadores están en render-deployment.json; no crear otro ni contratar planes.
+La rama vinculada es codex/publicacion-movil, auto-deploy al hacer commit/push.
 
-Verificaciones exteriores: HTTPS y /healthz 200; /api/status authRequired=true,
-configured=false y dynamicReader.state=ready. Peticiones sin sesión o con token
-sintético rechazadas (401). .env, .git, fuentes del servidor y lockfile no se sirven.
-Manifiesto e iconos accesibles. No hay IA activa ni claves de pago configuradas.
+## Comprobación del cierre
 
-El usuario introdujo la contraseña de la app en la dirección publicada. Se activó
-allí la sincronización y se observó «Sincronizado», la ficha técnica remota y su
-adjunto. Se descargó el TXT desde la web HTTPS y su SHA-256 coincide exactamente
-con el original (36af22dfd357f4a69b4afb5c6fe6b8c2b21ea5ae0aa6b7959623da1c18b5c151).
+HTTPS /healthz devuelve 200. /api/status devuelve authRequired=true,
+configured=false (sin IA activa) y dynamicReader.state=ready. Manifiesto sin
+share_target y con la misma identidad /. android-shortcut.js, cloud-connect.js,
+index.html, app.js y manifiesto coinciden con los blobs de Git; sw.js coincide
+al descontar su identificador de caché generado. Último cambio de ejecución:
+251066b; los commits posteriores hasta este cierre solo documentación/verificación.
 
-Lectura autenticada real comprobada desde el editor con https://example.org/,
-sin guardar cambios: devolvió un resultado con aviso de descripción/precio no
-publicados. Un primer intento falló durante las actualizaciones; la repetición
-tras el despliegue final terminó correctamente. Se descartó solo esa edición de
-prueba. Las fichas existentes siguen intactas.
+La API de GitHub no publica estados/checks/despliegues de Render para esa rama.
+Un resultado combinado pending con statuses vacío no demuestra un build pendiente.
+Sin nuevo acceso al panel/API Render no se ha observado un ID o estado de build
+nuevo: lo comprobado es el código actual servido por HTTPS. Los campos
+last_dashboard_* de render-deployment.json conservan la comprobación histórica
+del 28/10, separada de la verificación externa actual. No inventar un deploy ID.
 
-Pendiente intervención del usuario: abrir la URL en Safari del iPhone, iniciar
-sesión de la app y comprobar la colección; después Compartir → Añadir a pantalla
-de inicio. No dar la instalación en iPhone ni el Android por verificados todavía.
-No es necesario tener el PC encendido. El plan Free puede tardar alrededor de un
-minuto en despertar tras inactividad y tiene cuotas: no prometer disponibilidad
-inmediata o gratuidad sin límites. No se contrató un plan de pago.
+El commit de cierre usa [skip render]: cambia guías, metadatos de verificación,
+exclusiones de exportaciones privadas y, si procede, fixtures de pruebas; no
+requiere reemplazar el contenedor que ya sirve el código actual. No confundir
+subir este cierre con publicar funcionalidades nuevas o sincronizar datos.
 
----
-# Publicación móvil
+## Móviles y compartir
 
-Estado: publicado y verificado en https://planes-espe-miguel.onrender.com.
+iPhone instalado y atajo de segundo plano confirmados por el usuario. Espe tiene
+su cuenta propia autorizada, app Android instalada, sincronización y receptor
+Guardar planes con logo funcionando sin traer Planes al primer plano. Se genera
+con HTTP Request Shortcuts > Install as App; la herramienta y su atajo deben
+permanecer instalados. No recrear/revocar sus permisos al cambiar de PC.
 
-## Opción elegida y coste
+Se retiró únicamente el receptor PWA antiguo de Compartir (share_target), por
+petición del usuario. Planes principal conserva instalación, icono, sesión y
+datos. Android puede tardar en actualizar la WebAPK; la desaparición física de
+la opción antigua aún no está confirmada. No reinstalar ni borrar datos para
+acelerarla. Se conservan /share-target y su cola por compatibilidad. Ver
+COMPARTIR-ANDROID.md y COMPARTIR-IPHONE.md para uso y límites.
 
-Render, servicio Web Docker con plan **Free**, región Frankfurt. Conserva Node
-24 y la lectura pública HTTP/PDF/Playwright sin sustituirla por proxies abiertos.
-No añadir tarjeta ni contratar planes de pago. Render publica una URL HTTPS y
-permite despliegue automático al subir cambios a la rama vinculada.
+## Pruebas de este cierre
 
-Límites consultados el 28/10/2026: el servicio se duerme después de 15 minutos
-sin tráfico y tarda alrededor de un minuto en reactivarse; 750 horas gratis por
-workspace y mes. Tiene 512 MB de RAM, por lo que se admite una extracción a la
-vez y ocho peticiones por minuto por miembro. Render puede suspender por exceso
-de transferencia o tráfico saliente. Sin método de pago, el exceso suspende o
-bloquea nuevos builds; no convertirlo en un upgrade automático.
+126/126 unitarias y cinco baterías Edge pasan: PWA, permiso/descarga de atajo,
+iPhone, receptor Android antiguo compatible y sincronización entre dos
+navegadores. Sintaxis de 77 JS/CJS comprobada. La batería cloud inicialmente
+falló por comprobar el conflicto antes de acabar un ciclo activo; se reprodujo
+la carrera sintéticamente y se corrigió solo la preparación de esa prueba,
+conservando/reforzando las aserciones. Tres ejecuciones corregidas consecutivas
+pasan. No se modificó lógica productiva ni datos reales para arreglarlo.
 
-Fuentes oficiales: https://render.com/docs/free,
-https://render.com/docs/blueprint-spec y https://render.com/docs/web-services.
+## Servicio y presupuesto
 
-Los datos y adjuntos siguen en el Supabase existente: no crear base de datos
-Render, ejecutar migraciones ni trasladar datos al disco efímero del servidor.
-Se mantienen los límites del plan gratuito Supabase.
+Servicio existente: Render Free, Docker, Frankfurt, My Workspace, health
+/healthz. Configuración reproducible en render.yaml y Dockerfile. No se han
+creado servicios, añadido tarjetas o cambiado planes durante este cierre.
+Objetivo 0 €/mes; las condiciones y cuotas gratuitas pueden cambiar. Los límites
+históricos se consultaron el 28/10/2026: el servicio puede dormir tras inactividad
+y tardar alrededor de un minuto en despertar. No prometer disponibilidad o coste
+cero sin límites; comprobar https://render.com/docs/free al revisar contratación.
+Los datos siguen en Supabase, no en el disco efímero de Render.
 
-## Archivos y seguridad
+## Arquitectura y protección
 
-- `Dockerfile`: Node 24.22.1, instalación reproducible npm ci, Chromium con sus
-  bibliotecas, usuario sin privilegios. No incorpora .env, sesiones ni copias.
-- `render.yaml`: plan free explícito, rama codex/publicacion-movil, /healthz y
-  PLANES_REQUIRE_AUTH=1. Confirmar la rama real al vincular GitHub.
-- `server.cjs`: respeta PORT y escucha en 0.0.0.0 solo en modo remoto/LAN.
-  En producción exige origen HTTPS configurado por RENDER_EXTERNAL_URL o
-  PLANES_PUBLIC_ORIGIN, sesión Supabase verificada y pertenencia antes de leer.
-  Los tokens no se guardan en logs ni archivos del servidor.
-- `host-auth.cjs`: verifica /auth/v1/user y planes_members en cada extracción;
-  no confía en claims decodificados ni usa claves administrativas.
-- La página y recursos estáticos no contienen fichas privadas. La colección y
-  documentos están protegidos por Supabase RLS; abrir una URL no autoriza acceso.
-- Chromium usa sandbox en producción. Falta verificar en el Linux alojado que
-  el proveedor permita ese sandbox; no desactivarlo para facilitar el despliegue.
-  Si no puede iniciarse, la lectura dinámica quedará limitada y debe indicarse.
-- No se configuró IA ni una API de pago. Consultar /api/status en la URL remota.
+Docker usa Node 24.22.1, npm ci con lockfile, Chromium con bibliotecas y usuario
+sin privilegios. COPY es explícito; .dockerignore y .gitignore excluyen .env,
+sesiones, dependencias, copias y ZIP/JSON de permisos Android. Nunca incluir
+secretos reales en Git, archivos de exportación, logs o imágenes del contenedor.
 
-## Icono móvil, sin red y actualizaciones
+El servidor remoto exige sesión Supabase verificada y membresía para
+/api/inspect y /api/image, además de origen y límites. POST /api/share acepta
+únicamente permiso exclusivo de solo alta; no lee ni borra la colección. Los
+archivos estáticos no contienen datos de fichas. Supabase conserva RLS y bucket
+privado; no repetir las migraciones 001–004 ni cambiar miembros o reglas.
 
-El manifiesto permite añadir al inicio; los PNG se obtienen de la imagen original
-sin alterar la marca. El service worker conserva solo archivos de interfaz: no
-cachea la API, Supabase, tokens ni documentos. La colección y adjuntos descargados
-siguen en sus almacenes habituales del navegador.
+El lector dinámico alojado informa ready tras su prueba sintética de arranque
+con sandbox. No desactivar aislamiento o TLS para facilitar una lectura. Las
+páginas privadas o bloqueadas no tienen extracción garantizada.
 
-El identificador de caché deriva del contenido servido al arrancar. Una versión
-nueva no fuerza recarga de una ficha sin guardar; las actualizaciones pendientes
-se aplican al cerrar y abrir las copias. Con red, los archivos se consultan al
-servidor; sin red se utiliza la interfaz almacenada. Esto no asegura extracción
-sin conexión ni que archivos nunca descargados estén disponibles sin Internet.
+La PWA cachea solo interfaz y arte: no API, sesión, Supabase o documentos
+privados. Una actualización no fuerza recarga sobre una edición sin guardar.
+Los archivos se sirven desde caché de su versión; colección local/adjuntos usan
+sus almacenes propios. La apertura sin red no garantiza extracción ni acceso
+a documentos nunca descargados. GitHub, Supabase e historial Codex son mecanismos
+separados: ver CONTINUAR-EN-CASA.md para retomar en otro PC.
 
-## Servicio creado (28/10/2026)
+## Procedimiento habitual de publicación
 
-Workspace My Workspace (único espacio observado), plan Free, Frankfurt, Docker, rama codex/publicacion-movil, auto-deploy On Commit y health /healthz. Identificadores en render-deployment.json. El código inicial es 45578cf. GitHub quedó limitado solo al repositorio de esta app. No se configuraron tarjeta, base de datos ni secretos nuevos. La integración Render está instalada pero no expone herramientas MCP en esta sesión; creación realizada desde el Dashboard oficial.
+1. Revisar rama/remoto/estado, conservar trabajo local y actualizar desde GitHub.
+2. Comprobar cambios con datos sintéticos y revisar secretos antes de commit.
+3. Para cambios de ejecución: commit y push normales a la rama vinculada, esperar
+   el auto-deploy y comparar HTTPS/assets/health/status. No crear otro servicio.
+4. Para guías o pruebas sin cambios de ejecución: [skip render] evita un build
+   innecesario; verificar que la web activa continúa sirviendo el código esperado.
+5. Si se requiere el panel de Render, usar el acceso oficial del usuario y no
+   pedir contraseñas o tokens por el chat. No hay conector Render expuesto aquí.
 
-## Pasos de despliegue (histórico y verificaciones pendientes)
-
-1. Se encontró y sugirió la integración Render. Preferirla cuando el usuario la conecte; comprobar sus herramientas y cuenta antes de crear servicios. Si no ofrece la capacidad necesaria, entrar en dashboard.render.com con la cuenta del usuario. No solicitar
-   contraseñas/tokens por el chat. Si hace falta crear cuenta o aceptar términos,
-   el usuario completa ese acceso.
-2. Vincular únicamente el repositorio planes-espe-miguel cuando se elijan
-   permisos GitHub. No dar acceso a todos los repositorios por comodidad.
-3. Crear Web Service Docker, plan Free, Frankfurt, rama codex/publicacion-movil,
-   health /healthz. Verificar plan y ausencia de cobros antes de crearlo.
-4. Esperar build y URL HTTPS real; revisar logs sin publicar datos de sesión.
-5. Verificar /api/status, acceso denegado sin sesión, login, sincronización,
-   captura autenticada, lectura dinámica con sandbox y documento desde el móvil.
-6. Indicar al usuario cómo añadir al inicio de Safari. Segundo miembro y Android
-   se probarán más adelante. No afirmar publicación o instalación hasta observarla.
-
-## Pruebas locales
-
-78 pruebas de Node y browser-pwa, browser-cloud, browser-maps pasan. PWA se ha
-probado con Edge aislado: caché de interfaz, colección sin red y exclusión de API.
-No hay Docker instalado en este PC: la imagen Linux y Chromium de producción
-se verificaron finalmente en Render: el build Linux terminó bien y /api/status informa dynamicReader.state=ready, tras ejecutar JavaScript sintético con Chromium y sandbox. No confundir estas pruebas
-locales con una publicación o una prueba en iPhone.
+Histórico: publicación inicial Docker y estado Live observados el 28/10/2026;
+login, ficha y adjunto reales comprobados entonces. Esos datos no se han
+modificado para las verificaciones de cierre actuales.

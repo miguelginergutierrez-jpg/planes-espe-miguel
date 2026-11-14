@@ -1,9 +1,22 @@
+# Estado vigente — 14/11/2026
+
+El usuario confirmó que el atajo iPhone guarda en segundo plano y la ficha llega
+a la colección. No reconstruirlo, recrear o revocar su permiso para configurar
+Android: cada cuenta conserva su permiso independiente. Android de Espe también
+está instalado y confirmado; ver COMPARTIR-ANDROID.md. La retirada del antiguo
+share_target de la PWA no modifica este POST /api/share del iPhone.
+
+Ajustes ahora agrupa ambas plataformas en «Guardar enlaces sin abrir la app».
+Las instrucciones de configuración inferiores sirven para una instalación nueva,
+no son pasos pendientes del iPhone ya funcional. La sección #share es histórica.
+No copiar el permiso a GitHub, chats, capturas o documentación.
+
 # Guardar sin abrir la app — 29/10/2026
 
 El usuario ya probó el atajo de apertura y solicita guardado automático en
 segundo plano. La actualización 003 fue autorizada y aplicada en Supabase:
 Success. No rows returned. No repetir 001/002 ni cambiar las fichas existentes.
-La comprobación real del nuevo atajo queda pendiente del iPhone.
+La prueba real del atajo fue confirmada posteriormente; ver estado vigente arriba.
 
 ## Preparar el permiso una vez
 

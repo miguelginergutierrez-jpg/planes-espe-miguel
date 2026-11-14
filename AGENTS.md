@@ -1,3 +1,65 @@
+## Cierre y traslado al otro PC — 14/11/2026
+
+Rama de continuidad: codex/publicacion-movil, remoto oficial del proyecto.
+Al iniciar este cierre no había cambios locales sin guardar ni divergencias
+con GitHub (HEAD 1cd7e7b). No se ha descartado trabajo ni cambiado de rama.
+Seguir CONTINUAR-EN-CASA.md, reescrito con npm ci y el mensaje vigente para
+retomar: main/59f6ae3 son históricos, no restaurarlos para preparar el otro PC.
+
+Estado funcional confirmado por el usuario: iPhone con atajo de segundo plano;
+Espe con cuenta propia autorizada, Android instalado y receptor Guardar planes
+con logo funcionando sin abrir Planes. Conservar HTTP Request Shortcuts y su
+atajo interno. Solo se retiró del manifiesto el primer receptor PWA «Planes»;
+NO se quieren retirar entradas de HTTP, desmarcar su launcher o borrar la app
+principal. Su desaparición física depende de actualizar la WebAPK y sigue sin
+confirmarse. Último cambio de ejecución publicado: 251066b.
+
+Pendientes del teléfono, recomendables pero NO bloqueantes para usar la app:
+comprobar retirada de la opción antigua, desactivar el permiso temporal de
+instalación de Archivos y eliminar el ZIP privado de Descargas. No consta que
+se hayan hecho. No revocar permisos de guardado ni repetir instalaciones o SQL.
+Pendientes futuros previos que no se desarrollan en este cierre: recolector
+seguro de adjuntos huérfanos y validación de Listas entre los dos móviles reales.
+
+Cierre autorizado: actualizar guías y metadatos, excluir APK y ZIP/JSON privados
+también del contexto Docker y comprobar código/pruebas/servicio. package.json,
+package-lock.json v3, Node 24 y dependencias fijadas (Playwright 1.62.1 y PDF
+6.4.299), migraciones 001–004 y .env.example se conservan versionados. Instalar
+con npm ci en el otro equipo. No reinstalar dependencias aquí si coinciden.
+Sin cambios de fichas reales, credenciales, miembros, RLS o planes de pago.
+
+Comprobaciones de cierre: 126/126 unitarias, sintaxis de 77 JS/CJS y cinco
+baterías Edge (PWA, permiso/descarga Android, compartir iPhone, receptor Android
+antiguo compatible y nube) pasan. Nube validó dos navegadores, adjunto, edición
+UI, renovación, conflicto, pérdida de red y borrado, siempre con backend sintético.
+Su fixture tenía una carrera: tick retorna pronto si ya hay ciclo activo y la
+aserción se adelantaba al conflicto. Se reprodujo reteniendo un GET sintético;
+al completar aparecía conflicto conservando versión B. Corregido solo el test:
+servir android-shortcut.js, pausar/drenar ciclos, comprobar revisión base común,
+reactivar en orden y reforzar conservación hasta resolver. Tres ejecuciones
+consecutivas pasan; no se alteró lógica productiva ni hay error pendiente.
+Auditoría de archivos y diez commits de sesión sin secretos reales detectados.
+Dependencias y test-results quedan ignorados, conservados localmente; no hay
+trabajo de código excluido o bloqueado para el otro PC.
+
+GitHub solo comparte código y documentación. Supabase es la sincronización
+separada de fichas, listas y adjuntos; Auth público responde 200 y la extracción
+alojada sin sesión devuelve 401. No se han leído ni reescrito colecciones reales
+para este cierre. Historial completo de Codex y sesiones NO se trasladan por Git.
+La lectura/sincronización real actual del usuario no se certifica con simulaciones.
+
+HTTPS /healthz 200, /api/status authRequired true, IA configured false y lector
+dinámico ready. Activos públicos comparados con blobs Git coinciden (SW con su
+hash generado). No hay PR asociada según API GitHub. Render no publica estados
+ni checks de build en esa API; no confundir pending con statuses vacío con un
+build pendiente. El código actual está servido; no hay nuevo deploy ID o estado
+del panel observado. render-deployment.json separa prueba externa actual de la
+comprobación histórica del Dashboard. Cierre sin cambios de ejecución: usar
+[skip render] para no gastar otro build; verificar HTTPS tras subir igualmente.
+
+Las fechas y estados de fase de las notas inferiores son históricos. Sus
+restricciones y decisiones siguen vigentes salvo sustitución expresa arriba.
+
 ## Android confirmado; retirar SOLO compartir PWA antiguo — 14/11/2026
 
 Usuario confirma instalado y funcionando el APK «Guardar planes» con el logo,

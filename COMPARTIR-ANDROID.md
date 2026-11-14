@@ -38,7 +38,9 @@ WebAPK aún no actualizadas y capturas en curso. No se borran sus pendientes.
 Desactivar «Permitir desde esta fuente» de Archivos, activado temporalmente para
 instalar el APK. Eliminar de Descargas el ZIP privado tras importarlo; contiene
 el permiso de alta. Estos pasos y la retirada física de la opción antigua aún no han
-sido confirmados por el usuario. No podemos operar el Android desde este PC.
+sido confirmados por el usuario. No podemos operar el Android desde este PC. Son tareas recomendables de seguridad
+y limpieza, no requisitos para abrir Planes, sincronizar o guardar enlaces; el
+usuario ya puede usar la app.
 
 ## Configuración inicial, ya completada en el móvil de Espe
 

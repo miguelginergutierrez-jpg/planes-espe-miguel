@@ -5,16 +5,37 @@
   "service_id": "srv-dbh68ptg1s2s73d1ju00",
   "initial_deploy_id": "dep-dbh68qlg1s2s73d1k040",
   "source_branch": "codex/publicacion-movil",
-  "source_commit": "45578cf688328ff948f53d85830dfd15821e7486",
   "region": "frankfurt",
   "plan": "free",
   "dashboard_url": "https://dashboard.render.com/web/srv-dbh68ptg1s2s73d1ju00",
   "initial_status": "building",
   "url": "https://planes-espe-miguel.onrender.com",
-  "latest_verified_deploy_id": "dep-dbh6bqc9v7es739upt3g",
-  "latest_verified_commit": "51d0d306025205908840cc56e589bbc7c65facef",
-  "verified_status": "live",
+  "verified_status": "serving-current-code",
   "dynamic_reader": "ready",
   "hosted_attachment_sha256": "36af22dfd357f4a69b4afb5c6fe6b8c2b21ea5ae0aa6b7959623da1c18b5c151",
-  "last_verified_date": "2026-10-28"
+  "last_verified_date": "2026-11-14",
+  "last_dashboard_verified_deploy_id": "dep-dbh6bqc9v7es739upt3g",
+  "last_dashboard_verified_commit": "51d0d306025205908840cc56e589bbc7c65facef",
+  "last_dashboard_verified_status": "live",
+  "last_dashboard_verified_date": "2026-10-28",
+  "latest_verified_runtime_commit": "251066b761a65c138e406f316dee32242658b326",
+  "verification_method": "public_https_compared_to_git_blobs",
+  "external_verification": {
+    "health_http": 200,
+    "auth_required": true,
+    "ai_configured": false,
+    "dynamic_reader": "ready",
+    "manifest_has_share_target": false,
+    "checked_assets": [
+      "android-shortcut.js",
+      "cloud-connect.js",
+      "index.html",
+      "app.js",
+      "manifest.webmanifest",
+      "sw.js"
+    ],
+    "dashboard_deploy_status_checked": false,
+    "note": "HTTPS y activos actuales verificados; sin nuevo ID de despliegue observable por API o checks de GitHub. Los campos last_dashboard_* son históricos."
+  },
+  "initial_source_commit": "45578cf688328ff948f53d85830dfd15821e7486"
 }

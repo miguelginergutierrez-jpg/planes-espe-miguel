@@ -1,3 +1,22 @@
+# Estado vigente — cierre 14/11/2026
+
+Las migraciones 001, 002, 003 y 004 YA están aplicadas. Primera cuenta y segunda
+cuenta de Espe autorizadas, slots 1 y 2, acceso y sincronización confirmados.
+No repetir creación de proyecto, migraciones, autorización ni copia inicial.
+La configuración pública portable está en ../supabase-public.json. Contraseñas,
+sesiones y permisos de Atajos no se transfieren por Git ni se guardan aquí.
+
+Sincronización automática de fichas y adjuntos implementada; Listas usa acceso
+exclusivo. iPhone y Android Guardar planes confirmados por el usuario. POST
+/api/share usa permisos de solo alta independientes por cuenta; no recrearlos
+para cambiar de PC. El extractor alojado exige sesión para inspect/image.
+No se han modificado datos reales al comprobar el cierre de sesión.
+
+GitHub comparte código y guías. Las fichas y documentos viajan por Supabase; las
+pruebas de escritorio usan respuestas simuladas y no certifican una nueva lectura
+de la sesión real del usuario. Las referencias inferiores a fases pendientes
+son históricas; para continuidad seguir ../AGENTS.md y ../CONTINUAR-EN-CASA.md.
+
 ## Listas privadas — 31/10/2026
 
 004_shared_lists.sql aplicada con éxito y privacidad verificada. NO repetirla.
