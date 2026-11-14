@@ -8,5 +8,8 @@ test-results
 playwright-report
 backups
 planes-espe-miguel-*.json
+guardar-en-planes-android*.zip
+guardar-en-planes-android*.json
+*.apk
 tests
 *.log
