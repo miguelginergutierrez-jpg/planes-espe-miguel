@@ -1,19 +1,20 @@
-## Atajo Android real funciona; logo y duplicado pendientes — 14/11/2026
+## Atajo Android real funciona; distinguir la entrada al compartir — 14/11/2026
 
-Usuario confirma importación de guardar-en-planes-android.zip y envío real desde
-Compartir mediante HTTP Shortcuts sin abrir Planes. Sustituye el pendiente de
-prueba física indicado abajo. No recrear ni revocar el permiso ya funcional.
-El usuario informa que Guardar en Planes muestra icono HTTP también dentro de
-HTTP Shortcuts; convive con el destino PWA antiguo con logo y resulta confuso.
-Pendiente ajustar icono del atajo y comprobar Direct Share en su Android antes
-de dar por resuelto el menú. No afirmar que el icono se importó correctamente.
-Archivo ZIP contiene PNG original válido y nombre custom-icon_planes.png según
-IconUtil oficial. No se ha determinado la causa física (icono/caché/versión).
-LauncherShortcut true ya habilita acceso directo/Direct Share en código actual;
-la posición y presencia final dependen del selector de compartir de Android.
-Guiar edición manual del icono sin tocar URL, JSON ni permiso privado. No pedir
-exportar el atajo con secretos, regenerarlo ni reinstalar la app a ciegas.
-Mantener opciones funcionales hasta comprobar sustituto con logo.
+Usuario confirma importación del ZIP y envío real desde HTTP Shortcuts sin abrir
+Planes. No recrear ni revocar su permiso funcional. Aclaración posterior: dentro
+del editor SÍ se ve el logo de la pareja. No está demostrado un fallo del ZIP.
+El icono HTTP del selector puede ser la entrada general de la app auxiliar.
+Usuario confirma marcada «Mostrar como acceso directo a aplicación en el launcher».
+No insistir en activarla ni cambiar la imagen correcta. El destino PWA antiguo
+con logo sigue existiendo y resulta confuso. No retirarlo antes de verificar el
+sustituto. Se propone función oficial «Install as App» al mantener pulsado el
+atajo, para crear receptor con nombre/logo propios. Verificada documentación y
+ShellApkBuilder/ShellActivity oficiales: APK generado localmente desde plantilla,
+con id del atajo e icono; conserva HTTP Shortcuts y permiso existentes, sin servidor
+ni credenciales nuevas. La función y su resultado físico aún NO confirmados en
+este móvil; guiar paso a paso, sin prometer aún logo ni ausencia de primer plano.
+No repetir instalación de PWA, migraciones o autorización de Espe. No exportar
+permisos al chat. Pendiente eliminar ZIP privado de Descargas tras configurar.
 
 ## Atajo Android sin abrir Planes preparado — 14/11/2026
 

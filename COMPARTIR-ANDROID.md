@@ -1,10 +1,15 @@
 # Estado real — 14/11/2026
 
 Usuario confirma el atajo importado y el guardado en segundo plano funcionando.
-Pendiente logo: ve icono de HTTP también dentro del atajo. El destino PWA anterior
-con logo sigue en Compartir y confunde. Próximo paso: editar solo icono del atajo
-y verificar Direct Share, conservando permiso y flujo ya funcionales. La prueba
-física anterior prevalece sobre las notas históricas de pendiente inferiores.
+Aclaró que en el editor sí se ve el logo de la pareja; la opción del launcher ya
+está marcada. No cambiar logo, recrear permiso ni insistir en activar esa casilla.
+El icono HTTP puede corresponder al receptor genérico de HTTP Shortcuts; convive
+con el destino PWA anterior y confunde. Próxima comprobación: menú contextual de
+Guardar en Planes > Install as App (función oficial). Genera localmente APK con
+nombre/logo y receptor de texto, enlazado al atajo existente. Mantiene instalada
+la herramienta auxiliar; no incorpora claves nuevas ni llama a otro backend.
+No probado aún en el Android real. Ver https://http-shortcuts.rmy.ch/advanced.
+No eliminar receptor funcional antes de confirmar el nuevo y su comportamiento.
 
 # Compartir enlaces desde Android
 
