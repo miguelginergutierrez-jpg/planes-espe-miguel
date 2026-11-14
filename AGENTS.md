@@ -13,6 +13,7 @@ Permitir notificaciones; comprobar ahorro de batería/datos si no se ejecuta.
 El ZIP privado lleva el permiso: borrar de Descargas tras importar, no enviarlo
 ni usar el editor web remoto. Excluido en Git; variables secretas y excluidas de
 reexportación e historial. El secreto no se guarda en datos de Planes ni caché.
+Publicado 1489168 en Render: módulo y botón actuales verificados por HTTPS.
 126 unitarias y Edge permiso/descarga, PWA, Android-share e iPhone pasan con datos
 sintéticos. Importación y ejecución en Android físico pendientes: no afirmarlas.
 No migraciones ni cambios de reglas/datos reales. Ver COMPARTIR-ANDROID.md.

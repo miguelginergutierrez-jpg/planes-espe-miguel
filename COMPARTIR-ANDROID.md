@@ -76,3 +76,6 @@ Fuentes: https://http-shortcuts.rmy.ch/advanced,
 https://http-shortcuts.rmy.ch/import-export,
 https://http-shortcuts.rmy.ch/scripting y código oficial
 https://github.com/Waboodoo/HTTP-Shortcuts (schema de importación y ZIP).
+
+Publicación 1489168 verificada por HTTPS el 14/11/2026: módulo idéntico al local
+y botón Android disponible. Servidor local de este proyecto también actualizado.
