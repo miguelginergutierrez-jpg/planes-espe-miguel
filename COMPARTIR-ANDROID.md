@@ -1,94 +1,77 @@
-# Estado real — 14/11/2026
+# Compartir desde Android — estado real 14/11/2026
 
-Usuario confirma el atajo importado y el guardado en segundo plano funcionando.
-Aclaró que en el editor sí se ve el logo de la pareja; la opción del launcher ya
-está marcada. No cambiar logo, recrear permiso ni insistir en activar esa casilla.
-El icono HTTP puede corresponder al receptor genérico de HTTP Shortcuts; convive
-con el destino PWA anterior y confunde. Próxima comprobación: menú contextual de
-Guardar en Planes > Install as App (función oficial). Genera localmente APK con
-nombre/logo y receptor de texto, enlazado al atajo existente. Mantiene instalada
-la herramienta auxiliar; no incorpora claves nuevas ni llama a otro backend.
-No probado aún en el Android real. Ver https://http-shortcuts.rmy.ch/advanced.
-No eliminar receptor funcional antes de confirmar el nuevo y su comportamiento.
+El usuario confirma instalado y funcionando «Guardar planes» con el logo de la
+pareja, creado mediante HTTP Request Shortcuts > Install as App. Guarda enlaces
+sin traer Planes al primer plano. Cuenta propia de Espe autorizada en slot 2,
+login y sincronización confirmados. No repetir migraciones, autorización o login.
 
-# Compartir enlaces desde Android
+## Uso habitual
 
-Publicado el 14/11/2026: manifiesto share_target verificado en Render. Usuario
-confirma cuenta de Espe creada y SQL «Segundo acceso preparado» (slot 2).
-Usuario confirma login y estado «Sincronizado» en Android.
-Instalación con logo y Compartir físico confirmados por el usuario: crea ficha.
-Chrome Update falló; se solucionó reinstalando la app desde Ajustes Android.
-Nuevo pendiente: envío sin primer plano mediante atajo nativo, por petición del
-usuario. El receptor PWA actual abre Planes; no afirmar que cumple segundo plano.
+En Chrome, Maps u otra app: Compartir > Guardar planes. HTTP Request Shortcuts
+y el atajo interno deben seguir instalados: el APK personalizado los utiliza.
+Planes sigue siendo la aplicación para consultar y editar la colección.
+No hay permisos nuevos de Supabase, coste añadido ni cambios al atajo iPhone.
+Render Free puede tardar al despertar y un timeout no confirma guardado. Sin
+Internet se muestra error; este atajo no tiene cola offline automática.
 
-1. Crear cuenta propia en Authentication > Users del Supabase existente. El
-usuario introduce correo/contraseña allí; no pedirlos en el chat ni guardarlos.
-2. Autorizar exclusivamente slot 2 con autorizar-segundo-miembro.sql, sustituyendo
-el marcador solo dentro del SQL Editor oficial. No repetir migraciones ni
-reemplazar miembros. El script impide sustituir un segundo miembro diferente.
-3. En Chrome Android, abrir https://planes-espe-miguel.onrender.com, conectar
-la cuenta de Espe y activar sincronización. Instalar desde menú Chrome > Instalar
-aplicación (WebAPK, no solo marcador). El manifiesto conserva el logo existente.
-4. Compartir un enlace desde Chrome/Maps/Instagram, elegir Planes y esperar a
-la confirmación. Se abre la app y guarda automáticamente, sin pulsar Enviar.
-No equivale al atajo iPhone que ejecuta sin abrir la app.
+## Retirada de opciones anteriores, solicitada por el usuario
 
-Implementación: share_target POST urlencoded /share-target; servidor de respaldo
-y service worker reciben title/text/url y extraen un único enlace http(s) sin
-credenciales. Nada se escribe por un GET arbitrario. POST crea un ticket aleatorio;
-SW lo guarda en IndexedDB privado; respaldo servidor 15 minutos en memoria.
-Se redirige al shell con el ticket en fragmento, sin URL compartida en query/logs.
-La app solo procesa tickets existentes, conserva una cola local privada hasta
-conectar/activar la sincronización, protege borradores y bloquea procesamiento
-simultáneo entre pestañas. No usa claves de Atajos ni credenciales nuevas.
-Guardado/sincronización normales de la colección, deduplicación por URL. Las
-fechas ya pasadas quedan por revisar. Fallos de red mantienen los pendientes;
-no se promete proceso permanente en segundo plano ni plazo instantáneo en Render Free.
-Sin cambios en RLS, migraciones, presupuesto ni flujo #share del iPhone.
+- Se retira share_target del manifiesto de Planes, manteniendo id, nombre,
+  iconos y demás propiedades. La aplicación principal conserva su instalación,
+  sesión, datos y PWA. La antigua entrada de compartir desaparece cuando Chrome
+  actualiza la WebAPK, lo cual puede tardar 1–2 días. PWA cerrada, Wi-Fi y carga
+  favorecen la actualización según Chrome. No reinstalar ni borrar datos.
+- Se conservan rutas y cola de recepción antiguas por compatibilidad con las
+  WebAPK aún no actualizadas y capturas en curso. No se borran sus pendientes.
+- Para quitar la sugerencia dinámica de HTTP del móvil ya configurado: mantener
+  pulsado el atajo interno > Editar > Ajustes de activación y ejecución >
+  desmarcar «Mostrar como acceso directo a aplicación en el launcher» > Guardar.
+  No borrar el atajo ni cambiar su variable compartida o permiso. Guardar planes
+  instalado invoca el ID del atajo directamente y no depende de esa casilla.
+- Las descargas nuevas ya incluyen launcherShortcut false. No hace falta descargar
+  ni importar otro ZIP en el móvil funcional ni revocar su permiso.
+- El receptor genérico HTTP / Enviar a… puede seguir visible. No existe interruptor
+  oficial hallado para ocultarlo manteniendo la herramienta: no afirmar que ya
+  está eliminado ni desinstalar HTTP para intentarlo.
 
-123 unitarias; Edge: POST real con SW, conservación durante login/recarga,
-captura y sincronización automáticas con backend sintético, sin duplicados.
-También pasan flujo iPhone anterior y PWA sin red. Compartir PWA físico confirmado.
-Fuente primaria: https://developer.chrome.com/docs/capabilities/web-apis/web-share-target
+## Cierre pendiente en el teléfono
 
-## Guardar sin traer Planes al primer plano (preparado, pendiente móvil)
+Desactivar «Permitir desde esta fuente» de Archivos, activado temporalmente para
+instalar el APK. Eliminar de Descargas el ZIP privado tras importarlo; contiene
+el permiso de alta. Estos pasos y la retirada física de sugerencias aún no han
+sido confirmados por el usuario. No podemos operar el Android desde este PC.
 
-HTTP Request Shortcuts instalado por el usuario. Cuenta, autorización, PWA y
-sincronización de Espe ya comprobadas: no repetirlos.
+## Configuración inicial, ya completada en el móvil de Espe
 
-1. En el Android de Espe, abrir Planes publicado y Ajustes. Desplegar «Guardar
-   enlaces sin abrir la app» y pulsar «Preparar atajo Android». Confirmar la
-   creación del permiso exclusivo de ESA cuenta. No hacerlo con la de Miguel.
-2. Se descarga guardar-en-planes-android.zip, generado solo en ese navegador.
-   Contiene un permiso privado de solo alta, sin correo ni contraseña. En HTTP
-   Request Shortcuts > Importar/exportar > Importar desde archivo, elegirlo y
-   fusionar con los existentes. No reemplazar/borrar otros atajos.
-3. Permitir notificaciones. Si ofrece Direct Share en «Trigger & Execution
-   Settings», activarlo para Guardar en Planes (no se importa como preferencia
-   del dispositivo). Se puede compartir mediante «Send to…» / HTTP Shortcuts.
-4. Compartir un enlace y elegir Guardar en Planes de HTTP Shortcuts; el destino
-   PWA llamado Planes sigue abriendo la app. Comprobar aviso de éxito/error y
-   llegada real de la ficha manteniendo el navegador de origen en primer plano.
-5. Eliminar el ZIP de Descargas después de importar. No enviarlo, subirlo al
-   editor web remoto ni conservarlo en Git. Descargar de nuevo mientras el
-   permiso está visible lo reutiliza. Cerrar Ajustes borra la copia temporal de
-   memoria: otra creación revoca el permiso anterior de ESA cuenta.
+1. En Planes con la cuenta correcta: Ajustes > Guardar enlaces sin abrir la app >
+   Preparar atajo Android. Confirmar creación del permiso de ESA cuenta.
+2. Importar guardar-en-planes-android.zip desde Descargas en HTTP Request Shortcuts
+   mediante Importar/exportar > Importar desde archivo, combinando con existentes.
+   El ZIP se genera en el navegador y contiene secreto privado; no subirlo al
+   editor web remoto, Git o chat. Una descarga repetida con permiso visible lo
+   reutiliza; otra creación revoca el permiso anterior solo de esa cuenta.
+3. Permitir notificaciones. El atajo recibe texto con un único enlace, hace POST
+   HTTPS /api/share y avisa del resultado sin abrir Planes.
+4. Mantener pulsado el atajo > Install as App. Guardar APK en Descargas y abrirlo
+   con Archivos para instalarlo. Puede requerir permitir esa fuente temporalmente;
+   desactivar el permiso tras instalar. No basta con guardar el APK en Descargas.
+5. Probar Compartir > Guardar planes y llegada de la ficha sin salir del navegador.
+   No regenerar el permiso en el iPhone de Miguel: es independiente por cuenta.
 
-Implementación android-shortcut.js: archivo ZIP de dos entradas (config JSON
-v90 e icono original), POST HTTPS /api/share, JSON seguro desde un único enlace
-compartido incluso si incluye título, timeout 120 s. Variables secretas fuera
-de historial/reexportación, scripts success/failure vacíos, UI notification,
-waitForInternet false: condiciones oficiales para headless. No se promete
-fiabilidad sin probar ese Android; el fabricante/ahorro de batería puede limitar
-el proceso. Sin red o ante timeout se avisa, no hay cola offline automática.
-Puede tardar por Render Free. Si no aparece el aviso no dar por guardado.
-126 unitarias y Edge descarga/permiso/PWA/Android PWA/iPhone verificados con
-backend sintético. No se ha importado ni probado este atajo en el móvil aún.
+## Implementación y comprobaciones
 
-Fuentes: https://http-shortcuts.rmy.ch/advanced,
-https://http-shortcuts.rmy.ch/import-export,
-https://http-shortcuts.rmy.ch/scripting y código oficial
-https://github.com/Waboodoo/HTTP-Shortcuts (schema de importación y ZIP).
+android-shortcut.js crea ZIP local con config JSON v90 e icono PNG original.
+Variables secretas excluidas de historial/reexportación; timeout 120 s, scripts
+success/failure vacíos, UI notification y waitForInternet false. El APK de la
+herramienta se genera localmente con nombre, icono e ID del atajo, sin claves
+nuevas ni otro servidor. Se conservan POST /api/share y sus permisos de solo alta.
+Tras la retirada pasan 126 unitarias y Edge permiso/descarga, PWA sin red,
+Android anterior compatible e iPhone con backend sintético. Manifiesto comparado
+con el anterior: solo retira share_target, sin cambiar identidad o instalación.
+No se han modificado fichas reales para probar.
 
-Publicación 1489168 verificada por HTTPS el 14/11/2026: módulo idéntico al local
-y botón Android disponible. Servidor local de este proyecto también actualizado.
+Fuentes oficiales:
+- https://http-shortcuts.rmy.ch/advanced#install-shortcuts-as-apps
+- https://http-shortcuts.rmy.ch/import-export
+- https://github.com/Waboodoo/HTTP-Shortcuts
+- https://web.dev/articles/manifest-updates#updates_on_chrome_for_android

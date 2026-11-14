@@ -1,20 +1,30 @@
-## Atajo Android real funciona; distinguir la entrada al compartir — 14/11/2026
+## Android con logo confirmado; retirada de accesos antiguos — 14/11/2026
 
-Usuario confirma importación del ZIP y envío real desde HTTP Shortcuts sin abrir
-Planes. No recrear ni revocar su permiso funcional. Aclaración posterior: dentro
-del editor SÍ se ve el logo de la pareja. No está demostrado un fallo del ZIP.
-El icono HTTP del selector puede ser la entrada general de la app auxiliar.
-Usuario confirma marcada «Mostrar como acceso directo a aplicación en el launcher».
-No insistir en activarla ni cambiar la imagen correcta. El destino PWA antiguo
-con logo sigue existiendo y resulta confuso. No retirarlo antes de verificar el
-sustituto. Se propone función oficial «Install as App» al mantener pulsado el
-atajo, para crear receptor con nombre/logo propios. Verificada documentación y
-ShellApkBuilder/ShellActivity oficiales: APK generado localmente desde plantilla,
-con id del atajo e icono; conserva HTTP Shortcuts y permiso existentes, sin servidor
-ni credenciales nuevas. La función y su resultado físico aún NO confirmados en
-este móvil; guiar paso a paso, sin prometer aún logo ni ausencia de primer plano.
-No repetir instalación de PWA, migraciones o autorización de Espe. No exportar
-permisos al chat. Pendiente eliminar ZIP privado de Descargas tras configurar.
+Usuario confirma instalado el APK generado por «Install as App», llamado en su
+móvil «Guardar planes», y que funciona al compartir sin abrir Planes. Icono de
+la pareja correcto en el editor. Cuenta propia de Espe y sincronización ya listas.
+No recrear permiso ni repetir instalación, miembros o migraciones. HTTP Request
+Shortcuts y el atajo interno siguen siendo necesarios para el APK; no borrarlos.
+
+Por petición explícita del usuario, se elimina share_target del manifiesto PWA
+conservando id, nombre, iconos, instalación, sesión y cachés de datos. Se conservan
+/share-target, SW y tickets como compatibilidad para WebAPK antiguas/peticiones
+en curso: no perder una captura mientras Chrome actualiza. No registrar nuevos
+destinos PWA. Android retira la entrada antigua al actualizar WebAPK; puede tardar
+1–2 días, no prometer efecto inmediato ni reinstalar/borrar datos para acelerarlo.
+Nuevo ZIP de atajo usa launcherShortcut false: evita duplicar sugerencia Direct
+Share junto al receptor APK. NO reimportar ZIP ni generar permisos para el móvil
+ya configurado: allí basta desmarcar «Mostrar como acceso directo a aplicación en
+el launcher» y guardar. Esa preferencia no controla el APK ni la variable compartida.
+
+La entrada genérica HTTP / Enviar a… puede permanecer: no hay opción oficial
+hallada para ocultarla manteniendo la herramienta. No confundirla con sugerencia
+dinámica, ni afirmar que el menú ya tiene una sola entrada. Pendientes de manos
+del usuario: desmarcar casilla, comprobar menú tras actualización y desactivar
+«Permitir desde esta fuente» para Archivos, activado para instalar el APK; borrar
+ZIP privado de Descargas. No desinstalar Planes principal ni borrar su almacenamiento.
+126 unitarias y Edge PWA/permiso-descarga/iPhone/recepción antigua pasan tras el
+cambio. Verificado que el manifiesto solo retira share_target.
 
 ## Atajo Android sin abrir Planes preparado — 14/11/2026
 

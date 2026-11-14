@@ -1,6 +1,8 @@
 # Continuar desde el ordenador de casa
 
-Estado comprobado el 31 de octubre de 2026. No necesitas el móvil Android todavía.
+Estado actualizado el 14 de noviembre de 2026. Android de Espe configurado y
+confirmado: Guardar planes con logo y envío sin abrir la app. Ver
+COMPARTIR-ANDROID.md para la limpieza pendiente de accesos antiguos y permisos.
 
 La rama activa es `codex/publicacion-movil`. Recupera siempre el último commit
 desde GitHub: no vuelvas al commit histórico de esta guía. Incluye Listas con
