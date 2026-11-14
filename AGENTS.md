@@ -1,30 +1,27 @@
-## Android con logo confirmado; retirada de accesos antiguos — 14/11/2026
+## Android confirmado; retirar SOLO compartir PWA antiguo — 14/11/2026
 
-Usuario confirma instalado el APK generado por «Install as App», llamado en su
-móvil «Guardar planes», y que funciona al compartir sin abrir Planes. Icono de
-la pareja correcto en el editor. Cuenta propia de Espe y sincronización ya listas.
-No recrear permiso ni repetir instalación, miembros o migraciones. HTTP Request
-Shortcuts y el atajo interno siguen siendo necesarios para el APK; no borrarlos.
+Usuario confirma instalado y funcionando el APK «Guardar planes» con el logo,
+creado con HTTP Request Shortcuts > Install as App. Guarda sin abrir Planes.
+Cuenta de Espe, autorización slot 2 y sincronización confirmadas. No repetir
+permisos de alta, migraciones, cuentas ni instalación. Mantener HTTP y su atajo.
 
-Por petición explícita del usuario, se elimina share_target del manifiesto PWA
-conservando id, nombre, iconos, instalación, sesión y cachés de datos. Se conservan
-/share-target, SW y tickets como compatibilidad para WebAPK antiguas/peticiones
-en curso: no perder una captura mientras Chrome actualiza. No registrar nuevos
-destinos PWA. Android retira la entrada antigua al actualizar WebAPK; puede tardar
-1–2 días, no prometer efecto inmediato ni reinstalar/borrar datos para acelerarlo.
-Nuevo ZIP de atajo usa launcherShortcut false: evita duplicar sugerencia Direct
-Share junto al receptor APK. NO reimportar ZIP ni generar permisos para el móvil
-ya configurado: allí basta desmarcar «Mostrar como acceso directo a aplicación en
-el launcher» y guardar. Esa preferencia no controla el APK ni la variable compartida.
+ACLARACIÓN explícita del usuario: quiere quitar SOLO la primera opción «Planes»
+que apareció antes de instalar HTTP, no la entrada de HTTP ni sus sugerencias.
+Se cancela la indicación anterior de desmarcar launcher; no insistir en tocarla.
+Se restaura launcherShortcut true en exportación, tal como estaba antes de esta
+limpieza. No regenerar/reimportar permisos ni cambiar el atajo funcional.
 
-La entrada genérica HTTP / Enviar a… puede permanecer: no hay opción oficial
-hallada para ocultarla manteniendo la herramienta. No confundirla con sugerencia
-dinámica, ni afirmar que el menú ya tiene una sola entrada. Pendientes de manos
-del usuario: desmarcar casilla, comprobar menú tras actualización y desactivar
-«Permitir desde esta fuente» para Archivos, activado para instalar el APK; borrar
-ZIP privado de Descargas. No desinstalar Planes principal ni borrar su almacenamiento.
-126 unitarias y Edge PWA/permiso-descarga/iPhone/recepción antigua pasan tras el
-cambio. Verificado que el manifiesto solo retira share_target.
+Se retira únicamente share_target del manifiesto PWA, conservando id, nombre,
+iconos, instalación y datos. Mantener la app principal Planes para abrir la
+colección. /share-target, SW y tickets quedan compatibles para WebAPK antiguas
+mientras Chrome actualiza y para no perder capturas en curso. Chrome puede tardar
+1–2 días o más en retirar la entrada: no prometer efecto inmediato ni desinstalar
+la app principal, borrar sus datos o repetir el bucle Pending/Scheduled/Failed.
+
+126 unitarias y Edge PWA, permisos/descarga, iPhone y recepción antigua pasaron.
+Pendientes de manos del usuario: verificar que desaparece solo la opción antigua
+tras actualización, desactivar «Permitir desde esta fuente» de Archivos y borrar
+ZIP privado de Descargas después de importar. No está confirmado que estén hechos.
 
 ## Atajo Android sin abrir Planes preparado — 14/11/2026
 

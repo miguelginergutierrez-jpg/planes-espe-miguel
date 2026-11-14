@@ -14,31 +14,30 @@ No hay permisos nuevos de Supabase, coste añadido ni cambios al atajo iPhone.
 Render Free puede tardar al despertar y un timeout no confirma guardado. Sin
 Internet se muestra error; este atajo no tiene cola offline automática.
 
-## Retirada de opciones anteriores, solicitada por el usuario
+## Retirada de la primera opción de Compartir, solicitada por el usuario
 
-- Se retira share_target del manifiesto de Planes, manteniendo id, nombre,
-  iconos y demás propiedades. La aplicación principal conserva su instalación,
-  sesión, datos y PWA. La antigua entrada de compartir desaparece cuando Chrome
-  actualiza la WebAPK, lo cual puede tardar 1–2 días. PWA cerrada, Wi-Fi y carga
-  favorecen la actualización según Chrome. No reinstalar ni borrar datos.
-- Se conservan rutas y cola de recepción antiguas por compatibilidad con las
-  WebAPK aún no actualizadas y capturas en curso. No se borran sus pendientes.
-- Para quitar la sugerencia dinámica de HTTP del móvil ya configurado: mantener
-  pulsado el atajo interno > Editar > Ajustes de activación y ejecución >
-  desmarcar «Mostrar como acceso directo a aplicación en el launcher» > Guardar.
-  No borrar el atajo ni cambiar su variable compartida o permiso. Guardar planes
-  instalado invoca el ID del atajo directamente y no depende de esa casilla.
-- Las descargas nuevas ya incluyen launcherShortcut false. No hace falta descargar
-  ni importar otro ZIP en el móvil funcional ni revocar su permiso.
-- El receptor genérico HTTP / Enviar a… puede seguir visible. No existe interruptor
-  oficial hallado para ocultarlo manteniendo la herramienta: no afirmar que ya
-  está eliminado ni desinstalar HTTP para intentarlo.
+ACLARACIÓN: se quiere retirar únicamente «Planes», el primer receptor anterior
+a instalar HTTP Request Shortcuts. No retirar HTTP ni sus sugerencias, no borrar
+el atajo ni regenerar el permiso. La indicación de desmarcar el launcher se cancela.
+La exportación conserva launcherShortcut true como antes de esta limpieza.
+
+Se retira share_target del manifiesto de Planes, manteniendo id, nombre, iconos
+y demás propiedades. La app principal conserva instalación, sesión y datos, y
+continúa siendo el acceso para consultar y editar. No desinstalarla ni borrarla.
+
+La entrada antigua desaparece cuando Chrome actualiza la WebAPK: habitualmente
+puede tardar 1–2 días, sin garantía. Abrir Planes para que compruebe el manifiesto;
+después PWA cerrada, Wi-Fi y carga favorecen la actualización según Chrome.
+No repetir el bucle de actualización fallida ni reinstalar para acelerarlo.
+
+Se conservan rutas, SW y cola de recepción antiguas por compatibilidad con las
+WebAPK aún no actualizadas y capturas en curso. No se borran sus pendientes.
 
 ## Cierre pendiente en el teléfono
 
 Desactivar «Permitir desde esta fuente» de Archivos, activado temporalmente para
 instalar el APK. Eliminar de Descargas el ZIP privado tras importarlo; contiene
-el permiso de alta. Estos pasos y la retirada física de sugerencias aún no han
+el permiso de alta. Estos pasos y la retirada física de la opción antigua aún no han
 sido confirmados por el usuario. No podemos operar el Android desde este PC.
 
 ## Configuración inicial, ya completada en el móvil de Espe

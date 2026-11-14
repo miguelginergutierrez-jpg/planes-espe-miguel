@@ -15,8 +15,7 @@
     id:'ac02d060-ff75-44a5-9260-01f4b0c0ce87',name:'Guardar en Planes',iconName:ICON,
     executionType:'app',method:'POST',url:'https://planes-espe-miguel.onrender.com/api/share',
     timeout:120000,waitForInternet:false,acceptAllCertificates:false,acceptCookies:false,
-    // The branded Install as App receiver replaces the optional Direct Share suggestion.
-    launcherShortcut:false,requestBodyType:'custom_text',contentType:'application/json',
+    launcherShortcut:true,requestBodyType:'custom_text',contentType:'application/json',
     bodyContent:'{{planes_body}}',codeOnPrepare:'('+prepare.toString()+')();',codeOnSuccess:'',codeOnFailure:'',
     excludeFromHistory:true,runOnAppStart:false,
     responseHandling:{uiType:'notification',successOutput:'message',successMessage:'Enlace guardado en Planes.',failureOutput:'simple'}
