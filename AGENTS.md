@@ -6,8 +6,10 @@ automático al conectar/activar sincronización. No cambia iPhone. Android abre
 la app para recibir; no prometer ejecución oculta como el atajo iOS.
 123 unitarias y Edge Android-share/iPhone/PWA pasan con datos sintéticos.
 Usuario tiene el Android, abrió web en Chrome, aún sin cuenta propia de Espe.
-Se le ha guiado al formulario oficial Create user; creación/autorización slot 2,
-instalación WebAPK y prueba real todavía pendientes. No afirmar completadas.
+Usuario confirma cuenta propia creada y SQL «Segundo acceso preparado».
+Autorización slot 2 confirmada por el usuario, sin datos personales en Git.
+Usuario confirma «Sincronizado» en Android con la cuenta de Espe.
+Pendiente instalación WebAPK y prueba real de Compartir.
 Control del navegador IAB no responde (browser.user unavailable); usuario opera
 Authentication en el panel oficial. Script guardado para slot2 con comprobaciones
 sin correos/UID reales. No repetir migraciones ni tocar miembros existentes.

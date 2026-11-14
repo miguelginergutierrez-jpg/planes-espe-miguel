@@ -1,7 +1,9 @@
 # Compartir enlaces desde Android
 
-Preparado el 14/11/2026. Pendiente completar cuenta de Espe e instalación/prueba
-real en su Android; no confundir pruebas Edge con WebAPK real instalado.
+Publicado el 14/11/2026: manifiesto share_target verificado en Render. Usuario
+confirma cuenta de Espe creada y SQL «Segundo acceso preparado» (slot 2).
+Usuario confirma login y estado «Sincronizado» en Android. Pendientes
+instalación y prueba física de Compartir; no confundir con Edge.
 
 1. Crear cuenta propia en Authentication > Users del Supabase existente. El
 usuario introduce correo/contraseña allí; no pedirlos en el chat ni guardarlos.
