@@ -23,6 +23,10 @@ Pendientes de manos del usuario: verificar que desaparece solo la opción antigu
 tras actualización, desactivar «Permitir desde esta fuente» de Archivos y borrar
 ZIP privado de Descargas después de importar. No está confirmado que estén hechos.
 
+Publicación 251066b verificada por HTTPS el 14/11/2026: manifiesto sin
+share_target y módulo HTTP idéntico al original. Retirada en selector Android
+aún depende de actualización WebAPK y confirmación del usuario.
+
 ## Atajo Android sin abrir Planes preparado — 14/11/2026
 
 Usuario instaló HTTP Request Shortcuts desde Google Play oficial. Ajustes >

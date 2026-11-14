@@ -74,3 +74,7 @@ Fuentes oficiales:
 - https://http-shortcuts.rmy.ch/import-export
 - https://github.com/Waboodoo/HTTP-Shortcuts
 - https://web.dev/articles/manifest-updates#updates_on_chrome_for_android
+
+Publicación 251066b verificada por HTTPS el 14/11/2026: manifiesto sin
+share_target y módulo HTTP idéntico al original. Retirada en selector Android
+aún depende de actualización WebAPK y confirmación del usuario.
